@@ -43,6 +43,7 @@
   <script src="../../js/attach-to-position.js"></script>
   <script src="../../js/set-name.component.js"></script>
   <script src="../../js/init-animation.js"></script>
+  <script src="../../js/neoNatoProcess.js"></script>
   <!-- <script src="../../js/set-position.js"></script> -->
 
 
@@ -50,6 +51,35 @@
   <script src="../../js/vector3_Lerp.js"></script>
 
   <script>
+
+
+function playObj(id, clip) {
+    console.log({ id })
+    console.log({ clip })
+    let blanket = document.getElementById(id)
+    blanket.setAttribute("animation-mixer", `clip:${clip};loop:once;repetitions:0;clampWhenFinished:true`)
+    document.getElementById("sphere_clamp").removeAttribute("static-body")
+
+    let delayInMilliseconds = 3000; //1 second
+
+    setTimeout(function () {
+        document.getElementById("sphere_blanket_close").setAttribute("opacity","0")
+        document.getElementById("sphere_blanket_close").removeAttribute("static-body")
+        
+        document.getElementById("sphere_CleftGauze").setAttribute("opacity","")
+        document.getElementById("sphere_CleftGauze").removeAttribute("static-body")  
+        
+        document.getElementById("sphere_cut_clamp").setAttribute("opacity","")
+        document.getElementById("sphere_cut_clamp").removeAttribute("static-body")  
+        
+        document.getElementById("sphere_clamp").setAttribute("opacity","")
+        document.getElementById("sphere_clamp").removeAttribute("static-body")  
+        
+        blanket.setAttribute("visible", "false")
+        document.getElementById("e-Manta_Cerrada").setAttribute("visible", "true")
+        document.getElementById("baby").setAttribute("dynamic-body", "")
+    }, delayInMilliseconds);
+}
 
     function emissiveObjectOn(element) {
       let emissiveObject = document.getElementById((element.id + "_emisive"))
@@ -172,17 +202,17 @@
         console.log("right hand: ", hand)
       }
     }
-    
+
     function takeOffGloves(e) {
-      
+
       if (window.event.relatedTarget.id == "lhand") {
-          let hand = document.getElementById("leftHand").getObject3D("mesh").getObjectByName("handL2320").material.color = new THREE.Color(0xffffff);
-          console.log("hand: ", hand)
-        } else if (window.event.relatedTarget.id == "rhand") {
-          let hand = document.getElementById("rightHand").getObject3D("mesh").getObjectByName("handR2320").material.color = new THREE.Color(0xffffff);
-          console.log("right hand: ", hand)
-        }
-      
+        let hand = document.getElementById("leftHand").getObject3D("mesh").getObjectByName("handL2320").material.color = new THREE.Color(0xffffff);
+        console.log("hand: ", hand)
+      } else if (window.event.relatedTarget.id == "rhand") {
+        let hand = document.getElementById("rightHand").getObject3D("mesh").getObjectByName("handR2320").material.color = new THREE.Color(0xffffff);
+        console.log("right hand: ", hand)
+      }
+
     }
 
     function spawnentity() {
@@ -252,6 +282,13 @@
       <a-asset-item id="Cloranfenicol" src="Models/Cloranfenicol.gltf"></a-asset-item>
       <a-asset-item id="arrow" src="../Process5/Assets/arrow.gltf"></a-asset-item>
       <a-asset-item id="Gloves_Steril" src="../Process3/Assets/Gloves_Anim.gltf"></a-asset-item>
+      <a-asset-item id="CleftGauze_Close_Emissive" src="Models/CleftGauze_Close_Emissive.gltf"></a-asset-item>
+      <a-asset-item id="PlantaresRight_Alpha" src="Models/PlantaresRight_Alpha.gltf"></a-asset-item>
+      <a-asset-item id="PlantaresLeft_Alpha" src="Models/PlantaresLeft_Alpha.gltf"></a-asset-item>
+      <a-asset-item id="Baby_Blanket_Static02" src="Models/Baby_Blanket_Static02.gltf"></a-asset-item>
+
+
+
       <!-- Baby -->
 
 
@@ -266,8 +303,8 @@
       <a-asset-item id="Baby_Burrito" src="Models/Baby_Burrito.gltf"></a-asset-item>
 
 
-      <!-- <a-asset-item id="Manta_Cerrada" src="Models/Manta_Cerrada.gltf"></a-asset-item> -->
-      <a-asset-item id="Manta_Cerrada" src="Models/Baby_Blanket2.gltf"></a-asset-item>
+      <a-asset-item id="Manta_Cerrada" src="Models/Manta_Cerrada.gltf"></a-asset-item>
+      <a-asset-item id="Manta_animation" src="Models/Baby_Blanket2.gltf"></a-asset-item>
       <a-asset-item id="Manta_Abierta" src="Models/Manta_Cama.gltf"></a-asset-item>
 
 
@@ -300,7 +337,7 @@
       <a-asset-item id="CleftGauze" src="Models/CleftGauze.gltf"></a-asset-item>
       <a-asset-item id="CleftGauze_Close" src="Models/CleftGauze_Close.gltf"></a-asset-item>
 
-      <a-asset-item id="Manta_Animation" src="Models/Manta_BS.gltf"></a-asset-item>
+      <!-- <a-asset-item id="Manta_Animation" src="Models/Manta_BS.gltf"></a-asset-item> -->
 
       <a-asset-item id="Medical_Laundry-v2" src="Models/Medical_Laundry-v2.gltf"></a-asset-item>
 
@@ -342,6 +379,8 @@
       </a-asset-item>
       <a-asset-item id="student" src="../../super/process/assets/StudentNurseAvatar.gltf"></a-asset-item>
       <a-asset-item id="teacher" src="../../super/process/assets/TeacherAvatar.gltf"></a-asset-item>
+
+
 
       <!-- Theater -->
       <!-- <a-asset-item id="scenebase" src="/Models/gltf/Scene_Base.gltf"></a-asset-item>
@@ -694,19 +733,20 @@
 
       <template id="vxr-obj-template-Baby_Vacuna">
         <a-entity>
-          <a-entity id="baby" grabbable="maxGrabbers: NaN" visible="true" class="vxr-obj-Baby_Vacuna"  
+          <a-entity id="baby" ondragend="baby_rest()" grabbable="maxGrabbers: NaN" visible="true" class="vxr-obj-Baby_Vacuna"
             gltf-model="#Bebe_Bracelet" draggable grabbable position="0.816 0.250 -0.872" rotation="0 0 0"
             ondragstart="setMass()">
 
             <a-entity id="e-clamp_static" visible="false" class="vxr-obj-ClampClosed vxr-interact"
               gltf-model="#ClampClosed" position="-0.020 0.082 0.079" rotation="0 90 0"></a-entity>
 
-            <a-entity id="e-CleftGauze_Close" class="vxr-obj-CleftGauze_Close  vxr-interact"
+            <a-entity id="e-CleftGauze_static" class="vxr-obj-CleftGauze_Close  vxr-interact"
               gltf-model="#CleftGauze_Close" draggable="" grabbable position="-0.007 0.076 0.074" rotation="0 90 0"
               visible="false"></a-entity>
 
-            <a-entity id="e-Manta_Cerrada" class="vxr-obj-CleftGauze_Close  vxr-interact" gltf-model="#Manta_Cerrada"
-              draggable="" grabbable position="-0.03829 -0.003 -0.01601" rotation="0 0 0" visible="false"></a-entity>
+            <a-entity id="e-Manta_Cerrada" class="vxr-obj-CleftGauze_Close  vxr-interact"
+              gltf-model="#Baby_Blanket_Static02" draggable="" grabbable position="-0.03829 -0.003 -0.01601"
+              rotation="0 0 0" visible="false"></a-entity>
 
 
           </a-entity>
@@ -848,9 +888,8 @@
 
       <template id="vxr-obj-template-Plantares">
         <a-entity>
-          <a-entity id="e-plantar" grabbable="maxGrabbers: NaN" class="vxr-obj-Plantares vxr-interact"
-            gltf-model="#Plantares" draggable="" grabbable position="-1.14041 0.41247 -0.08001" rotation="0 180 0"
-            static-body visible="true">
+          <a-entity id="e-plantar" class="vxr-obj-Plantares vxr-interact" gltf-model="#Plantares"
+            position="-1.14041 0.41247 -0.08001" rotation="0 180 0" visible="true">
           </a-entity>
 
         </a-entity>
@@ -883,9 +922,19 @@
 
       <template id="vxr-obj-template-CleftGauze">
         <a-entity>
-          <a-entity id="e-CleftGauze" class="vxr-obj-CleftGauze  vxr-interact" gltf-model="#CleftGauze"
+          <a-entity id="e-CleftGauze" ondragstart="emissiveObjectOn(this)" ondragend="emissiveObjectOff(this)"
+            class="vxr-obj-CleftGauze  vxr-interact" gltf-model="#CleftGauze"
             animation-mixer="clip:Abierto;clampWhenFinished: true;loop:once;startFrame:10000;timeScale:0.5" draggable=""
             grabbable position="0.28402 0.437 -0.31634" rotation="0 0 0" visible="true" dynamic-body>
+          </a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-CleftGauze-emisive">
+        <a-entity>
+          <a-entity id="e-CleftGauze_emisive" class="vxr-obj-CleftGauze  vxr-interact"
+            gltf-model="#CleftGauze_Close_Emissive" draggable="" grabbable position="0.804 0.331 -0.800"
+            rotation="0 90 0" visible="false">
           </a-entity>
         </a-entity>
       </template>
@@ -919,11 +968,11 @@
         </a-entity>
       </template>
 
-      <template id="vxr-obj-template-e-Manta_Abierta">
+      <template id="vxr-obj-template-Manta_Abierta">
         <a-entity>
           <a-entity id="e-Manta_Abierta" grabbable="maxGrabbers: NaN" grabbable
-            class="vxr-obj-e-Manta_Abierta  vxr-interact" gltf-model="#Manta_Abierta" draggable="" grabbable
-            position="0.80307 0.206 -0.86032" rotation="0 90 0" visible="true">
+            class="vxr-obj-e-Manta_Abierta  vxr-interact" gltf-model="#Manta_animation" draggable="" grabbable
+            position="0.826 0.271 -0.899" rotation="0 0.000 0" visible="true">
           </a-entity>
         </a-entity>
       </template>
@@ -965,6 +1014,23 @@
             class="vxr-obj-Pañal_Prueba vxr-interact" dynamic-body gltf-model="#Pañal_Prueba" draggable="" grabbable
             position="-0.528 0.41544 -0.04718"
             rotation="-2.494018912508317e-7 -179.99999999766683 -0.000005429871687493074" visible="true">
+          </a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-PlantaresLeft_Alpha">
+        <a-entity>
+          <a-entity id="e-PlantaresLeft_Alpha" class="vxr-obj-PlantaresLeft_Alpha vxr-interact"
+            gltf-model="#PlantaresLeft_Alpha" position="-1.141 0.415 -0.083" rotation="0 -180 0" visible="false">
+          </a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-PlantaresRight_Alpha">
+        <a-entity>
+          <a-entity id="e-PlantaresRight_Alpha" grabbable="maxGrabbers: NaN"
+            class="vxr-obj-PlantaresRight_Alpha vxr-interact" gltf-model="#PlantaresRight_Alpha"
+            position="-1.141 0.415 -0.083" rotation="0 -180 0" visible="false">
           </a-entity>
         </a-entity>
       </template>
@@ -1084,35 +1150,36 @@
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
       </a-entity>
       <!-- /VIVE CONTROLLERS -->
-      <a-entity id="lhand" mixin="touch" hand-attach input-controls="hand: left"
+      <a-entity id="lhand" mixin="touch" vive-controls="hand: left;model:false" 
+      hand-attach input-controls="hand: left"
         networked="template:#left-hand-template">
       </a-entity>
-      <a-entity id="rhand" mixin="touch" hand-attach input-controls="hand: right"
+      <a-entity id="rhand" mixin="touch" vive-controls="hand: right;model:false" hand-attach input-controls="hand: right"
         networked="template:#right-hand-template">
       </a-entity>
     </a-entity>
 
-    <a-entity id="baby-cript" class="gltf" gltf-model="#bed" position="-0.010 0.901 -1.986" rotation="0 180.000 0"
+    <a-entity id="baby-cript" class="gltf"  gltf-model="#bed" position="-0.010 0.901 -1.986" rotation="0 180.000 0"
       scale="1 0.85 1"></a-entity>
 
     <a-entity id="genes01" gltf-model="#genes" scale="1.2 1 1.2" position="-3.411 0.858 -2.769" material="color: brown"
       rotation="0 90.000 0" shadow="receive: false"></a-entity>
-
-    <a-sphere id="heparinsealCollider" static-body="sphereRadius: NaN" attach-point-v2="objClass:vxr-obj-heparinseal"
+    <!-- 
+    <a-sphere id="heparinsealCollider" static-body="sphereRadius: NaN" 
+    ="objClass:vxr-obj-heparinseal"
       static-body opacity="1" position="0.818 1.8186 -1.051" geometry="radius: 0.05">
     </a-sphere>
-    <a-sphere id="sphereOverScale" attach-point-v2="objClass:balance" static-body opacity="1"
-      position="-1.71723 1.97 -0.309" geometry="radius: 0.05">
-    </a-sphere>
 
-
-    <a-sphere id="Thermometer-collider" static-body="sphereRadius: NaN" attach-point-v2="objClass:Thermometer-collider"
+    <a-sphere id="Thermometer-collider" static-body="sphereRadius: NaN" ="objClass:Thermometer-collider"
       opacity="1" position="0.87924 1.8186 -0.88097" geometry="radius: 0.03" material="" velocity="">
     </a-sphere>
 
-    <a-box id="tableBox2" class="boxTable2" opacity="1" static-body="sphereRadius: NaN" rotation=""
-      position="-1.64575 1.97348 -0.31224" color="red" depth="0.6" height="0.1" width="1.1" material=""
-      geometry="depth: 0.4; width: 0.6"></a-box>
+    <a-sphere id="sphereOverScale" ="objClass:balance" static-body opacity="1"
+      position="-1.71723 1.97 -0.309" geometry="radius: 0.05">
+    </a-sphere> -->
+
+
+
 
     <a-entity id="arrow01" gltf-model="#arrow" visible="false" position="1.219 2.000 -0.835" rotation="0 0 0"
       animation-mixer>
@@ -1124,13 +1191,60 @@
       trigger-animation="entity_id:e-clamp;obj_entity:2" opacity="1" position="0.8012 1.81575 -0.96787"
       geometry="radius: 0.05"> </a-sphere>
 
+    <a-sphere id="sphere_cut_clamp"
+    set-mass-at-collide="entity_id:e-Scisors;action_obj:e-Cordon_Tijera"
+      scale="0.5 0.5 0.5" 
+      static-body="sphereRadius: NaN" 
+      static-body 
+      opacity="1" 
+      position="0.8012 1.81575 -0.96787"
+      geometry="radius: 0.05"> </a-sphere>
+
+    <a-sphere id="sphere_blanket_close" scale="0.5 0.5 0.5" static-body="sphereRadius: NaN" static-body opacity="1"
+      position="1.076 1.951 -1.063" color="red" ondragstart="playObj('e-Manta_Abierta','Cloth_IdletoClose')"
+      geometry="radius: 0.05"> </a-sphere>
+
+    <a-sphere id="sphere_CleftGauze" scale="0.5 0.5 0.5" static-body="sphereRadius: NaN" static-body
+      trigger-animation="entity_id:e-CleftGauze;obj_entity:2" opacity="0" position="0.8012 1.81575 -0.96787"
+      geometry="radius: 0.05"> </a-sphere>
+
     <a-sphere id="sphere-gloves-animation" visible="true" scale="0.5 0.5 0.5" static-body="sphereRadius: NaN"
-      static-body opacity="1" position="-0.243 1.91924 -0.26112" ondragstart="playAnimation()" attach-point-v2
-      geometry="radius: 0.04"> </a-sphere>
-      
-      <a-sphere id="sphere-gloves-off" visible="true" scale="0.5 0.5 0.5" static-body="sphereRadius: NaN"
-      static-body opacity="1" position="0.544 1.580 -0.603" ondragstart="takeOffGloves()" attach-point-v2
-      geometry="radius: 0.04"> </a-sphere>
+      static-body opacity="1" position="-0.243 1.91924 -0.26112" ondragstart="playAnimation()" geometry="radius: 0.04">
+    </a-sphere>
+
+    <a-sphere id="sphere-gloves-off" visible="true" scale="0.5 0.5 0.5" static-body="sphereRadius: NaN" static-body
+      opacity="1" position="0.544 1.580 -0.603" ondragstart="takeOffGloves()" geometry="radius: 0.04">
+    </a-sphere>
+
+    <!-- second move -->
+
+    <a-box id="tableBox2" weight-baby="entity_id:baby;action_obj:sphere-foot-InkPad" class="boxTable2" opacity="0"
+      static-body="sphereRadius: NaN" rotation="" position="-1.64575 1.97348 -0.31224" color="red" depth="0.6"
+      height="0.1" width="1.1" material="" geometry="depth: 0.4; width: 0.6"></a-box>
+
+    <a-sphere id="sphere-foot-InkPad" tint-baby-feet="entity_id:baby;action_obj:sphere-foot-print-left" visible="false"
+      scale="0.5 0.5 0.5" opacity="0" position="-1.127 1.899 -0.607" geometry="radius: 0.04"> </a-sphere>
+
+    <a-sphere id="sphere-foot-print-left"
+    baby-feet-print="entity_id:baby;" 
+    visible="true" scale="0.5 0.5 0.5"
+      opacity="0" position="-1.062 1.919 -0.403" geometry="radius: 0.04">
+    </a-sphere>
+
+    <!-- Third move -->
+
+    <a-sphere id="sphere-baby-rest" set-baby-on-thermal-crib="entity_id:baby;"
+    visible="true"
+    scale="0.5 0.5 0.5"
+    color="red"
+      opacity="1" position="0.750 1.800 -1.069"
+      geometry="radius: 0.04">
+    </a-sphere>
+
+
+    <!-- <a-sphere id="sphere-foot-print-right" visible="true" scale="0.5 0.5 0.5"
+    static-body opacity="1" position="-1.130 1.919 -0.403"   
+    geometry="radius: 0.04"> </a-sphere> -->
 
   </a-scene>
 
