@@ -66,13 +66,13 @@ function playObj(id, clip) {
         document.getElementById("sphere_blanket_close").setAttribute("opacity","0")
         document.getElementById("sphere_blanket_close").removeAttribute("static-body")
         
-        document.getElementById("sphere_CleftGauze").setAttribute("opacity","")
+        document.getElementById("sphere_CleftGauze").setAttribute("opacity","0")
         document.getElementById("sphere_CleftGauze").removeAttribute("static-body")  
         
-        document.getElementById("sphere_cut_clamp").setAttribute("opacity","")
+        document.getElementById("sphere_cut_clamp").setAttribute("opacity","0")
         document.getElementById("sphere_cut_clamp").removeAttribute("static-body")  
         
-        document.getElementById("sphere_clamp").setAttribute("opacity","")
+        document.getElementById("sphere_clamp").setAttribute("opacity","0")
         document.getElementById("sphere_clamp").removeAttribute("static-body")  
         
         blanket.setAttribute("visible", "false")
@@ -286,6 +286,7 @@ function playObj(id, clip) {
       <a-asset-item id="PlantaresRight_Alpha" src="Models/PlantaresRight_Alpha.gltf"></a-asset-item>
       <a-asset-item id="PlantaresLeft_Alpha" src="Models/PlantaresLeft_Alpha.gltf"></a-asset-item>
       <a-asset-item id="Baby_Blanket_Static02" src="Models/Baby_Blanket_Static02.gltf"></a-asset-item>
+      <a-asset-item id="Baby_Diaper_Animations" src="Models/Baby_Diaper_Animations.gltf"></a-asset-item>
 
 
 
@@ -733,7 +734,9 @@ function playObj(id, clip) {
 
       <template id="vxr-obj-template-Baby_Vacuna">
         <a-entity>
-          <a-entity id="baby" ondragend="baby_rest()" grabbable="maxGrabbers: NaN" visible="true" class="vxr-obj-Baby_Vacuna"
+          <a-entity id="baby"
+          ondragend="baby_rest();baby_finalle()"           
+          grabbable="maxGrabbers: NaN" visible="true" class="vxr-obj-Baby_Vacuna"
             gltf-model="#Bebe_Bracelet" draggable grabbable position="0.816 0.250 -0.872" rotation="0 0 0"
             ondragstart="setMass()">
 
@@ -1002,8 +1005,11 @@ function playObj(id, clip) {
 
       <template id="vxr-obj-template-Pañal_Cerrado">
         <a-entity>
-          <a-entity id="e-Pañal_Cerrado" class="vxr-obj-Pañal_Cerrado  vxr-interact" gltf-model="#Pañal_Cerrado"
-            draggable="" rotation="0 0 0" scale="1 1 1" position="0.832 0.231 -0.626  " visible="false">
+          <a-entity id="e-Pañal_Cerrado" class="vxr-obj-Pañal_Cerrado  vxr-interact" 
+          gltf-model="#Baby_Diaper_Animations"
+          visible="false"
+            draggable="" rotation="0 90 0" scale="1 1 1" 
+            position="0.002 0.256 -1.782  " visible="true">
           </a-entity>
         </a-entity>
       </template>
@@ -1105,6 +1111,21 @@ function playObj(id, clip) {
       position="0.87605 1.669 -1.02947" color="red" depth="0.6" height="0.1" width="1.1" material=""
       geometry="width: 0.8"></a-box>
 
+      <a-box id="tableBoxCrib"
+      static-body="sphereRadius: NaN"
+      class="boxTable3"
+      opacity="0" 
+      static-body
+      rotation="0 0 0"
+      position="-0.094 1.653 -1.952" 
+      color="red"
+      depth="0.6"
+      height="0.1"
+      width="1.1"
+      material=""
+      baby-rest-fourth="entity_id:baby"
+      geometry="width: 0.8"></a-box>
+      
     <!-- <a-box id="TorundaBowl" class="boxTable2" opacity="0" static-body position="0.30215 1.87809 -0.51316" depth="0.1"
       height="0.1" width="0.1" material="" geometry="depth: 0.1; width: 0.1"></a-box> -->
 
@@ -1218,12 +1239,24 @@ function playObj(id, clip) {
 
     <!-- second move -->
 
-    <a-box id="tableBox2" weight-baby="entity_id:baby;action_obj:sphere-foot-InkPad" class="boxTable2" opacity="0"
-      static-body="sphereRadius: NaN" rotation="" position="-1.64575 1.97348 -0.31224" color="red" depth="0.6"
+    <a-box id="tableBox2"
+    weight-baby="entity_id:baby;action_obj:sphere-foot-InkPad"
+    class="boxTable2"
+    opacity="0"
+      static-body="sphereRadius: NaN" 
+      rotation=""
+      position="-1.64575 1.97348 -0.31224" 
+      color="red" 
+      depth="0.6"
       height="0.1" width="1.1" material="" geometry="depth: 0.4; width: 0.6"></a-box>
 
-    <a-sphere id="sphere-foot-InkPad" tint-baby-feet="entity_id:baby;action_obj:sphere-foot-print-left" visible="false"
-      scale="0.5 0.5 0.5" opacity="0" position="-1.127 1.899 -0.607" geometry="radius: 0.04"> </a-sphere>
+    <a-sphere id="sphere-foot-InkPad"
+    tint-baby-feet="entity_id:baby;action_obj:sphere-foot-print-left"
+    visible="false"
+      scale="0.5 0.5 0.5"
+      opacity="0"
+      position="-1.127 1.899 -0.607" 
+      geometry="radius: 0.04"> </a-sphere>
 
     <a-sphere id="sphere-foot-print-left"
     baby-feet-print="entity_id:baby;" 
@@ -1233,13 +1266,53 @@ function playObj(id, clip) {
 
     <!-- Third move -->
 
-    <a-sphere id="sphere-baby-rest" set-baby-on-thermal-crib="entity_id:baby;"
-    visible="true"
+    <a-sphere id="sphere-baby-rest" 
+    set-baby-on-thermal-crib="entity_id:baby;"
+    visible="false"
     scale="0.5 0.5 0.5"
     color="red"
-      opacity="1" position="0.750 1.800 -1.069"
-      geometry="radius: 0.04">
+    opacity="1" position="0.750 1.800 -1.069"
+    geometry="radius: 0.04">
+    
     </a-sphere>
+    
+    <a-sphere id="sphere_Thermometer" 
+    scale="0.5 0.5 0.5" 
+    position="0.816 1.775 -0.937"
+    geometry="radius: 0.05"
+    visible="false"
+    baby-thermometer="entity_id:e-Thermometer"
+    > 
+    
+    </a-sphere>
+    
+    <a-sphere id="sphere_syringe" 
+      scale="0.5 0.5 0.5" 
+      position="0.814 1.795 -0.937"
+      geometry="radius: 0.05"
+      visible="false"
+      baby-syringe="entity_id:e-Syringe_1CC_Skin"> 
+    </a-sphere>
+    
+    <a-sphere id="baby_to_Idle_position" 
+    scale="0.5 0.5 0.5" 
+    position="0.856 1.835 -1.012"
+    geometry="radius: 0.05"
+    ondragend="baby_idle()"
+    visible="false"> 
+    
+  </a-sphere>
+  
+  <a-sphere
+  id="sphere_daiper"
+  scale="0.5 0.5 0.5" 
+  static-body="sphereRadius: NaN" 
+  static-body
+  trigger-animation="entity_id:e-clamp;obj_entity:2"
+  opacity="1" 
+  baby-daiper="entity_id:pañal"
+  position="-0.041 1.816 -1.994"
+  geometry="radius: 0.05"> </a-sphere>
 
 
     <!-- <a-sphere id="sphere-foot-print-right" visible="true" scale="0.5 0.5 0.5"
