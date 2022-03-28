@@ -51,7 +51,24 @@ function playObj(id, clip) {
         document.getElementById("baby").setAttribute("dynamic-body", "")
     }, delayInMilliseconds);
 }
+let secondAct = false;
+let secondActOnce = true;
 
+function baby_scale(){
+    if(secondAct && secondActOnce){
+        let baby = document.getElementById("baby")
+        baby.removeAttribute("dynamic-body")
+        baby.setAttribute("position","-1.612 0.624 -0.049")
+        baby.setAttribute("rotation","0 -90.000 0")     
+        
+        document.getElementById("sphere-measure-tape").setAttribute("static-body","")
+        document.getElementById("sphere-measure-tape").setAttribute("visible","true")
+        secondAct = false;
+        secondActOnce= false;
+        
+        
+    }
+} 
 AFRAME.registerComponent('weight-baby', {
     schema: {
         entity_id: { type: 'string', default: '0' },
@@ -71,9 +88,41 @@ AFRAME.registerComponent('weight-baby', {
                 elem.setAttribute("static-body", "")
                 console.log("bool",selff.onceBool)
                 selff.onceBool=false
-                
+                secondAct=true;
             }else{
             console.log("bool",selff.onceBool)
+            }
+        });
+    }
+})
+
+function genericSetMass(element) {
+    document.getElementById(element.id).setAttribute('dynamic-body', 'mass:0.1')
+  }
+
+AFRAME.registerComponent('measure-tape', {
+    schema: {
+        entity_id: { type: 'string', default: '0' },
+        action_obj: { type: 'string', default: "" },
+    },
+
+    init: function () {
+        let el = this.el;
+        let selff= this
+        let data = this.data
+        let id_Data = this.data.entity_id;
+        this.onceBool= true
+
+        this.el.addEventListener('collide', function (e) {
+            
+            if (id_Data == e.detail.body.el.id) {    
+                document.getElementById("baby").setAttribute("dynamic-body","")
+                document.getElementById("e-measuring-tape").setAttribute("dynamic-body","mass:0.0")
+                document.getElementById("e-measuring-tape").setAttribute("visible","false")
+                document.getElementById("sphere-measure-tape").remove()
+                document.getElementById("e-measuring-tape").remove()
+                
+                
             }
         });
     }
@@ -294,11 +343,8 @@ function baby_finalle(){
         baby.removeAttribute("dynamic-body")
         baby.setAttribute("position","-0.189 0.250 -1.802")
         baby.setAttribute("rotation","0 90 0")        
-        
-        
-        
-        
-
+        document.getElementById("sphere_daiper").setAttribute("static-body","")
+        document.getElementById("sphere_daiper").setAttribute("visible","true")
         
     }
 }
@@ -322,6 +368,30 @@ AFRAME.registerComponent('baby-daiper', {
                 document.getElementById("e-Pañal_Cerrado").setAttribute("visible","true")
                 document.getElementById("e-Pañal_Cerrado").setAttribute("animation-mixer","loop:once;repetitions:0;clampWhenFinished:true")
                 sphere.setAttribute("visible","false")
+                document.getElementById("sphere_final_blanket").setAttribute("static-body","")
+                document.getElementById("sphere_final_blanket").setAttribute("visible","true")
+                
+            }
+        });
+    }
+})
+
+AFRAME.registerComponent('baby-blanket', {
+    schema: {
+        entity_id: { type: 'string', default: '0' },
+        action_obj: { type: 'string', default: "" },
+    },
+
+    init: function () {
+        let el = this.el;
+        let data = this.data
+        let id_Data = this.data.entity_id;
+
+        this.el.addEventListener('collide', function (e) {
+            
+            if (id_Data == e.detail.body.el.id) {    
+                document.getElementById("e-Baby_Sheet_Animations").setAttribute("visible","true")
+                document.getElementById("e-Baby_Sheet_Animations").setAttribute("animation-mixer","clip:Cloth_ExtendedtoClose;loop:once;repetitions:0;clampWhenFinished:true")
                 
             }
         });

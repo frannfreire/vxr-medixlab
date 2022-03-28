@@ -220,6 +220,18 @@
   {
     "template": "vxr-obj-template-PlantaresRight_Alpha",
     "selector": ".vxr-obj-PlantaresRight_Alpha"
+  },
+  {
+    "template": "vxr-obj-template-Baby_Sheet_Static00",
+    "selector": ".vxr-obj-Baby_Sheet_Static00"
+  },
+  {
+    "template": "vxr-obj-template-Baby_Sheet_Animations",
+    "selector": ".vxr-obj-Baby_Sheet_Animations"
+  },
+  {
+    "template": "vxr-obj-template-measuring-tape",
+    "selector": ".vxr-obj-measuring-tape"
   }
   
  ]

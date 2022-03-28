@@ -141,6 +141,13 @@ function playObj(id, clip) {
             e.detail.body.el.setAttribute('visible', 'false');
             obj.setAttribute("visible", "true")
             emisive.remove()
+            
+            if(id_Data=="e-CleftGauze"){
+              
+              document.getElementById("sphere_blanket_close").setAttribute("visible","true")
+              document.getElementById("sphere_blanket_close").setAttribute("static-body","")
+              
+            }
 
           }
 
@@ -307,8 +314,10 @@ function playObj(id, clip) {
       <a-asset-item id="Manta_Cerrada" src="Models/Manta_Cerrada.gltf"></a-asset-item>
       <a-asset-item id="Manta_animation" src="Models/Baby_Blanket2.gltf"></a-asset-item>
       <a-asset-item id="Manta_Abierta" src="Models/Manta_Cama.gltf"></a-asset-item>
-
-
+      <a-asset-item id="Baby_Sheet_Static00" src="Models/Baby_Sheet_Static00.gltf"></a-asset-item>
+      <a-asset-item id="Baby_Sheet_Animations" src="Models/Baby_Sheet_Animations.gltf"></a-asset-item>
+      
+      
 
 
       <a-asset-item id="Cordon_Tijera" src="Models/Cordon_Tijera.gltf"></a-asset-item>
@@ -489,6 +498,14 @@ function playObj(id, clip) {
           <a-entity id="e-medicaltape" grabbable="maxGrabbers: NaN" dynamic-body="sphereRadius: NaN"
             class="vxr-obj-medicaltape vxr-interact" gltf-model="#medicaltape" dynamic-body draggable grabbable
             toggle-physics position="0.23028 0.40356 -0.21582"></a-entity>
+        </a-entity>
+      </template>
+      
+      <template id="vxr-obj-template-measuring-tape">
+        <a-entity>
+          <a-entity id="e-measuring-tape" grabbable="maxGrabbers: NaN" dynamic-body="sphereRadius: NaN"
+            class="vxr-obj-measuring-tape vxr-interact" gltf-model="#medicaltape" dynamic-body draggable grabbable
+            toggle-physics position="-0.379 0.40356 0.013"></a-entity>
         </a-entity>
       </template>
 
@@ -735,10 +752,10 @@ function playObj(id, clip) {
       <template id="vxr-obj-template-Baby_Vacuna">
         <a-entity>
           <a-entity id="baby"
-          ondragend="baby_rest();baby_finalle()"           
+          ondragend="baby_rest();baby_scale();baby_finalle()"         
           grabbable="maxGrabbers: NaN" visible="true" class="vxr-obj-Baby_Vacuna"
             gltf-model="#Bebe_Bracelet" draggable grabbable position="0.816 0.250 -0.872" rotation="0 0 0"
-            ondragstart="setMass()">
+             >
 
             <a-entity id="e-clamp_static" visible="false" class="vxr-obj-ClampClosed vxr-interact"
               gltf-model="#ClampClosed" position="-0.020 0.082 0.079" rotation="0 90 0"></a-entity>
@@ -1013,6 +1030,17 @@ function playObj(id, clip) {
           </a-entity>
         </a-entity>
       </template>
+      
+      <template id="vxr-obj-template-Baby_Sheet_Animations">
+        <a-entity>
+          <a-entity id="e-Baby_Sheet_Animations" class="vxr-obj-Baby_Sheet_Animations  vxr-interact" 
+          gltf-model="#Baby_Sheet_Animations" 
+          visible="false"
+            draggable="" rotation="0 90 0" scale="1 1 1" 
+            position="-0.191 0.254 -1.765" >
+          </a-entity>
+        </a-entity>
+      </template>
 
       <template id="vxr-obj-template-Pañal_Prueba">
         <a-entity>
@@ -1037,6 +1065,15 @@ function playObj(id, clip) {
           <a-entity id="e-PlantaresRight_Alpha" grabbable="maxGrabbers: NaN"
             class="vxr-obj-PlantaresRight_Alpha vxr-interact" gltf-model="#PlantaresRight_Alpha"
             position="-1.141 0.415 -0.083" rotation="0 -180 0" visible="false">
+          </a-entity>
+        </a-entity>
+      </template>
+      
+      <template id="vxr-obj-template-Baby_Sheet_Static00">
+        <a-entity>
+          <a-entity id="e-Baby_Sheet_Static00" grabbable="maxGrabbers: NaN" dynamic-body
+            class="vxr-obj-Baby_Sheet_Static00 vxr-interact" gltf-model="#Baby_Sheet_Static00"
+            position="-0.470 0.418 -0.362" rotation="0 -180 0" scale="0.700 0.700 0.700" visible="true">
           </a-entity>
         </a-entity>
       </template>
@@ -1166,7 +1203,7 @@ function playObj(id, clip) {
       position="-1.11051 9.99225 4.03024" rotation="-90 0 0"></a-entity>
 
     <a-entity id="player" networked="template:#player-template;attachTemplateToLocal:false;" position="0 0.8 -2"
-      rotation="0 180 0" movement-controls="speed:0.3">
+      rotation="0 180 0" movement-controls="speed:0.15">
       <a-entity camera position="0 1.7 0.2" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
       </a-entity>
@@ -1221,9 +1258,9 @@ function playObj(id, clip) {
       position="0.8012 1.81575 -0.96787"
       geometry="radius: 0.05"> </a-sphere>
 
-    <a-sphere id="sphere_blanket_close" scale="0.5 0.5 0.5" static-body="sphereRadius: NaN" static-body opacity="1"
+    <a-sphere id="sphere_blanket_close" scale="0.5 0.5 0.5" opacity="1"
       position="1.076 1.951 -1.063" color="red" ondragstart="playObj('e-Manta_Abierta','Cloth_IdletoClose')"
-      geometry="radius: 0.05"> </a-sphere>
+      geometry="radius: 0.05" visible="false"> </a-sphere>
 
     <a-sphere id="sphere_CleftGauze" scale="0.5 0.5 0.5" static-body="sphereRadius: NaN" static-body
       trigger-animation="entity_id:e-CleftGauze;obj_entity:2" opacity="0" position="0.8012 1.81575 -0.96787"
@@ -1249,6 +1286,14 @@ function playObj(id, clip) {
       color="red" 
       depth="0.6"
       height="0.1" width="1.1" material="" geometry="depth: 0.4; width: 0.6"></a-box>
+      
+      <a-sphere id="sphere-measure-tape"
+      measure-tape="entity_id:e-measuring-tape"
+    visible="false"
+      scale="0.5 0.5 0.5"
+      opacity="0"
+      position="-1.471 2.247 -0.262" 
+      geometry="radius: 0.04"> </a-sphere>
 
     <a-sphere id="sphere-foot-InkPad"
     tint-baby-feet="entity_id:baby;action_obj:sphere-foot-print-left"
@@ -1312,8 +1357,18 @@ function playObj(id, clip) {
   opacity="1" 
   baby-daiper="entity_id:pañal"
   position="-0.041 1.816 -1.994"
-  geometry="radius: 0.05"> </a-sphere>
+  geometry="radius: 0.05"
+  visible="false"> </a-sphere>
 
+  <a-sphere
+  id="sphere_final_blanket"
+  scale="0.5 0.5 0.5" 
+  baby-blanket="entity_id:e-Baby_Sheet_Static00"
+  opacity="1" 
+  baby-daiper="entity_id:pañal"
+  position="-0.041 1.816 -1.994"
+  geometry="radius: 0.05"
+  visible="false"> </a-sphere>
 
     <!-- <a-sphere id="sphere-foot-print-right" visible="true" scale="0.5 0.5 0.5"
     static-body opacity="1" position="-1.130 1.919 -0.403"   
