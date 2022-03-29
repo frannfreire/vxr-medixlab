@@ -232,6 +232,10 @@
   {
     "template": "vxr-obj-template-measuring-tape",
     "selector": ".vxr-obj-measuring-tape"
+  },
+  {
+    "template": "vxr-obj-template-measuring-tape-static",
+    "selector": ".vxr-obj-measuring-tape-static"
   }
   
  ]

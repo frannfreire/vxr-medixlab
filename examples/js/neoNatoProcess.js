@@ -63,6 +63,7 @@ function baby_scale(){
         
         document.getElementById("sphere-measure-tape").setAttribute("static-body","")
         document.getElementById("sphere-measure-tape").setAttribute("visible","true")
+        
         secondAct = false;
         secondActOnce= false;
         
@@ -120,8 +121,17 @@ AFRAME.registerComponent('measure-tape', {
                 document.getElementById("e-measuring-tape").setAttribute("dynamic-body","mass:0.0")
                 document.getElementById("e-measuring-tape").setAttribute("visible","false")
                 document.getElementById("sphere-measure-tape").remove()
-                document.getElementById("e-measuring-tape").remove()
+                document.getElementById("e-measuring-tape-static").setAttribute("animation-mixer","loop:once;clampWhenFinished:true;")
+                document.getElementById("e-measuring-tape-static").setAttribute("visible","true")
+                //document.getElementById("e-measuring-tape").remove()
                 
+                let delayInMilliseconds=5000;
+                
+                setTimeout(function () {
+                    
+                    document.getElementById("e-measuring-tape-static").setAttribute("visible","false")
+                    
+                },delayInMilliseconds)
                 
             }
         });
@@ -226,6 +236,8 @@ function baby_rest(){
         document.getElementById("e-Manta_Cerrada").setAttribute("visible","false")
         document.getElementById("sphere-baby-rest").setAttribute("visible","false")
         document.getElementById("sphere-baby-rest").removeAttribute("static-body")
+        document.getElementById("e-CleftGauze_static").setAttribute("visible","false")
+        document.getElementById("e-clamp_static").setAttribute("visible","false")
         
         
         let delayInMilliseconds = 3000; //1 second
@@ -261,7 +273,7 @@ AFRAME.registerComponent('baby-syringe', {
                 document.getElementById("sphere_Thermometer").setAttribute("visible","true")
                 document.getElementById("sphere_Thermometer").setAttribute("static-body","")
                 
-            }
+            }   
         });
     }
 })
@@ -309,6 +321,8 @@ function baby_idle(){
             document.getElementById("sphere_syringe").setAttribute("opacity","0")
             document.getElementById("sphere_syringe").removeAttribute("static-body")
             document.getElementById("baby").setAttribute("dynamic-body","")
+            document.getElementById("e-CleftGauze_static").setAttribute("visible","true")
+            document.getElementById("e-clamp_static").setAttribute("visible","true")
             
             
         },delayInMilliseconds)

@@ -294,6 +294,8 @@ function playObj(id, clip) {
       <a-asset-item id="PlantaresLeft_Alpha" src="Models/PlantaresLeft_Alpha.gltf"></a-asset-item>
       <a-asset-item id="Baby_Blanket_Static02" src="Models/Baby_Blanket_Static02.gltf"></a-asset-item>
       <a-asset-item id="Baby_Diaper_Animations" src="Models/Baby_Diaper_Animations.gltf"></a-asset-item>
+      <a-asset-item id="MeasuringTape_Static00" src="Models/MeasuringTape_Static00.gltf"></a-asset-item>
+      <a-asset-item id="MeasuringTape_Animation" src="Models/MeasuringTape_Animation.gltf"></a-asset-item>
 
 
 
@@ -504,8 +506,22 @@ function playObj(id, clip) {
       <template id="vxr-obj-template-measuring-tape">
         <a-entity>
           <a-entity id="e-measuring-tape" grabbable="maxGrabbers: NaN" dynamic-body="sphereRadius: NaN"
-            class="vxr-obj-measuring-tape vxr-interact" gltf-model="#medicaltape" dynamic-body draggable grabbable
+            class="vxr-obj-measuring-tape vxr-interact" gltf-model="#MeasuringTape_Static00" dynamic-body draggable grabbable
             toggle-physics position="-0.379 0.40356 0.013"></a-entity>
+        </a-entity>
+      </template>
+      
+      <template id="vxr-obj-template-measuring-tape-static">
+        <a-entity>
+          <a-entity id="e-measuring-tape-static" 
+            class="vxr-obj-measuring-tape vxr-interact"
+            gltf-model="#MeasuringTape_Animation"  
+            draggable
+            grabbable
+            position="-1.467 0.873 -0.574" 
+            rotation="0 -90 0"
+            visible="false">
+            </a-entity>
         </a-entity>
       </template>
 
