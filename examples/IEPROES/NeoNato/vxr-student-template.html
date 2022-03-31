@@ -1,0 +1,522 @@
+<html>
+
+<head>
+  <title>Vertex Medixlab</title>
+  <!-- Replace "../build.js" with the super-hands and
+         A-Frame distributions to run : -->
+  <script src="../../super/build.js"></script>
+  <!-- <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script> -->
+  <!-- <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script> -->
+
+  <!-- Networked aframe -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+  <script src="/easyrtc/easyrtc.js"></script>
+  <script src="/dist/networked-aframe.js"></script>
+  <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
+  <script
+    src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
+  <script src="/js/spawn-in-circle.component.js"></script>
+
+
+  <!-- Super hands -->
+  <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.js"></script>
+  <script src="https://unpkg.com/aframe-physics-extras/dist/aframe-physics-extras.min.js"></script>
+  <script
+    src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+
+  <!-- set spectators position -->
+
+  <!-- ownership transfer dependencies -->
+
+  <script src="../../js/spawner.component.js"></script>
+  <script src="../../js/toggle-physics.component.js"></script>
+  <script src="../../js/rotator.component.js"></script>
+  <script src="../../js/input.component.js"></script>
+  <script src="../../js/avatar-body.component.js"></script>
+
+  <!-- ​​<script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script> 
+  <script src="https://unpkg.com/aframe-log-component/dist/aframe-log-component.min.js"></script> 
+  <script src="https://unpkg.com/aframe-event-set-component@^4.1.1/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
+  <script  src="https://rawgit.com/fernandojsg/aframe-input-mapping-component/master/dist/aframe-input-mapping-component.min.js"></script>  -->
+  <script src="../../js/set-name.component.js"></script>
+  <script src="../../js/randomize-spec-color.component.js"></script>
+
+
+  <!-- Camera output -->
+  <script src="../../js/camera-output.js"></script>
+
+
+
+  <script>
+    function spawnentity() {
+      let syncs = document.getElementsByClassName("syncup");
+      let vxr_obj_template = document.getElementsByClassName("vxr-obj-template");
+      let constraint_avatar_template = document.getElementsByClassName("constraint-avatar-template");
+      for (let i = 0; i < syncs.length; ++i) {
+        syncs[i].setAttribute("networked", "template:#vxr-template;attachTemplateToLocal:true")
+      }
+      for (let i = 0; i < constraint_avatar_template.length; ++i) {
+        constraint_avatar_template[i].setAttribute("networked", "template:#constraint-avatar-template;attachTemplateToLocal:true")
+      }
+    }
+  </script>
+
+
+
+
+  <!-- <link rel="stylesheet" type="text/css" href="../../../super/process/assets/examples.css"> -->
+</head>
+
+<body>
+  <a-scene physics="debug: true; gravity: -5; iterations: 75" networked-scene="
+      room: audio;
+      adapter: easyrtc;
+      audio: false;
+      debug: true;
+      onConnect: spawnentity;
+    ">
+    <a-assets>
+      <!-- <a-asset-item id="htc" src="../../../super/process/assets/vr_controller_vive.obj"></a-asset-item> -->
+      <a-asset-item id="maskn95" src="../../Models/gltf/MaskN95.gltf"></a-asset-item>
+      <a-asset-item id="table" src="../../Models/gltf/Table.gltf"></a-asset-item>
+      <a-asset-item id="alcoholbottle" src="../../super/process/assets/AlcoholBottle.gltf"></a-asset-item>
+      <a-asset-item id="bed" src="../../Models/gltf/Bed.gltf"></a-asset-item>
+      <a-asset-item id="patient" src="../../Models/gltf/Patient.gltf"></a-asset-item>
+      <a-asset-item id="tray" src="../../super/process/assets/Tray.gltf"></a-asset-item>
+      <a-asset-item id="StudentAvatar" src="../../super/process/assets/StudentNurseAvatar.gltf"></a-asset-item>
+      <a-asset-item id="SpectatorAvatar" src="../../super/process/assets/avatars/SpectatorAvatar.gltf"></a-asset-item>
+      <a-asset-item id="TeacherAvatar" src="../../super/process/assets/TeacherAvatar.gltf"></a-asset-item>
+      <a-asset-item id="right-hand" src="../../super/process/assets/rightHandHigh.glb"></a-asset-item>
+      <a-asset-item id="left-hand" src="../../super/process/assets/leftHandHigh.glb"></a-asset-item>
+      <a-asset-item id="dripbag" src="../../Models/gltf/DripBag.gltf"></a-asset-item>
+      <a-asset-item id="rubber" src="../../Models/gltf/Rubber.gltf"></a-asset-item>
+      <a-asset-item id="medicaltape" src="../../Models/gltf/MedicalTape.gltf"></a-asset-item>
+      <a-asset-item id="gauze" src="../../Models/gltf/Gauze.gltf"></a-asset-item>
+      <a-asset-item id="allistweezers" src="../../Models/gltf/Scisors.gltf"></a-asset-item>
+      <a-asset-item id="cottonswab" src="../../Models/gltf/CottonSwabs01.gltf"></a-asset-item>
+      <a-asset-item id="salinebottle" src="../../Models/gltf/ClorhexidinaBottle.gltf"></a-asset-item>
+      <a-asset-item id="alcoholgel" src="../../Models/gltf/AlcoholGel.gltf"></a-asset-item>
+      <a-asset-item id="heparinseal" src="../../Models/gltf/HeparinSeal.gltf"></a-asset-item>
+      <a-asset-item id="intracath" src="../../Models/gltf/Intracath.gltf"></a-asset-item>
+
+      <!-- Avatars -->
+      <a-asset-item id="StudentAvatarHead" src="../../super/process/assets/avatars/StudentAvatarHead.gltf">
+      </a-asset-item>
+      <a-asset-item id="StudentAvatarBody" src="../../super/process/assets/avatars/StudentAvatarBody.gltf">
+      </a-asset-item>
+      <a-asset-item id="TeacherAvatarHead" src="../../super/process/assets/avatars/TeacherAvatarHead.gltf">
+      </a-asset-item>
+      <a-asset-item id="TeacherAvatarBody" src="../../super/process/assets/avatars/TeacherAvatarBody.gltf">
+      </a-asset-item>
+      <a-asset-item id="student" src="../../super/process/assets/StudentNurseAvatar.gltf"></a-asset-item>
+      <a-asset-item id="teacher" src="../../super/process/assets/TeacherAvatar.gltf"></a-asset-item>
+
+      <!-- Theater -->
+      <a-asset-item id="scenebase" src="../../Models/gltf/Scene_Base.gltf"></a-asset-item>
+      <a-asset-item id="scenemedixlablogo" src="../../Models/gltf/Scene_Medixlablogo.gltf"></a-asset-item>
+      <a-asset-item id="sceneieproeslogo" src="../../Models/gltf/Scene_Ieproesblogo.gltf"></a-asset-item>
+      <a-asset-item id="scenevertexlogo" src="../../Models/gltf/Scene_VertexLogo.gltf"></a-asset-item>
+      <a-asset-item id="scenebase02" src="../../Models/gltf/Base_Auditorium.gltf"></a-asset-item>
+      <a-asset-item id="stairsprincipal" src="../../Models/gltf/Stairs_Auditorium.gltf"></a-asset-item>
+      <a-asset-item id="ministairs" src="../../Models/gltf/Mini_Stairs_Auditorium.gltf"></a-asset-item>
+      <a-asset-item id="roofauditorium" src="../../Models/gltf/Roof_Auditorium.gltf"></a-asset-item>
+      <a-asset-item id="columns" src="../../Models/gltf/Columns_Auditorium.gltf"></a-asset-item>
+      <a-asset-item id="frontwall" src="../../Models/gltf/FrontWall_Auditorium.gltf"></a-asset-item>
+      <!-- <a-video id="canalizacion" src="/videos/Test.mp4" autoplay loop="true"></a-video> -->
+      <canvas width="512" height="512" id="cam2"></canvas>
+      <a-asset-item id="base" src="../../Models/gltf/Base.gltf"></a-asset-item>
+
+      <a-mixin id="touch" physics-collider phase-shift collision-filter="collisionForces: false"
+        static-body="shape: sphere; sphereRadius: 0.02" super-hands="colliderEvent: collisions;
+                          colliderEventProperty: els;
+                          colliderEndEvent: collisions;
+                          colliderEndEventProperty: clearedEls;">
+      </a-mixin>
+      <a-mixin id="point" raycaster="showLine: true; objects: .vxr-interact" collision-filter="collisionForces: false"
+        static-body="shape: sphere; sphereRadius: 0.001" super-hands="colliderEvent: raycaster-intersection;
+                    colliderEventProperty: els;
+                    colliderEndEvent:raycaster-intersection-cleared;
+                    colliderEndEventProperty: clearedEls;"></a-mixin>
+
+      <!-- Player -->
+      <template id="player-template">
+        <a-entity networked-audio-source="positional:false"></a-entity>
+      </template>
+      ​
+      <!-- Nurse Avatar -->
+      <template id="student-avatar-template">
+        <a-entity class="NurseHeadAvatar" gltf-model="#StudentAvatar" position="0 2 0"
+          networked-audio-source="positional:false"></a-entity>
+      </template>
+
+      <!-- Teacher Avatar -->
+      <template id="teacher-avatar-template">
+        <a-entity class="SpectatorAvatar" gltf-model="#TeacherAvatar" scale="0.8 0.8 0.8"
+          networked-audio-source="positional:false">
+        </a-entity>
+      </template>
+
+      <!-- Spectator Avatar -->
+      <template id="spectator-avatar-template">
+        <a-entity class="SpectatorAvatar" gltf-model="#SpectatorAvatar" networked-audio-source="positional:false">
+        </a-entity>
+      </template>
+
+      <!-- Teacher Avatar Constraints -->
+      <template id="constraint-teacher-avatar-template">
+        <a-entity>
+          <a-entity class="name-up-teacher"></a-entity>
+          <a-entity class="TeacherAvatar" id="teacher" gltf-model="#teacher"></a-entity>
+          <!-- <a-entity class="TeacherAvatarBody" id="teacherbody" gltf-model="#TeacherAvatarBody" ="angularDamping: 1"></a-entity>
+          <a-entity class="TeacherAvatarHead" id="teacherhead"  gltf-model="#TeacherAvatarHead" static-body avatar-body="body:#teacherbody; id:#teacherbody"></a-entity> -->
+        </a-entity>
+      </template>
+
+      <!-- Student Avatar Constraints -->
+      <template id="constraint-student-avatar-template">
+        <a-entity>
+          <a-entity class="name-up-student"></a-entity>
+          <a-entity class="StudentAvatar" id="student" gltf-model="#student"></a-entity>
+          <!-- <a-entity class="StudentAvatarBody" id="studentbody" gltf-model="#StudentAvatarBody" ="angularDamping: 1"></a-entity>
+          <a-entity class="StudentAvatarHead" id="studenthead"  gltf-model="#StudentAvatarHead" static-body avatar-body="body:#studentbody; id:#studentbody"></a-entity> -->
+        </a-entity>
+      </template>
+
+      <!-- Spectator Avatar Constraints -->
+      <template id="constraint-spectator-avatar-template">
+        <a-entity>
+          <a-entity class="name-up"></a-entity>
+          <a-entity class="SpectatorAvatar" id="spectator" gltf-model="#SpectatorAvatar"></a-entity>
+          <!-- <a-entity class="SpectatorAvatarBody" id="spectatorbody" gltf-model="#SpectatorAvatarBody" ="angularDamping: 1"></a-entity>
+          <a-entity class="SpectatorAvatarHead" id="spectatorhead"  gltf-model="#SpectatorAvatarHead" static-body avatar-body="body:#spectatorbody; id:#spectatorbody"></a-entity>        </a-entity> -->
+      </template>
+
+      <!-- Right Hand -->
+      <template id="right-hand-template">
+        <a-entity>
+          <!-- <a-entity obj-model="obj: #htc"></a-entity> -->
+          <a-entity scale="0.8 0.8 0.8" gltf-model="#right-hand"></a-entity>
+        </a-entity>
+      </template>
+
+      <!-- Left Hand -->
+      <template id="left-hand-template">
+        <a-entity>
+          <!-- <a-entity obj-model="obj: #htc"></a-entity> -->
+          <a-entity scale="0.8 0.8 0.8" gltf-model="#left-hand"></a-entity>
+        </a-entity>
+      </template>
+
+      <!-- vxr-template -->
+      <template id="vxr-template">
+        <a-entity>
+          <a-box class="vxr-obj-a" rotator="speed:-2" width="0.35" height="0.35" depth="0.35" rotation="0 0 0"
+            color="green" position="0 0 0"></a-box>
+          <a-sphere class="vxr-obj-b" toggle-physics color="#f00" dynamic-body draggable grabbable radius="0.18"
+            position="0.5 0 0"></a-sphere>
+          <a-box class="vxr-obj-c" rotator="speed:2" color="blue" width="0.35" height="0.35" depth="0.35"
+            position="1 0 0"></a-box>
+        </a-entity>
+      </template>
+
+      <!-- vxr-gltf -->
+      <template id="vxr-obj-template">
+        <a-entity>
+          <a-entity class="vxr-obj-maskn95 vxr-interact" gltf-model="#maskn95" draggable grabbable toggle-physics
+            position="-0.53715 0.44217 -0.36489"></a-entity>
+        </a-entity>
+      </template>
+
+
+      <template id="vxr-obj-template-2">
+        <a-entity>
+          <a-entity class="vxr-obj-alcoholbottle vxr-interact" gltf-model="#alcoholbottle" draggable grabbable
+            toggle-physics position="-0.50221 0.40887 -0.06246"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-3">
+        <a-entity>
+          <a-entity class="vxr-obj-tray vxr-interact" gltf-model="#tray" draggable grabbable toggle-physics
+            position="0.035 0.5 -0.2"></a-entity>
+        </a-entity>
+      </template>
+      <template id="vxr-obj-template-rubber">
+        <a-entity>
+          <a-entity class="vxr-obj-rubber vxr-interact" gltf-model="#rubber" draggable grabbable toggle-physics
+            position="-0.34 0.45 -0.2"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-dripbag">
+        <a-entity>
+          <a-entity class="vxr-obj-dripbag vxr-interact" gltf-model="#dripbag" draggable grabbable toggle-physics
+            position="-1.61 0.5 -0.30"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-medicaltape">
+        <a-entity>
+          <a-entity class="vxr-obj-medicaltape vxr-interact" gltf-model="#medicaltape" draggable grabbable
+            toggle-physics position="-1.19 0.5 -0.355"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-gauze">
+        <a-entity>
+          <a-entity class="vxr-obj-gauze vxr-interact" gltf-model="#gauze" draggable grabbable toggle-physics
+            position="-1.81 0.6 -0.28"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-allistweezers">
+        <a-entity>
+          <a-entity class="vxr-obj-allistweezers vxr-interact" gltf-model="#allistweezers" draggable grabbable
+            toggle-physics position="-1.3 0.5 -0.03"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-cottonswab01">
+        <a-entity>
+          <a-entity class="vxr-obj-cottonswab01 vxr-interact" gltf-model="#cottonswab" draggable grabbable
+            toggle-physics position="-1.01 0.5 -0.251"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-cottonswab02">
+        <a-entity>
+          <a-entity class="vxr-obj-cottonswab02 vxr-interact" gltf-model="#cottonswab" draggable grabbable
+            toggle-physics position="-1.08 0.7 -0.194"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-cottonswab03">
+        <a-entity>
+          <a-entity class="vxr-obj-cottonswab03 vxr-interact" gltf-model="#cottonswab" draggable grabbable
+            toggle-physics position="-1.08 0.7 -0.285"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-salinebottle">
+        <a-entity>
+          <a-entity class="vxr-obj-salinebottle vxr-interact" gltf-model="#salinebottle" draggable grabbable
+            toggle-physics position="-1.43 0.7 -0.026"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-alcoholgel">
+        <a-entity>
+          <a-entity class="vxr-obj-alcoholgel vxr-interact" gltf-model="#alcoholgel" draggable grabbable toggle-physics
+            position="-1.65 0.5 -0.026"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-heparinseal">
+        <a-entity>
+          <a-entity class="vxr-obj-heparinseal vxr-interact" gltf-model="#heparinseal" draggable grabbable
+            toggle-physics position="-1.57 0.50 -0.135"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="vxr-obj-template-intracath">
+        <a-entity>
+          <a-entity class="vxr-obj-intracath vxr-interact" gltf-model="#intracath" draggable grabbable toggle-physics
+            position="-1.11 0.45 -0.107"></a-entity>
+        </a-entity>
+      </template>
+
+      <template id="audience">
+        <a-entity id="spectator" position="-2.9119 2.18025 -2.79791" assign-seat>
+
+          <a-entity id="constraint-spectator" look-controls zoom="100" fov="120">
+            <a-entity class="name-up" name-up></a-entity>
+          </a-entity>
+        </a-entity>
+
+      </template>
+
+    </a-assets>
+    <a-entity
+      environment="lightPosition: 1 5 -2; groundColor: #00275b; grid: dots; gridColor: #168dab; preset: starry; skyType: atmosphere; skyColor: #030022; playArea: 0.5; ground: flat; groundColor2: #009dff"
+      visible="">
+      <a-entity class="environment" position="0 50 0"></a-entity>
+      <a-entity class="environment" position="1 5 -2" light="intensity: 0.1" visible=""></a-entity>
+      <a-entity rotation="-90 0 0" class="environmentGround environment" visible="" scale="1 1 3" false; receive:
+        false"></a-entity>
+      <a-entity class="environmentDressing environment" visible="false"></a-entity>
+      <a-sky radius="200" theta-length="110" class="environment" material="shader: skyshader; sunPosition: 0 0 0"
+        visible="" geometry=""></a-sky>
+      <a-entity id="stars"></a-entity>
+      <a-entity class="environment" position="0 50 0"></a-entity>
+      <a-entity class="environment" position="1 5 -2" light="intensity: 0.1" visible=""></a-entity>
+      <a-entity rotation="-90 0 0" class="environmentGround environment" visible="" scale="1 1 3"></a-entity>
+      <a-entity class="environmentDressing environment" visible="false"></a-entity>
+      <a-sky radius="200" theta-length="110" class="environment" material="shader: skyshader; sunPosition: 0 0 0"
+        visible="" geometry=""></a-sky>
+      <a-entity id="stars" visible=""></a-entity>
+    </a-entity>
+    <!-- <a-entity light="type: point; intensity: 0.75; distance: 50; decay: 2"
+            position="0 10 10">
+      </a-entity> -->
+    <a-light id="directionallight" light="intensity: 0.2" type="directional" position="0 0 0" rotation="-90 0 0"
+      intensity="0.400" target="#directionaltarget">
+      <a-entity id="directionaltarget" position="0 0 -1"></a-entity>
+    </a-light>
+
+    <!-- Static Objects -->
+    <a-entity class="gltf" gltf-model="#table" position="-1.5 1 -0.363" rotation="0 180 0"></a-entity>
+    <a-entity class="gltf" gltf-model="#table" position="-0.13 1 -0.363" rotation="0 180 0"></a-entity>
+    <a-box opacity="0" static-body rotation="" position="-0.10703 1.85724 -0.36937" color="red" depth="0.6" height="0.1"
+      width="1.1"></a-box>
+    <a-box opacity="0" static-body rotation="" position="-1.48 1.85724 -0.36937" color="red" depth="0.6" height="0.1"
+      width="1.1"></a-box>
+    <a-entity class="gltf" gltf-model="#bed" position="1.2 1 -0.67251" rotation="0 0 0"></a-entity>
+    <a-entity id="patient01" gltf-model="../../Models/gltf/Patient.gltf" scale="" position="1.20136 0.99273 -0.71331"
+      material="color: brown" rotation="" velocity=""></a-entity>
+
+
+
+    <a-entity class="gltf" gltf-model="../../Models/gltf/Bed.gltf" position="1.2 1 -0.67251" rotation="" velocity="">
+    </a-entity>
+
+    <!-- Theater Objects -->
+    <a-entity id="frontwall01" gltf-model="#frontwall" ; scale="1 1 1" position="0 0 -1.12569" material="color: brown"
+      rotation="0 0 0"></a-entity>
+    <a-entity id="roofauditorium01" gltf-model="#roofauditorium" ; scale="1 1 1" position="0 1.35517 0"
+      material="color: brown" rotation="0 0 0"></a-entity>
+    <a-entity id="scenebase01" gltf-model="#scenebase" ; scale="1 1 1" position="0 -0.82 0" material="color: brown"
+      rotation="0 0 0"></a-entity>
+    <a-entity id="scenebase02" gltf-model="#scenebase02" ; scale="1 1 1" position="0 0 0" material="color: brown"
+      rotation="0 0 0"></a-entity>
+    <a-entity id="scenemedixlablogo01" gltf-model="#scenemedixlablogo" ; scale="2 2 2"
+      position="0.04036 11.22773 -2.14313" material="color: brown" rotation="0 0 0"></a-entity>
+    <a-entity id="sceneieproeslogo01" gltf-model="#sceneieproeslogo" ; scale="3 3 3" position="-7.3502 9.07108 11.32697"
+      material="color: brown" rotation="0 151.70203541678805 0"></a-entity>
+    <a-entity id="scenevertexlogo01" gltf-model="#scenevertexlogo" ; scale="1 1 1" position="7.21432 9.20078 11.49686"
+      material="color: brown" rotation="0 -146.36321468175908 0"></a-entity>
+    <a-entity id="stairsprincipal01" gltf-model="#stairsprincipal" ; scale="1 1 1" position="0 0 0" rotation="0 0 0">
+    </a-entity>
+    <a-entity id="ministairs01" gltf-model="#ministairs" ; scale="1 1 1" position="0 0 0" rotation="0 0 0"></a-entity>
+    <a-entity id="lamps03" gltf-model="#lamps01" ; scale="1 1 1" position="0 16.9716 0" rotation="0 0 0"></a-entity>
+    <a-entity id="columns01" gltf-model="#columns" ; scale="1 1 1" position="0 0 0" material="color: brown"
+      rotation="0 0 0"></a-entity>
+    <a-entity id="base" gltf-model="../../Models/gltf/Base.gltf" scale="" position="1.1014 1 -2.07876"
+      material="color: brown" rotation=""></a-entity>
+
+    <!-- <a-entity camera="zoom: 0.8; aspect: 1; active: false;" camrender="cid: cam2" position="0 4.0 0" rotation="-95 -180 180"></a-entity>   
+      <a-plane rotation="0 0 0" scale="8.250 5.479 4" material="src:#cam2" position="0 7.32941 -1.90179" canvas-updater></a-plane> -->
+
+    <!-- Theater Lights -->
+    <a-entity background="color: #92f2ff"></a-entity>
+
+    <a-entity light="intensity: 0.7; type: ambient" position="-2.02939 0.34443 -0.50913" rotation="0 180 0"
+      id="ambientlight"></a-entity>
+    <a-entity light="color: #ffffff; penumbra: 0.81; type: point; intensity: 0.2" id="light01"
+      position="-1.11051 9.99225 4.03024" rotation="-90 0 0"></a-entity>
+
+    <!-- <a-entity class="constraint-avatar-template" position="0 3 2"></a-entity> -->
+    <a-entity id="player" networked="template:#player-template;attachTemplateToLocal:true;" position="0 0.8 -2"
+      rotation="0 180 0" movement-controls="speed:0.02">
+      <a-entity camera position="0 1.6 0.2" look-controls zoom="100" fov="120"
+        networked="template:#constraint-student-avatar-template;attachTemplateToLocal:false;">
+      </a-entity>
+      <!-- /VIVE CONTROLLERS -->
+      <a-entity id="lhand" mixin="touch" input-controls="hand: left" networked="template:#left-hand-template">
+      </a-entity>
+      <a-entity id="rhand" mixin="touch" input-controls="hand: right" networked="template:#right-hand-template">
+      </a-entity>
+    </a-entity>
+
+    <!-- ground collider keeps objets from falling -->
+    <a-box static-body width="100" height="0.01" depth="100" visible="false"></a-box>
+
+  </a-scene>
+  <script>
+    // Define custom schema for syncing avatar color, set by random-color
+    NAF.schemas.add({
+      template: '#student-avatar-template',
+      components: [
+        'position',
+        'rotation'
+      ]
+    });
+    NAF.schemas.add({
+      template: '#teacher-avatar-template',
+      components: [
+        'position',
+        'rotation'
+      ]
+    });
+    NAF.schemas.add({
+      template: '#spectator-avatar-template',
+      components: [
+        'position',
+        'rotation'
+      ]
+    });
+    NAF.schemas.add({
+      template: '#constraint-teacher-avatar-template',
+      components: [
+        'position',
+        'rotation'
+      ]
+    });
+    NAF.schemas.add({
+      template: '#constraint-student-avatar-template',
+      components: [
+        'position',
+        'rotation'
+      ]
+    });
+    NAF.schemas.add({
+      template: '#player-template',
+      components: [
+        'position',
+        'rotation',
+      ]
+    });
+    NAF.schemas.add({
+      template: '#right-hand-template',
+      components: [
+        'position',
+        'rotation'
+      ]
+    });
+    NAF.schemas.add({
+      template: '#left-hand-template',
+      components: [
+        'position',
+        'rotation'
+      ]
+    });
+    NAF.schemas.add({
+      template: '#constraint-spectator-avatar-template',
+      components: [
+        'position',
+        'rotation',
+        {
+          selector: '.name-up',
+          component: 'name-up'
+        },
+        {
+          selector: '.SpectatorAvatar',
+          component: 'randomize-spec-color'
+        }
+      ]
+    });
+
+    //Called by Networked-Aframe when connected to server
+    function onConnect() {
+      console.log("funca");
+    }
+  </script>
+  <script src="../../js/Feature-Schemas.js"></script>
+  <!-- <script src="../../js/vxr-full-house.js"></script> -->
+
+
+
+</body>
+
+</html>

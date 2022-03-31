@@ -56,11 +56,7 @@
   {
     "template": "vxr-obj-template-Bowl-Medic",
     "selector": ".vxr-obj-template-Bowl-Medic"
-  },
-  {
-    "template": "vxr-obj-template-Bowl-Medic2",
-    "selector": ".vxr-obj-Bowl-Medic2"
-  },
+  },  
   {
     "template": "vxr-obj-template-Bulb-Syringe",
     "selector": ".vxr-obj-Bulb-Syringe"
@@ -87,6 +83,10 @@
   },
   {
     "template": "vxr-obj-template-Clamp",
+    "selector": ".vxr-obj-Clamp"
+  },
+  {
+    "template": "vxr-obj-template-Clamp_emisive",
     "selector": ".vxr-obj-Clamp"
   },
   {
@@ -178,6 +178,10 @@
     "selector": ".vxr-obj-CleftGauze"
   }, 
   {
+    "template": "vxr-obj-template-CleftGauze-emisive",
+    "selector": ".vxr-obj-CleftGauze"
+  }, 
+  {
     "template": "vxr-obj-template-Medical_Laundry-v2",
     "selector": ".vxr-obj-Medical_Laundry-v2"
   }, 
@@ -198,12 +202,40 @@
     "selector": ".vxr-obj-Baby_Burrito"
   },
   {
-    "template": "vxr-obj-template-e-Manta_Abierta",
+    "template": "vxr-obj-template-Manta_Abierta",
     "selector": ".vxr-obj-e-Manta_Abierta"
   },
   {
     "template": "vxr-obj-template-Pañal_Cerrado",
     "selector": ".vxr-obj-Pañal_Cerrado"
+  },
+  {
+    "template": "vxr-obj-template-Gloves_Steril",
+    "selector": ".vxr-obj-Gloves_Steril"
+  },
+  {
+    "template": "vxr-obj-template-PlantaresLeft_Alpha",
+    "selector": ".vxr-obj-PlantaresLeft_Alpha"
+  },
+  {
+    "template": "vxr-obj-template-PlantaresRight_Alpha",
+    "selector": ".vxr-obj-PlantaresRight_Alpha"
+  },
+  {
+    "template": "vxr-obj-template-Baby_Sheet_Static00",
+    "selector": ".vxr-obj-Baby_Sheet_Static00"
+  },
+  {
+    "template": "vxr-obj-template-Baby_Sheet_Animations",
+    "selector": ".vxr-obj-Baby_Sheet_Animations"
+  },
+  {
+    "template": "vxr-obj-template-measuring-tape",
+    "selector": ".vxr-obj-measuring-tape"
+  },
+  {
+    "template": "vxr-obj-template-measuring-tape-static",
+    "selector": ".vxr-obj-measuring-tape-static"
   }
   
  ]
