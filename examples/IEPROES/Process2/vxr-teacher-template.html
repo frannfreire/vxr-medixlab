@@ -568,7 +568,7 @@ if (window.event.relatedTarget.id == "lhand") {
       <a-asset-item id="Table_005" src="/assets/utils/Table_005.gltf"></a-asset-item>
       <a-asset-item id="Medixlab_Pen" src="/assets/utils/Medixlab_Pen.gltf"></a-asset-item>
       <a-asset-item id="Medixlab_Clipboard" src="/assets/utils/Medixlab_Clipboard.gltf"></a-asset-item>
-
+      <a-asset-item id="nav" src="../../Models/navMesh.glb"></a-asset-item>
 
       
       <canvas id="cam2"></canvas>
@@ -1300,7 +1300,9 @@ if (window.event.relatedTarget.id == "lhand") {
     <a-entity light="color: #ffffff; penumbra: 0.81; type: point; intensity: 0.2" id="light01"
       position="-1.11051 9.99225 4.03024" rotation="-90 0 0"></a-entity>
 
-    <a-entity id="player" movement-controls networked="template:#player-template;attachTemplateToLocal:false;" position="-0.900 1 -2.470"
+    <a-entity id="player" 
+    movement-controls="speed:0.05;constrainToNavMesh: true"
+    networked="template:#player-template;attachTemplateToLocal:false;" position="-0.900 1 -2.470"
       rotation="0 180 0" >
       <a-entity id="camera" camera position="0 1 0.2" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
@@ -1312,7 +1314,21 @@ if (window.event.relatedTarget.id == "lhand") {
         networked="template:#right-hand-template">
       </a-entity>
     </a-entity>
-
+    
+    
+    <a-box id="boxFloor"
+    nav-mesh
+    scale="1 1 1"
+    static-body="sphereRadius: NaN"
+    opacity="1"
+    static-body
+    gltf-model="#nav"
+    rotation="0 -90 0"
+    position="0.14005 0.8 0.47531"
+    color="red" 
+    depth="0.6"
+    height="0.1"
+    width="1.1"></a-box>
     
 
     <a-sphere id="sphere_e-catheteranim" static-body="sphereRadius: NaN" scale="0.71168 0.71168 0.71168" static-body

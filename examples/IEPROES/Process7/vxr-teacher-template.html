@@ -811,7 +811,7 @@ function takeOffGloves(e) {
       <a-asset-item id="Medixlab_Pen" src="/assets/utils/Medixlab_Pen.gltf"></a-asset-item>
       <a-asset-item id="Medixlab_Clipboard" src="/assets/utils/Medixlab_Clipboard.gltf"></a-asset-item>
       <a-asset-item id="nasogastrictube_tapon" src="Assets/nasogastrictube_tapon.gltf"></a-asset-item>
-
+      <a-asset-item id="nav" src="../../Models/navMesh.glb"></a-asset-item>
 
 
       <a-video id="canalizacion" src="/videos/Test.mp4" autoplay loop="true"></a-video>
@@ -1740,9 +1740,7 @@ function takeOffGloves(e) {
     <a-box id="boxTable2" scale="0.5 0.5 1" static-body="sphereRadius: NaN" opacity="0" static-body rotation=""
     position="0.192 1.667 -2.169" color="red" depth="0.6" height="0.1" width="1.1"></a-box>
     
-    <a-box id="boxFloor" scale="4.14767 1 7.15846" static-body="sphereRadius: NaN" opacity="0" static-body rotation=""
-      position="0.36093 0.85321 -0.37707" color="red" depth="0.6" height="0.1" width="1.1"></a-box>
-
+  
 
     <!-- Theater Lights -->
     <a-entity background="color: #92f2ff"></a-entity>
@@ -1752,9 +1750,12 @@ function takeOffGloves(e) {
     <a-entity light="color: #ffffff; penumbra: 0.81; type: point; intensity: 0.2" id="light01"
       position="-1.11051 9.99225 4.03024" rotation="-90 0 0"></a-entity>
 
-    <a-entity id="player" movement-controls="speed:0.3" networked="template:#player-template;attachTemplateToLocal:false;" 
+    <a-entity id="player" 
+    movement-controls="speed:0.05;constrainToNavMesh: true"
+    networked="template:#player-template;attachTemplateToLocal:false;" 
     position="-0.796 1 -1.897"
-      rotation="0 180 0" >
+    rotation="0 180 0" >
+    <a-entity id="player-camera" position="0 0 0">
       <a-entity id="camera" camera position="0 1.7 0.2" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
       </a-entity>
@@ -1770,13 +1771,24 @@ function takeOffGloves(e) {
 
       </a-entity>
     </a-entity>
-
-
-
-
-
-
-    <a-entity id="genes01" gltf-model="#genes" scale="" position="0.14005 0.858 0.36121" material="color: brown"
+    </a-entity>
+    
+    <a-entity id="boxFloor"
+    nav-mesh
+    scale="1 1 1"
+    static-body="sphereRadius: NaN"
+    opacity="1"
+    static-body
+    gltf-model="#nav"
+    rotation="0 -90 0"
+    position="0.14005 1 0.36121" 
+    color="red" 
+    depth="0.6"
+    height="0.1"
+    width="1.1"></a-entity>
+    
+    <a-entity id="genes01" gltf-model="#genes" 
+    scale="" position="0.14005 0.858 0.36121" material="color: brown"
       rotation="0 -90.000 0" shadow="receive: false"></a-entity>
 
     <a-entity id="animationbed01" feature-animation="clip:BedAnimationUp;loop:once;repetitions:once;clamp:true" gltf-model="#animationbed" position="1.24734 0.87184 -1.18066" rotation="0 -90.000 0">

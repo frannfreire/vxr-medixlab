@@ -1218,12 +1218,16 @@ function playObj(id, clip) {
     <a-entity light="color: #ffffff; penumbra: 0.81; type: point; intensity: 0.2" id="light01"
       position="-1.11051 9.99225 4.03024" rotation="-90 0 0"></a-entity>
 
-    <a-entity id="player" networked="template:#player-template;attachTemplateToLocal:false;" position="0 0.8 -2"
-      rotation="0 180 0" movement-controls="speed:0.15">
-      <a-entity camera position="0 1.7 0.2" look-controls zoom="100" fov="120"
+    <a-entity id="player"
+    networked="template:#player-template;attachTemplateToLocal:false;" 
+    position="0 0.8 -2"
+    rotation="0 180 0" 
+    movement-controls="speed:0.05;constrainToNavMesh: true">
+    <a-entity id="player-camera" position="0 0 0">
+      <a-entity  camera position="0 1.7 0.2" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
       </a-entity>
-      <!-- /VIVE CONTROLLERS -->
+      
       <a-entity id="lhand" mixin="touch" vive-controls="hand: left;model:false" 
       hand-attach input-controls="hand: left"
         networked="template:#left-hand-template">
@@ -1232,7 +1236,24 @@ function playObj(id, clip) {
         networked="template:#right-hand-template">
       </a-entity>
     </a-entity>
-
+      <!-- /VIVE CONTROLLERS -->
+      
+    </a-entity>
+    
+    <a-box id="boxFloor"
+    nav-mesh
+    scale="5.5 1 11"
+    static-body="sphereRadius: NaN"
+    opacity="1"
+    static-body
+    rotation=""
+    position="-0.950 0.8 -2.803" 
+    color="red" 
+    depth="0.6"
+    height="0.1"
+    width="1.1"></a-box>
+    
+    
     <a-entity id="baby-cript" class="gltf"  gltf-model="#bed" position="-0.010 0.901 -1.986" rotation="0 180.000 0"
       scale="1 0.85 1"></a-entity>
 
@@ -1305,7 +1326,7 @@ function playObj(id, clip) {
       
       <a-sphere id="sphere-measure-tape"
       measure-tape="entity_id:e-measuring-tape"
-    visible="false"
+      visible="false"
       scale="0.5 0.5 0.5"
       opacity="0"
       position="-1.471 2.247 -0.262" 
@@ -1385,6 +1406,8 @@ function playObj(id, clip) {
   position="-0.041 1.816 -1.994"
   geometry="radius: 0.05"
   visible="false"> </a-sphere>
+  
+  
 
     <!-- <a-sphere id="sphere-foot-print-right" visible="true" scale="0.5 0.5 0.5"
     static-body opacity="1" position="-1.130 1.919 -0.403"   

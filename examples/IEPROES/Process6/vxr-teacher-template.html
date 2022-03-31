@@ -739,7 +739,7 @@
       <a-asset-item id="ClampHolder" src="../Process5/Assets/ClampHolder.gltf"></a-asset-item>
 
       <a-asset-item id="Table_005" src="../Process5/Assets/Table_005.gltf"></a-asset-item>
-
+      <a-asset-item id="nav" src="../../Models/navMesh.glb"></a-asset-item>
 
       <canvas id="cam2"></canvas>
 
@@ -1599,9 +1599,7 @@
       <a-box id="boxTable3" scale="0.55283 0.8 0.888" static-body="sphereRadius: NaN" opacity="0" static-body
       rotation="" position="0.31781 1.051 -1.828" color="red" depth="0.6" height="0.1" width="1.1"></a-box>
 
-    <a-box id="boxFloor" scale="4.14767 1 7.15846" static-body="sphereRadius: NaN" opacity="0" static-body rotation=""
-      position="0.36093 0.85321 -0.37707" color="red" depth="0.6" height="0.1" width="1.1"></a-box>
-
+ 
   
 
 
@@ -1616,8 +1614,9 @@
     <a-entity light="color: #ffffff; penumbra: 0.81; type: point; intensity: 0.2" id="light01"
       position="-1.11051 9.99225 4.03024" rotation="-90 0 0"></a-entity>
 
-      <a-entity id="player"  movement-controls="speed:0.3"
-      networked="template:#player-template;attachTemplateToLocal:false;" position="0 0.8 -1.3"
+      <a-entity id="player" movement-controls="speed:0.05;constrainToNavMesh: true"
+      networked="template:#player-template;attachTemplateToLocal:false;"
+      position="0 0.8 -1.3"
       rotation="0 180 0" >
       <a-entity camera position="0 1.7 0" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
@@ -1630,6 +1629,20 @@
         vive-controls="hand: right;model:false" networked="template:#right-hand-template">
       </a-entity>
     </a-entity>
+    
+    <a-box id="boxFloor"
+    nav-mesh
+    scale="1 1 1"
+    static-body="sphereRadius: NaN"
+    opacity="1"
+    static-body
+    gltf-model="#nav"
+    rotation="0 -90 0"
+    position="0.14005 0.8 0.55534"
+    color="red" 
+    depth="0.6"
+    height="0.1"
+    width="1.1"></a-box>
 
 
     <a-entity id="genes01" gltf-model="#genes" scale="" position="0.14005 0.858 0.55534" material="color: brown"

@@ -734,6 +734,7 @@
       <a-asset-item id="roofauditorium" src="/Models/gltf/Roof_Auditorium.gltf"></a-asset-item>
       <a-asset-item id="columns" src="/Models/gltf/Columns_Auditorium.gltf"></a-asset-item>
       <a-asset-item id="frontwall" src="/Models/gltf/FrontWall_Auditorium.gltf"></a-asset-item>
+      <a-asset-item id="nav" src="../../Models/navMesh.glb"></a-asset-item>
       <a-video id="canalizacion" src="/videos/Test.mp4" autoplay loop="true"></a-video>
       <a-video id="logopng" src="/Models/Images/Ieproes_Logo.png"></a-video>
 
@@ -1649,7 +1650,7 @@
       position="-1.11051 9.99225 4.03024" rotation="-90 0 0"></a-entity>
 
     <a-entity id="player" networked="template:#player-template;attachTemplateToLocal:false;" 
-    position="0 0.8 -2" movement-controls="speed:0.3"
+    position="-0.05 0.8 -0.800" movement-controls="speed:0.05;constrainToNavMesh: true"
       rotation="0 180 0" >
       <a-entity id="camera" camera rotation="0 180 0" position="0 1.0 0.2" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
@@ -1664,6 +1665,20 @@
         networked="template:#right-hand-template">
       </a-entity>
     </a-entity>
+    
+    <a-box id="boxFloor"
+    nav-mesh
+    scale="1 1 1"
+    static-body="sphereRadius: NaN"
+    opacity="1"
+    static-body
+    gltf-model="#nav"
+    rotation="0 -90 0"
+    position="0.14005 0.8 0.55534"
+    color="red" 
+    depth="0.6"
+    height="0.1"
+    width="1.1"></a-box>
 
 
     <a-entity id="genes01" gltf-model="#genes" scale="" position="0.14005 0.858 0.55534" material="color: brown"

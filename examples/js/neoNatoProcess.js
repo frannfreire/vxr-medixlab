@@ -57,7 +57,8 @@ let secondActOnce = true;
 function baby_scale(){
     if(secondAct && secondActOnce){
         let baby = document.getElementById("baby")
-        baby.removeAttribute("dynamic-body")
+        //baby.removeAttribute("dynamic-body")
+        baby.setAttribute("dynamic-body","mass:0.0")
         baby.setAttribute("position","-1.612 0.624 -0.049")
         baby.setAttribute("rotation","0 -90.000 0")     
         
@@ -117,9 +118,10 @@ AFRAME.registerComponent('measure-tape', {
         this.el.addEventListener('collide', function (e) {
             
             if (id_Data == e.detail.body.el.id) {    
-                document.getElementById("baby").setAttribute("dynamic-body","")
+                
                 document.getElementById("e-measuring-tape").setAttribute("dynamic-body","mass:0.0")
                 document.getElementById("e-measuring-tape").setAttribute("visible","false")
+                document.getElementById("e-measuring-tape").remove()
                 document.getElementById("sphere-measure-tape").remove()
                 document.getElementById("e-measuring-tape-static").setAttribute("animation-mixer","loop:once;clampWhenFinished:true;")
                 document.getElementById("e-measuring-tape-static").setAttribute("visible","true")
@@ -128,7 +130,7 @@ AFRAME.registerComponent('measure-tape', {
                 let delayInMilliseconds=5000;
                 
                 setTimeout(function () {
-                    
+                    document.getElementById("baby").setAttribute("dynamic-body","mass:0.1")
                     document.getElementById("e-measuring-tape-static").setAttribute("visible","false")
                     
                 },delayInMilliseconds)

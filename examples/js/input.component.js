@@ -17,7 +17,7 @@ AFRAME.registerComponent('input-controls', {
     this.onButtonChanged = this.onButtonChanged.bind(this);
     this.onButtonDown = function (evt) {
       self.onButtonEvent(evt.detail.id, 'down');
-      let position = document.getElementById("player").getAttribute("position");
+      let position = document.getElementById("player-camera").getAttribute("position");
       console.log("pos: ", position)
       // console.log("path: ", evt.buttondown)
       if (self.data.hand == "left" && available) {
@@ -48,12 +48,12 @@ AFRAME.registerComponent('input-controls', {
     };
     this.onButtonUp = function (evt) {
       self.onButtonEvent(evt.detail.id, 'up');
-      let position = document.getElementById("player").getAttribute("position");
+      let position = document.getElementById("player-camera").getAttribute("position");
       if (self.data.hand == "left" && available) {
-        position.y -= 0.1
+        //position.y -= 0.1
         leftArm=false;
       } else if (self.data.hand == "right" && available) {
-        position.y += 0.1
+        //position.y += 0.1
         rightArm=false;
       }
     };
