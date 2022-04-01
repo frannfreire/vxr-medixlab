@@ -51,7 +51,7 @@ backToLobby.addEventListener("raycaster-intersected-cleared", function () {
 });
 
 backToLobby.addEventListener("click", function () {
-  window.location = "/super/process/lobby.html";
+  window.location = "/super/process/lobby.html";  
 });
 
 reloadScene.addEventListener("click", function () {
