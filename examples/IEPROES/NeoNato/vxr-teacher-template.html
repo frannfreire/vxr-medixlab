@@ -246,7 +246,7 @@
 </head>
 
 <body>
-  <a-scene physics="debug: true; gravity: -5; iterations: 75" networked-scene="
+  <a-scene physics="debug: false; gravity: -5; iterations: 75" networked-scene="
       room: audio;
       adapter: easyrtc;
       audio: true;
@@ -792,6 +792,7 @@
       <template id="vxr-obj-template-Cordon_Tijera">
         <a-entity>
           <a-entity id="e-Cordon_Tijera" class="vxr-obj-Cordon_Tijera vxr-interact" gltf-model="#Cordon_Tijera"
+          ondragstart="genericSetMass(this)"
             draggable="" grabbable position="0.801 0.329 -0.791" visible="true">
           </a-entity>
         </a-entity>

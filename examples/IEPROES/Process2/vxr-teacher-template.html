@@ -466,7 +466,7 @@
 </head>
 
 <body>
-  <a-scene set-scene-id physics="debug: true; gravity: -4; iterations: 75">
+  <a-scene set-scene-id physics="debug: false; gravity: -4; iterations: 75">
     <a-assets>
       <!-- <a-asset-item id="htc" src="../assets/vr_controller_vive.obj"></a-asset-item> -->
 
@@ -1286,7 +1286,7 @@
 
     <a-entity id="player" movement-controls="speed:0.05;constrainToNavMesh: true"
       networked="template:#player-template;attachTemplateToLocal:false;" 
-      position="-0.277 1.4 -1.015" rotation="0 180 0">
+      position="0 0.8 -2" rotation="0 180 0">
       <a-entity id="player-camera" position="0 0 0">
       <a-entity id="camera" camera position="0 1 0.2" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
@@ -1310,7 +1310,7 @@
     static-body
     gltf-model="#nav"
     rotation="0 0 0"
-    position="0.14005 1.4 0.47531"
+    position="0.14005 0.8 0.47531"
     color="red"
     depth="0.6"
     height="0.1"
@@ -1347,7 +1347,8 @@
 
     </a-entity>
 
-    <a-box id="boxFloor" scale="4.14767 1 7.15846" static-body="sphereRadius: NaN" opacity="0" static-body rotation=""
+    <a-box id="boxFloor" scale="4.14767 1 7.15846" static-body="sphereRadius: NaN" 
+    opacity="0" static-body rotation=""
       position="0.36093 0.85321 -0.37707" color="red" depth="0.6" height="0.1" width="1.1"></a-box>
 
     <a-entity id="arrow01" gltf-model="#arrow" visible="false" position="1.219 2.000 -0.835" rotation="0 0 0"

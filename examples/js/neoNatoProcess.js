@@ -15,7 +15,7 @@ AFRAME.registerComponent('set-mass-at-collide', {
             console.log("collide with something")
             //trigger animation
             if (id_Data == e.detail.body.el.id) {    
-                elem.setAttribute("dynamic-body", "")
+                elem.setAttribute("dynamic-body", "mass:0.0")
                 document.getElementById("sphere_blanket_close").setAttribute("opacity","1")
             }
         });
