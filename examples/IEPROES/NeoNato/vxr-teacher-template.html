@@ -203,10 +203,10 @@
 
       console.log("event", window.event)
       if (window.event.relatedTarget.id == "lhand") {
-        let hand = document.getElementById("leftHand").getObject3D("mesh").getObjectByName("handL2320").material.color = new THREE.Color(0xe38666);
+        let hand = document.getElementById("leftHand").getObject3D("mesh").getObjectByName("handL2320").material.color = new THREE.Color(0xffffff);
         console.log("hand: ", hand)
       } else if (window.event.relatedTarget.id == "rhand") {
-        let hand = document.getElementById("rightHand").getObject3D("mesh").getObjectByName("handR2320").material.color = new THREE.Color(0xe38666);
+        let hand = document.getElementById("rightHand").getObject3D("mesh").getObjectByName("handR2320").material.color = new THREE.Color(0xffffff);
         console.log("right hand: ", hand)
       }
     }
@@ -214,10 +214,10 @@
     function takeOffGloves(e) {
 
       if (window.event.relatedTarget.id == "lhand") {
-        let hand = document.getElementById("leftHand").getObject3D("mesh").getObjectByName("handL2320").material.color = new THREE.Color(0xffffff);
+        let hand = document.getElementById("leftHand").getObject3D("mesh").getObjectByName("handL2320").material.color = new THREE.Color(0xe38666);
         console.log("hand: ", hand)
       } else if (window.event.relatedTarget.id == "rhand") {
-        let hand = document.getElementById("rightHand").getObject3D("mesh").getObjectByName("handR2320").material.color = new THREE.Color(0xffffff);
+        let hand = document.getElementById("rightHand").getObject3D("mesh").getObjectByName("handR2320").material.color = new THREE.Color(0xe38666);
         console.log("right hand: ", hand)
       }
 
@@ -475,14 +475,14 @@
       <!-- Right Hand -->
       <template id="right-hand-template">
         <a-entity>
-          <a-entity id="rightHand" scale="0.8 0.8 0.8" gltf-model="#right-hand"></a-entity>
+          <a-entity id="rightHand" tint-gloves scale="0.8 0.8 0.8" gltf-model="#right-hand"></a-entity>
         </a-entity>
       </template>
 
       <!-- Left Hand -->
       <template id="left-hand-template">
         <a-entity>
-          <a-entity id="leftHand" scale="0.8 0.8 0.8" gltf-model="#left-hand"></a-entity>
+          <a-entity id="leftHand" tint-gloves scale="0.8 0.8 0.8" gltf-model="#left-hand"></a-entity>
         </a-entity>
       </template>
 
@@ -1206,7 +1206,7 @@
     <a-entity id="player"
     networked="template:#player-template;attachTemplateToLocal:false;" 
     position="0 0.8 -2"
-    rotation="0 180 0" 
+    rotation="0 0 0" 
     movement-controls="speed:0.05;constrainToNavMesh: true">
     <a-entity id="player-camera" position="0 0 0">
       <a-entity  camera position="0 1.7 0.2" look-controls zoom="100" fov="120"

@@ -140,6 +140,29 @@ AFRAME.registerComponent('measure-tape', {
     }
 })
 
+
+
+AFRAME.registerComponent('tint-gloves', {
+    schema: {
+        entity_id: { type: 'string', default: '0' },
+        action_obj: { type: 'string', default: "" },
+    },
+
+    init: function () {
+        let el = this.el;
+        let data = this.data
+        let id_Data = this.data.entity_id;
+        this.el.addEventListener('model-loaded', e => {
+        
+        
+            document.getElementById("leftHand").getObject3D("mesh").getObjectByName("handL2320").material.color = new THREE.Color(0xe38666);
+            document.getElementById("rightHand").getObject3D("mesh").getObjectByName("handR2320").material.color = new THREE.Color(0xe38666);
+            
+          
+        }) 
+    }
+})
+
 AFRAME.registerComponent('tint-baby-feet', {
     schema: {
         entity_id: { type: 'string', default: '0' },
