@@ -27,7 +27,7 @@ AFRAME.registerComponent('input-controls', {
           available = false
           return
         }
-        position.y -= 0.1
+        //position.y -= 0.1
         // document.getElementById("lhand").removeAttribute("mixin")
         // document.getElementById("rhand").removeAttribute("mixin")
         // document.getElementById("lhand").setAttribute("mixin","point")
@@ -39,7 +39,7 @@ AFRAME.registerComponent('input-controls', {
           available = false
           return
         }
-        position.y += 0.1
+        //position.y += 0.1
         // document.getElementById("lhand").removeAttribute("mixin")
         // document.getElementById("rhand").removeAttribute("mixin")
         // document.getElementById("lhand").setAttribute("mixin","touch")

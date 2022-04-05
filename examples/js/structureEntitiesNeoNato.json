@@ -236,6 +236,12 @@
   {
     "template": "vxr-obj-template-measuring-tape-static",
     "selector": ".vxr-obj-measuring-tape-static"
+  },
+  {
+    "template": "vxr-obj-template-Syringe_Tuberculine_Animation",
+    "selector": ".vxr-obj-Syringe_Tuberculine_Animation"
   }
+  
+  
   
  ]

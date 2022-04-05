@@ -153,10 +153,15 @@ AFRAME.registerComponent('tint-gloves', {
         let data = this.data
         let id_Data = this.data.entity_id;
         this.el.addEventListener('model-loaded', e => {
+            let delayInMilliseconds=5000;
+                
+                setTimeout(function () {
+                    document.getElementById("leftHand").getObject3D("mesh").getObjectByName("handL2320").material.color = new THREE.Color(0xe38666);
+                    document.getElementById("rightHand").getObject3D("mesh").getObjectByName("handR2320").material.color = new THREE.Color(0xe38666)
+                    
+                },delayInMilliseconds)
         
-        
-            document.getElementById("leftHand").getObject3D("mesh").getObjectByName("handL2320").material.color = new THREE.Color(0xe38666);
-            document.getElementById("rightHand").getObject3D("mesh").getObjectByName("handR2320").material.color = new THREE.Color(0xe38666);
+            ;
             
           
         }) 
@@ -297,6 +302,18 @@ AFRAME.registerComponent('baby-syringe', {
                 
                 document.getElementById("sphere_Thermometer").setAttribute("visible","true")
                 document.getElementById("sphere_Thermometer").setAttribute("static-body","")
+                document.getElementById(el.id).setAttribute("visible","false")
+                let syringe_animation = document.getElementById("e-Syringe_Tuberculine_Animation")
+                
+                syringe_animation.setAttribute("visible","true")
+                syringe_animation.setAttribute("animation-mixer","loop:once;repetitions:0;clampWhenFinished:true")
+                
+                let delayInMilliseconds =3000
+                setTimeout(function () {
+                    
+                    syringe_animation.setAttribute("visible","false")
+                    
+                },delayInMilliseconds)
                 
             }   
         });
@@ -319,6 +336,8 @@ AFRAME.registerComponent('baby-thermometer', {
             if (id_Data == e.detail.body.el.id) {    
                 document.getElementById("baby_to_Idle_position").setAttribute("visible","true")
                 document.getElementById("baby_to_Idle_position").setAttribute("static-body","")
+                document.getElementById(el.id).setAttribute("visible","false")
+                document.getElementById(el.id).remove()
                 
             }
         });
@@ -338,14 +357,21 @@ function baby_idle(){
             
             document.getElementById("baby_to_Idle_position").removeAttribute("visible","false")
             document.getElementById("baby_to_Idle_position").removeAttribute("static-body")
-            document.getElementById("baby_to_Idle_position").setAttribute("opacity","0")
-            document.getElementById("sphere_Thermometer").setAttribute("visible","false")
-            document.getElementById("sphere_Thermometer").setAttribute("opacity","0")
-            document.getElementById("sphere_Thermometer").removeAttribute("static-body")
-            document.getElementById("sphere_syringe").setAttribute("visible","false")
-            document.getElementById("sphere_syringe").setAttribute("opacity","0")
+            document.getElementById("sphere_daiper").setAttribute("static-body","")
+            document.getElementById("sphere_daiper").setAttribute("visible","true")
+        
+            //document.getElementById("sphere_Thermometer").removeAttribute("static-body")
             document.getElementById("sphere_syringe").removeAttribute("static-body")
-            document.getElementById("baby").setAttribute("dynamic-body","")
+            
+            //document.getElementById("sphere_Thermometer").setAttribute("visible","false")
+            //document.getElementById("sphere_Thermometer").setAttribute("opacity","0")
+            //document.getElementById("sphere_syringe").setAttribute("visible","false")
+            //document.getElementById("sphere_syringe").setAttribute("opacity","0")
+            
+            document.getElementById("baby_to_Idle_position").setAttribute("opacity","0")
+            
+            
+            
             document.getElementById("e-CleftGauze_static").setAttribute("visible","true")
             document.getElementById("e-clamp_static").setAttribute("visible","true")
             
@@ -382,8 +408,7 @@ function baby_finalle(){
         baby.removeAttribute("dynamic-body")
         baby.setAttribute("position","-0.189 0.250 -1.802")
         baby.setAttribute("rotation","0 90 0")        
-        document.getElementById("sphere_daiper").setAttribute("static-body","")
-        document.getElementById("sphere_daiper").setAttribute("visible","true")
+        
         
     }
 }
@@ -409,6 +434,16 @@ AFRAME.registerComponent('baby-daiper', {
                 sphere.setAttribute("visible","false")
                 document.getElementById("sphere_final_blanket").setAttribute("static-body","")
                 document.getElementById("sphere_final_blanket").setAttribute("visible","true")
+                
+                let delayInMilliseconds = 3000; //1 second
+                
+                setTimeout(function () {
+                    document.getElementById("baby").setAttribute("dynamic-body","0.1")
+                    document.getElementById("e-Pañal_Cerrado").setAttribute("visible","false")
+                    document.getElementById("e-Baby_Diaper_StaticClose").setAttribute("visible","true")
+                    document.getElementById("sphere_daiper").remove()
+                    
+                },delayInMilliseconds)
                 
             }
         });

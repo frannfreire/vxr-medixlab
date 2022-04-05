@@ -241,18 +241,12 @@
     }
   </script>
 
-
+<script src="../../js/set_scene_id.js"></script>
   <!-- <link rel="stylesheet" type="text/css" href="../../super/process/assets/examples.css"> -->
 </head>
 
 <body>
-  <a-scene physics="debug: false; gravity: -5; iterations: 75" networked-scene="
-      room: audio;
-      adapter: easyrtc;
-      audio: true;
-      debug: true;
-      onConnect: spawnentity;
-    ">
+  <a-scene physics="debug: true; gravity: -5; iterations: 75" set-scene-id  >
     <a-assets>
       <!-- <a-asset-item id="htc" src="../../../super/process/assets/vr_controller_vive.obj"></a-asset-item> -->
       <a-asset-item id="table" src="../../Models/gltf/Table.gltf"></a-asset-item>
@@ -297,6 +291,7 @@
       <a-asset-item id="Baby_Diaper_Animations" src="Models/Baby_Diaper_Animations.gltf"></a-asset-item>
       <a-asset-item id="MeasuringTape_Static00" src="Models/MeasuringTape_Static00.gltf"></a-asset-item>
       <a-asset-item id="MeasuringTape_Animation" src="Models/MeasuringTape_Animation.gltf"></a-asset-item>
+      <a-asset-item id="Syringe_Tuberculine_Animation" src="Models/Syringe_Tuberculine_Animation.gltf"></a-asset-item>
 
 
 
@@ -344,6 +339,7 @@
 
       <a-asset-item id="Pañal_Prueba" src="Models/Pañal_Abrido.gltf"></a-asset-item>
       <a-asset-item id="Pañal_Cerrado" src="Models/Pañal_Cerrado.gltf"></a-asset-item>
+      <a-asset-item id="Baby_Diaper_StaticClose" src="Models/Baby_Diaper_StaticClose.gltf"></a-asset-item>
 
 
       <a-asset-item id="MantaPrueba" src="Models/Manta.gltf"></a-asset-item>
@@ -781,6 +777,11 @@
               gltf-model="#CleftGauze_Close" draggable="" grabbable 
               position="-0.007 0.076 0.074" rotation="0 90 0"
               visible="false"></a-entity>
+              
+              <a-entity id="e-Baby_Diaper_StaticClose" class="vxr-obj-Baby_Diaper_StaticClose  vxr-interact"
+              gltf-model="#Baby_Diaper_StaticClose" draggable="" grabbable 
+              position="-0.023 0.007 0.189" rotation="0 0 0"
+              visible="false"></a-entity>
 
             <a-entity id="e-Manta_Cerrada" class="vxr-obj-CleftGauze_Close  vxr-interact"
               gltf-model="#Baby_Blanket_Static02" draggable="" grabbable position="-0.03829 -0.003 -0.01601"
@@ -869,6 +870,16 @@
           <a-entity id="e-Syringe_1CC_Skin" class="vxr-obj-Syringe_1CC_Skin vxr-interact" gltf-model="#Syringe_1CC_Skin"
             draggable="" grabbable position="0.23597 0.4098 -0.41517"
             rotation="0.000011081847617899339 180 0.00009149713672594367" dynamic-body visible="true">
+          </a-entity>
+
+        </a-entity>
+      </template>
+      
+      <template id="vxr-obj-template-Syringe_Tuberculine_Animation">
+        <a-entity>
+          <a-entity id="e-Syringe_Tuberculine_Animation" class="vxr-obj-Syringe_Tuberculine_Animation vxr-interact" gltf-model="#Syringe_Tuberculine_Animation"
+            position="0.798 0.410 -0.735"
+            rotation="64.359 90.000 81.000" visible="false">
           </a-entity>
 
         </a-entity>
@@ -1040,8 +1051,8 @@
       <template id="vxr-obj-template-Pañal_Cerrado">
         <a-entity>
           <a-entity id="e-Pañal_Cerrado" class="vxr-obj-Pañal_Cerrado  vxr-interact"
-            gltf-model="#Baby_Diaper_Animations" visible="false" draggable="" rotation="0 90 0" scale="1 1 1"
-            position="0.002 0.256 -1.782  " visible="true">
+            gltf-model="#Baby_Diaper_Animations" visible="false" draggable="" rotation="0 0 0" scale="1 1 1"
+            position="0.789 0.256 -0.682  " visible="true">
           </a-entity>
         </a-entity>
       </template>
@@ -1206,7 +1217,7 @@
 
     <a-entity id="player"
     networked="template:#player-template;attachTemplateToLocal:false;" 
-    position="0 0.8 -2"
+    position="0 1 -2"
     rotation="0 0 0" 
     movement-controls="speed:0.05;constrainToNavMesh: true">
     <a-entity id="player-camera" position="0 0 0">
@@ -1234,7 +1245,7 @@
     static-body
     gltf-model="#nav"
     rotation="0 0 0"
-    position="0 0 0" 
+    position="0 1 0" 
     color="red" 
     depth="0.6"
     height="0.1"
@@ -1334,12 +1345,12 @@
 
     </a-sphere>
 
-    <a-sphere id="sphere_syringe" scale="0.5 0.5 0.5" position="0.814 1.795 -0.937" geometry="radius: 0.05"
+    <a-sphere id="sphere_syringe" scale="0.5 0.5 0.5" position="0.843 1.818 -0.937" geometry="radius: 0.05"
       visible="false" baby-syringe="entity_id:e-Syringe_1CC_Skin">
     </a-sphere>
 
     <a-sphere id="baby_to_Idle_position" scale="0.5 0.5 0.5" position="0.856 1.835 -1.012" geometry="radius: 0.05"
-      ondragend="baby_idle()" visible="false">
+      ondragend="baby_idle()" visible="true">
 
     </a-sphere>
     
@@ -1355,12 +1366,10 @@
   <a-sphere
   id="sphere_daiper"
   scale="0.5 0.5 0.5" 
-  static-body="sphereRadius: NaN" 
-  static-body
   trigger-animation="entity_id:e-clamp;obj_entity:2"
   opacity="1" 
   baby-daiper="entity_id:pañal"
-  position="-0.041 1.816 -1.994"
+  position="0.797  1.816 -0.914"
   geometry="radius: 0.05"
   visible="false"> </a-sphere>
 
