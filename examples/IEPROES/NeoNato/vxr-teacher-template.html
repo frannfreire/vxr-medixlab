@@ -403,6 +403,7 @@
       <a-asset-item id="columns" src="/Models/gltf/Columns_Auditorium.gltf"></a-asset-item>
       <a-asset-item id="frontwall" src="/Models/gltf/FrontWall_Auditorium.gltf"></a-asset-item>
       <a-video id="logopng" src="/Models/Images/Ieproes_Logo.png"></a-video> -->
+      <a-asset-item id="nav" src="../../Models/navMesh_08.glb"></a-asset-item>
 
       <!-- <canvas id="cam2"></canvas> -->
 
@@ -1238,13 +1239,13 @@
     
     <a-box id="boxFloor"
     nav-mesh
-    scale="5.5 1 11"
+    scale="1 1 1"
     static-body="sphereRadius: NaN"
     opacity="1"
     static-body
-    rotation=""
-    position="-0.950 1 -2.803" 
-    visible="false"
+    gltf-model="#nav"
+    rotation="0 0 0"
+    position="0 0 0" 
     color="red" 
     depth="0.6"
     height="0.1"
