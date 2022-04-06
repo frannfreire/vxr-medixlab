@@ -246,7 +246,7 @@
 </head>
 
 <body>
-  <a-scene physics="debug: true; gravity: -5; iterations: 75" set-scene-id  >
+  <a-scene physics="debug: false; gravity: -5; iterations: 75" set-scene-id  >
     <a-assets>
       <!-- <a-asset-item id="htc" src="../../../super/process/assets/vr_controller_vive.obj"></a-asset-item> -->
       <a-asset-item id="table" src="../../Models/gltf/Table.gltf"></a-asset-item>
@@ -1249,7 +1249,8 @@
     color="red" 
     depth="0.6"
     height="0.1"
-    width="1.1"></a-box>
+    width="1.1"
+    visible="false"></a-box>
     
     
     <a-entity id="baby-cript" class="gltf"  gltf-model="#bed" position="-0.010 0.901 -1.986" rotation="0 180.000 0"
