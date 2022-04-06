@@ -6,19 +6,54 @@ setTimeout(function () {
   localStorage.setItem("token", keycloak.token);
   localStorage.setItem("userID", keycloak.tokenParsed.sub);
 
+  let initSessionOnReloadPage = new Date()
+  let initSessionOnReloadPageDate = initSessionOnReloadPage.toISOString().replace('Z', '')
+  localStorage.setItem("initSessionOnReloadPageDate", initSessionOnReloadPageDate);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "http://localhost:8000/session", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function(e) {
+    if (this.status == 200) {
+      console.log('response', this.response); // JSON response  
+    }
+  };
+  xhr.send(
+    JSON.stringify({
+      id: localStorage.getItem("userID"),
+      user_id: localStorage.getItem("token"),
+      duration: 10.5,
+      init_session: localStorage.getItem("initSessionOnReloadPageDate"),
+      finish_session: localStorage.getItem("finishSessionDate"),
+    })
+  );
+
   console.log('The token in localStorage is:', localStorage.getItem("token"));
   console.log('The userID in localStorage is:', localStorage.getItem("userID"));
 
+  let procedimientos = document.createElement("a-text");
+  procedimientos.setAttribute("position", "-0.5 2.4 -2.98");
+  procedimientos.setAttribute("width", "2.8");
+  procedimientos.setAttribute("height", "2.8");
+  procedimientos.setAttribute("text", "value: Procedimientos;");
+  scene2.appendChild(procedimientos);
+
+  let welcome = document.createElement("a-text");
+  welcome.setAttribute("position", "-0.7 2.9 -3");
+  welcome.setAttribute("value", "¡Bienvenido!");
+  scene2.appendChild(welcome);
+
   let username = document.createElement("a-text");
-  username.setAttribute("position", "-1.4 2.8 -3");
-  username.setAttribute("value", `Bienvenido, ${keycloak.tokenParsed.name}`);
+  username.setAttribute("position", "-0.9 2.7 -3");
+  username.setAttribute("value", `${keycloak.tokenParsed.name}`);
   scene2.appendChild(username);
 
-  let logoutButton = document.createElement("a-plane");
+  let logoutButton = document.createElement("a-gui-flex-container");
   logoutButton.setAttribute("position", "1.9 2.8 -2.99");
   logoutButton.setAttribute("height", "0.2");
-  logoutButton.setAttribute("width", "0.5");
-  logoutButton.setAttribute("material", "color: #072B73");
+  logoutButton.setAttribute("width", "0.7");
+  logoutButton.setAttribute("panel-rounded", "0.1")
+  logoutButton.setAttribute("material", "color: #2156CC; opacity: 0.25");
   scene2.appendChild(logoutButton);
 
   let logoutText = document.createElement("a-text");
@@ -63,15 +98,6 @@ setTimeout(function () {
     panel8.parentNode.removeChild(panel8);
     panel9.parentNode.removeChild(panel9);
 
-    process1.parentNode.removeChild(process1);
-    process2.parentNode.removeChild(process2);
-    process3.parentNode.removeChild(process3);
-    process4.parentNode.removeChild(process4);
-    process5.parentNode.removeChild(process5);
-    process6.parentNode.removeChild(process6);
-    process7.parentNode.removeChild(process7);
-    process8.parentNode.removeChild(process8);
-
     bloqueo1.parentNode.removeChild(bloqueo1);
     bloqueo2.parentNode.removeChild(bloqueo2);
     bloqueo3.parentNode.removeChild(bloqueo3);
@@ -94,25 +120,12 @@ setTimeout(function () {
     panel7.parentNode.removeChild(panel7);
     panel8.parentNode.removeChild(panel8);
     panel9.parentNode.removeChild(panel9);
-
-    process2.parentNode.removeChild(process2);
-    process3.parentNode.removeChild(process3);
-    process4.parentNode.removeChild(process4);
-    process5.parentNode.removeChild(process5);
-    process6.parentNode.removeChild(process6);
-    process7.parentNode.removeChild(process7);
-    process8.parentNode.removeChild(process8);
   }
 
   if (keycloak.tokenParsed.semestre === "3") {
     panel4.parentNode.removeChild(panel4);
     panel5.parentNode.removeChild(panel5);
     panel9.parentNode.removeChild(panel9);
-
-    process3.parentNode.removeChild(process3);
-    process4.parentNode.removeChild(process4);
-    process8.parentNode.removeChild(process8);
-
     bloqueo1.parentNode.removeChild(bloqueo1);
     bloqueo4.parentNode.removeChild(bloqueo4);
     bloqueo5.parentNode.removeChild(bloqueo5);
@@ -136,7 +149,6 @@ setTimeout(function () {
   if (keycloak.tokenParsed.semestre === "5") {
     panel9.parentNode.removeChild(panel9);
 
-    process8.parentNode.removeChild(process8);
     bloqueo1.parentNode.removeChild(bloqueo1);
     bloqueo2.parentNode.removeChild(bloqueo2);
     bloqueo3.parentNode.removeChild(bloqueo3);
@@ -148,7 +160,6 @@ setTimeout(function () {
   if (keycloak.tokenParsed.semestre === "6") {
     panel9.parentNode.removeChild(panel9);
 
-    process8.parentNode.removeChild(process8);
     bloqueo1.parentNode.removeChild(bloqueo1);
     bloqueo2.parentNode.removeChild(bloqueo2);
     bloqueo3.parentNode.removeChild(bloqueo3);
@@ -178,15 +189,18 @@ setTimeout(function () {
   }
 
   logoutButton.addEventListener("mouseenter", function () {
-    logoutButton.setAttribute("opacity", 0.5);
+    logoutButton.setAttribute("material", "opacity: 0.05;");
   });
 
   logoutButton.addEventListener("mouseleave", function () {
-    logoutButton.setAttribute("opacity", 1);
+    logoutButton.setAttribute("material", "opacity: 0.25;");
   });
 
   logoutButton.addEventListener("click", function () {
     keycloak.logout();
+    let finishSession = new Date()
+    let finishSessionDate = finishSession.toISOString().replace('Z', '')
+    localStorage.setItem("finishSessionDate", finishSessionDate);
   });
 
   console.log(
