@@ -23,8 +23,11 @@ function spawnEntities(structure) {
         entityEl.setAttribute("opacity", item.opacity)
         entityEl.setAttribute("id", item.id)
         entityEl.setAttribute("value", item.value)
+        entityEl.setAttribute("text", item.text)
         entityEl.setAttribute("src", item.src)
         entityEl.setAttribute("color", item.color)
+        entityEl.setAttribute("material", item.material)
+        entityEl.setAttribute("panel-rounded", item.panelrounded)
         scene.appendChild(entityEl);
 
         let panelID = entityEl.getAttribute("id")
@@ -32,7 +35,7 @@ function spawnEntities(structure) {
         entityEl.addEventListener("mouseenter", function () {
             entityEl.setAttribute("opacity", item.opacity - 0.5)
             if (panelID == 'panel1') {
-                entityEl.setAttribute("opacity", "0.6")
+                entityEl.setAttribute("opacity", "1.0")
             }
         });
 

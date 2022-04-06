@@ -1,5 +1,22 @@
 let Scene = document.querySelector("a-scene");
 
+let logoutButton = document.createElement("a-plane");
+logoutButton.setAttribute("position", "2.20 2.8 1");
+logoutButton.setAttribute("height", "0.2");
+logoutButton.setAttribute("width", "0.5");
+logoutButton.setAttribute("rotation", "0 180 0");
+logoutButton.setAttribute("class", "objectsScene");
+logoutButton.setAttribute("material", "color: #0c96ea");
+Scene.appendChild(logoutButton);
+
+let logoutButtonText = document.createElement("a-text");
+logoutButtonText.setAttribute("position", "2.4 2.81 1");
+logoutButtonText.setAttribute("height", "1.5");
+logoutButtonText.setAttribute("width", "1.5");
+logoutButtonText.setAttribute("rotation", "0 180 0");
+logoutButtonText.setAttribute("text", "value: Cerrar sesión; font:SourceSansPro-SemiBold-msdf.json; negate:false");
+Scene.appendChild(logoutButtonText);
+
 let backToLobby = document.createElement("a-plane");
 backToLobby.setAttribute("position", "2.50 2.5 1");
 backToLobby.setAttribute("height", "0.2");
@@ -42,12 +59,27 @@ reloadScene.addEventListener("raycaster-intersected-cleared", function () {
   reloadScene.setAttribute("opacity", 1);
 });
 
+logoutButton.addEventListener("raycaster-intersected", function () {
+  logoutButton.setAttribute("opacity", 0.5);
+});
+
+logoutButton.addEventListener("raycaster-intersected-cleared", function () {
+  logoutButton.setAttribute("opacity", 1);
+});
+
 backToLobby.addEventListener("raycaster-intersected", function () {
   backToLobby.setAttribute("opacity", 0.5);
 });
 
 backToLobby.addEventListener("raycaster-intersected-cleared", function () {
   backToLobby.setAttribute("opacity", 1);
+});
+
+logoutButton.addEventListener("click", function () {
+  keycloak.logout();
+  let finishSession = new Date()
+  let finishSessionDate = finishSession.toISOString().replace('Z', '')
+  localStorage.setItem("finishSessionDate", finishSessionDate);
 });
 
 backToLobby.addEventListener("click", function () {
