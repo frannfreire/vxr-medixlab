@@ -1650,8 +1650,9 @@
       position="-1.11051 9.99225 4.03024" rotation="-90 0 0"></a-entity>
 
     <a-entity id="player" networked="template:#player-template;attachTemplateToLocal:false;" 
-    position="-0.05 0.8 -0.800" movement-controls="speed:0.05;constrainToNavMesh: true"
+    position="-0.05 0 -0.800" movement-controls="speed:0.05;constrainToNavMesh: true"
       rotation="0 180 0" >
+      <a-entity id="player-camera" position="0 0 0">
       <a-entity id="camera" camera rotation="0 180 0" position="0 1.0 0.2" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
       </a-entity>
@@ -1665,6 +1666,7 @@
         networked="template:#right-hand-template">
       </a-entity>
     </a-entity>
+  </a-entity>
     
     <a-box id="boxFloor"
     nav-mesh
@@ -1673,12 +1675,13 @@
     opacity="1"
     static-body
     gltf-model="#nav"
-    rotation="0 0 0"
-    position="0.14005 0.8 0.55534"
+    rotation="0 1 0"
+    position="0.14005 0 0.55534"
     color="red" 
     depth="0.6"
     height="0.1"
-    width="1.1"></a-box>
+    width="1.1"
+    visible="false"></a-box>
 
 
     <a-entity id="genes01" gltf-model="#genes" scale="" position="0.14005 0.858 0.55534" material="color: brown"
