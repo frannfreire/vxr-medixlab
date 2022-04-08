@@ -11,6 +11,9 @@
   <script>
     let url = "../../../js/structureEntitiesNeoNato.json"
   </script>
+  
+  <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
+  <script src="../../js/keycloak-logic.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
   <script src="/easyrtc/easyrtc.js"></script>
@@ -19,7 +22,7 @@
     src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
   <script src="/js/spawn-in-circle.component.js"></script>
   <script src="//cdn.8thwall.com/web/aframe/aframe-extras-6.1.1.min.js"></script>
-
+  <script src="../../js/userButtons.js"></script>
 
 
   <!-- Super hands -->
@@ -907,6 +910,13 @@
     <a-box id="tableBox3" static-body="sphereRadius: NaN" class="boxTable3" opacity="0" static-body rotation="0 90 0"
       position="0.87605 1.669 -1.02947" color="red" depth="0.6" height="0.1" width="1.1" material=""
       geometry="width: 0.8"></a-box>
+      
+      <a-entity 
+      id="tst"
+      user-buttons 
+      position="-1.836 2.236 -0.503"
+      rotation="0 90 0">
+    </a-entity>
 
     <!-- <a-box id="TorundaBowl" class="boxTable2" opacity="0" static-body position="0.30215 1.87809 -0.51316" depth="0.1"
       height="0.1" width="0.1" material="" geometry="depth: 0.1; width: 0.1"></a-box> -->

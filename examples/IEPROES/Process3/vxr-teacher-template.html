@@ -51,6 +51,7 @@
   <!-- <script src="../../js/hand-attach.js"></script> -->
   <script src="../../js/attach-intracath.js"></script>
   <script src="../../js/attach-to-position.js"></script>
+  <script src="../../js/userButtons.js"></script>
   <!-- <script src="../../js/set-name.component.js"></script> -->
 
   <script src="../../js/randomize-spec-color.component.js"></script>
@@ -1717,7 +1718,12 @@
       opacity="1" position="0.329 1.811 -0.567" ondragstart="fnApositoPackage(this)" attach-point-v2
       geometry="radius: 0.05"> </a-sphere>
       
-      
+      <a-entity 
+      id="tst"
+      user-buttons 
+      position="-1.836 2.236 -0.503"
+      rotation="0 90 0">
+      </a-entity>
       
       
       <a-sphere id="sphere-gloves-off" visible="true" scale="0.5 0.5 0.5" static-body="sphereRadius: NaN"
