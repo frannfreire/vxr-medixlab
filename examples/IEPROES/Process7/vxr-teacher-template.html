@@ -15,8 +15,8 @@
   
   <script src="../../js/userButtons.js"></script>
 
-  <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
-  <script src="../../js/keycloak-logic.js"></script>
+  <!-- <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
+  <script src="../../js/keycloak-logic.js"></script> -->
   <script>
     let url = "../../../js/structureEntitiesProcess7.json"
   </script>
@@ -1660,7 +1660,7 @@ function takeOffGloves(e) {
         <a-entity>
           <a-entity id="e-Medixlab_Clipboard" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
             class="vxr-obj-Medixlab_Clipboard vxr-interact" gltf-model="#Medixlab_Clipboard" draggable grabbable
-            static-body position="0.124 0.188 -1.904" scale="1 1 1">
+            static-body position="0.124 0.188 -1.904" scale="1 1 1" send-process>
           </a-entity>
         </a-entity>
       </template>
@@ -1947,6 +1947,59 @@ function takeOffGloves(e) {
   <!-- <script src="../../js/description.js"></script> -->
   <script src="../../js/panelQuestions.js"></script>
   <script src="../../js/buttonsScene.js"></script>
+  
+  <script>
+    
+
+    /* global AFRAME */
+    AFRAME.registerComponent('send-process', {
+      schema: {
+        template: { default: '' },
+        keyCode: { default: 32 }
+      },
+
+      init: function () {
+        let mySelf = this.el;
+        let process  = 7
+        let initProcess = new Date()
+        this.el.addEventListener('collide', function (e) {
+        console.log({mySelf})
+        console.log("e.detail: ",e.detail.body.el.id)
+          if (e.detail.body.el.id=="e-Medixlab_Pen") {
+            let endProcess = new Date()
+            let duration = endProcess-initProcess
+            let initProcessTime = initProcess.toISOString().replace('Z', '')
+            let endProcessTime = endProcess.toISOString().replace('Z', '')
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://api.medixlab.vxr.space/process", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            // xhr.send(JSON.stringify({
+            //   "id": "885aa17d-64c1-4509-899a-9a8bfe632a7c",
+            //   "user_id": "keycloak_token",
+            //   "duration": 10.50,
+            //   "init_session": "2022-10-11T11:00:00",
+            //   "finish_session": "2022-10-11T12:00:00"
+            // }));
+            
+            
+            xhr.send(JSON.stringify({
+              "process_number": process,
+              "duration": duration,
+              "process_state": 1,
+              "init_process": initProcessTime,
+              "end_process": endProcessTime,
+              "session_id": "4c4f605c-55d0-4fe4-af67-d5b184681167"
+            }));
+          }
+          console.log("status: ",xhr.status)
+      })
+      
+    }
+  });
+
+
+
+  </script>
 
   <script>
     // Define custom schema for syncing avatar color, set by random-color
