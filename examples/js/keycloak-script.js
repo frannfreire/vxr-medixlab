@@ -26,6 +26,8 @@ setTimeout(function () {
       finish_session: localStorage.getItem("finishSessionDate"),
     })
   );
+  var json_data = xhr.responseText; 
+  console.log("response", json_data)
 
   console.log('The token in localStorage is:', localStorage.getItem("token"));
   console.log('The userID in localStorage is:', localStorage.getItem("userID"));
