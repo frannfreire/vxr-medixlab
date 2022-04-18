@@ -67,7 +67,7 @@
                 <div class="${properties.kcInputWrapperClass!}">
                     <input type="text" id="email" class="${properties.kcInputClass!}" name="email"
                            value="${(register.formData.email!'')}" autocomplete="email"
-                           pattern=".+@ieproes\.edu\.sv|.+@ieproes2\.edu\.sv"
+                           pattern=".+@ieproes\.edu\.sv|.+@vertexstudio\.co"
                            aria-invalid="<#if messagesPerField.existsError('email')>true</#if>"
                     />
 
