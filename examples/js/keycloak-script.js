@@ -12,6 +12,7 @@ setTimeout(function () {
 
   console.log('The token in localStorage is:', localStorage.getItem("token"));
   console.log('The userID in localStorage is:', localStorage.getItem("userID"));
+  console.log('The sessionID in localStorage is:', localStorage.getItem("sessionID"));
 
   let username = document.createElement("a-text");
   username.setAttribute("position", "-0.823 2.687 -3");
@@ -183,11 +184,14 @@ setTimeout(function () {
     logoutButton.setAttribute("material", "opacity: 0.25;");
   });
 
+  const loggedInScene = true;
+
   logoutButton.addEventListener("click", function () {
     keycloak.logout();
     let finishSession = new Date()
     let finishSessionDate = finishSession.toISOString().replace('Z', '')
     localStorage.setItem("finishSessionDate", finishSessionDate);
+    loggedInScene = false;
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://api.medixlab.vxr.space/session", true);
@@ -206,6 +210,25 @@ setTimeout(function () {
       })
     );
   });
+
+  console.log("logged in scene bool:", loggedInScene)
+
+  if (loggedInScene == true) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://api.medixlab.vxr.space/session", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function(e) {
+      if (this.status == 200) {
+        console.log('response', this.response); // JSON response  
+        localStorage.setItem("sessionID", this.response.id);
+      }
+    };
+    xhr.send(
+      JSON.stringify({
+        sessionid: localStorage.getItem("sessionID"),
+      })
+    );
+  }
 
   console.log(
     "El nombre ha sido posicionado en la escena, el nombre es:",
