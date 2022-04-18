@@ -1,12 +1,4 @@
-[{
-        "position": "-0.05 1.55 -3",
-        "element": "a-plane",
-        "width": "4.8",
-        "height": "3",
-        "src": "#backgroundLobby",
-        "opacity": "1.0",
-        "id": "panel1"
-    },
+[
     {
         "position": "-2 1.45 -2.98",
         "element": "a-text",
