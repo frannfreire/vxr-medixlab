@@ -2000,6 +2000,33 @@ function takeOffGloves(e) {
 
 
   </script>
+  
+  <!-- <script>
+  setTimeout(function () {
+      var xhr = new XMLHttpRequest();
+      
+      xhr.open("POST", "http://localhost:8000/session", true);
+      //xhr.open("POST", "https://api.medixlab.vxr.space/session", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onload = function(e) {
+        if (this.status == 200) {
+          console.log('response', this.response); // JSON response  
+        }
+      };
+      xhr.send(
+        JSON.stringify({
+          user_id:  "123456789",
+          duration: 5050,
+          init_session: "2015-09-05T23:56:04" ,
+          finish_session:"2015-09-05T23:56:04" ,
+        })
+      );
+      
+      
+  },3000)
+  
+  
+  </script> -->
 
   <script>
     // Define custom schema for syncing avatar color, set by random-color
