@@ -10,23 +10,6 @@ setTimeout(function () {
   let initSessionOnReloadPageDate = initSessionOnReloadPage.toISOString().replace('Z', '')
   localStorage.setItem("initSessionOnReloadPageDate", initSessionOnReloadPageDate);
 
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "https://api.medixlab.vxr.space/session", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onload = function(e) {
-    if (this.status == 200) {
-      console.log('response', this.response); // JSON response  
-    }
-  };
-  xhr.send(
-    JSON.stringify({
-      user_id: localStorage.getItem("userID"),
-      duration: 10.5,
-      init_session: localStorage.getItem("initSessionOnReloadPageDate"),
-      finish_session: localStorage.getItem("finishSessionDate"),
-    })
-  );
-
   console.log('The token in localStorage is:', localStorage.getItem("token"));
   console.log('The userID in localStorage is:', localStorage.getItem("userID"));
 
@@ -205,6 +188,23 @@ setTimeout(function () {
     let finishSession = new Date()
     let finishSessionDate = finishSession.toISOString().replace('Z', '')
     localStorage.setItem("finishSessionDate", finishSessionDate);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://api.medixlab.vxr.space/session", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function(e) {
+      if (this.status == 200) {
+        console.log('response', this.response); // JSON response  
+      }
+    };
+    xhr.send(
+      JSON.stringify({
+        user_id: localStorage.getItem("userID"),
+        duration: 10.5,
+        init_session: localStorage.getItem("initSessionOnReloadPageDate"),
+        finish_session: localStorage.getItem("finishSessionDate"),
+      })
+    );
   });
 
   console.log(
