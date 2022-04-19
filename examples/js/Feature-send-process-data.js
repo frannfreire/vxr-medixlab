@@ -20,7 +20,7 @@ AFRAME.registerComponent('send-process', {
         document.getElementById("lhand").setAttribute("mixin","point")
         document.getElementById("rhand").setAttribute("mixin","point")
         let endProcess = new Date()
-        let duration = endProcess-initProcess
+        let duration = Math.abs(endProcess.getTime()-initProcess.getTime())/1000
         let initProcessTime = initProcess.toISOString().replace('Z', '')
         let endProcessTime = endProcess.toISOString().replace('Z', '')
         var xhr = new XMLHttpRequest();

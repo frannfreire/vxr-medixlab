@@ -45,7 +45,7 @@
   <script src="../../js/attach-to-position.js"></script>
   <script src="../../js/set-name.component.js"></script>
   <script src="../../js/init-animation.js"></script>
-  <script src="../../js/neoNatoProcessOld.js"></script>
+  <script src="../../js/neoNatoProcess.js"></script>
   <!-- <script src="../../js/set-position.js"></script> -->
   
   <script src="../../js/Feature-send-process-data.js"></script>
@@ -1058,11 +1058,12 @@
       </template>
 
 
+
       <template id="vxr-obj-template-Pañal_Cerrado">
         <a-entity>
           <a-entity id="e-Pañal_Cerrado" class="vxr-obj-Pañal_Cerrado  vxr-interact"
-            gltf-model="#Baby_Diaper_Animations" visible="false" draggable="" rotation="0 90 0" scale="1 1 1"
-            position="0.002 0.256 -1.782  " visible="true">
+            gltf-model="#Baby_Diaper_Animations" visible="false" draggable="" rotation="0 0 0" scale="1 1 1"
+            position="0.789 0.256 -0.682  " visible="true">
           </a-entity>
         </a-entity>
       </template>
@@ -1071,7 +1072,7 @@
         <a-entity>
           <a-entity id="e-Baby_Sheet_Animations" class="vxr-obj-Baby_Sheet_Animations  vxr-interact"
             gltf-model="#Baby_Sheet_Animations" visible="false" draggable="" rotation="0 90 0" scale="1 1 1"
-            position="-0.167 0.220 -1.768">
+            position="-0.191 0.254 -1.765">
           </a-entity>
         </a-entity>
       </template>
@@ -1111,8 +1112,8 @@
           </a-entity>
         </a-entity>
       </template>
-
-<template id="vxr-obj-template-aux-table">
+      
+      <template id="vxr-obj-template-aux-table">
         <a-entity>
           <a-entity id="e-aux-table" grabbable="maxGrabbers: NaN" visible="true" rotation="0 -90 0" grabbable
             class="vxr-obj-aux-table vxr-interact" gltf-model="#Table_004" draggable grabbable
@@ -1273,8 +1274,8 @@
       <!-- /VIVE CONTROLLERS -->
       
     </a-entity>
-
- <a-box id="boxFloor"
+    
+    <a-box id="boxFloor"
     nav-mesh
     scale="1 1 1"
     static-body="sphereRadius: NaN"
@@ -1293,7 +1294,7 @@
     <a-entity id="baby-cript" class="gltf"  gltf-model="#bed" position="-0.010 0.901 -1.986" rotation="0 180.000 0"
       scale="1 0.85 1"></a-entity>
 
-    <a-entity id="genes01" gltf-model="#genes" scale="1.2 1 1.2" position="-2.987 0.858 -2.053" material="color: brown"
+    <a-entity id="genes01" gltf-model="#genes" scale="1.2 1 1.2" position="-3.411 0.858 -2.769" material="color: brown"
       rotation="0 90.000 0" shadow="receive: false"></a-entity>
     <!-- 
     <a-sphere id="heparinsealCollider" static-body="sphereRadius: NaN" 
@@ -1343,7 +1344,8 @@
       opacity="1" position="0.544 1.580 -0.603" ondragstart="takeOffGloves()" geometry="radius: 0.04">
     </a-sphere>
 
- <a-box id="boxTable2" scale="0.5 0.5 1" static-body="sphereRadius: NaN" opacity="0" static-body rotation=""
+    <!-- second move -->
+    <a-box id="boxTable2" scale="0.5 0.5 1" static-body="sphereRadius: NaN" opacity="0" static-body rotation=""
     position="-0.938 1.667 -2.169" color="red" depth="0.6" height="0.1" width="1.1"></a-box>
     
     <a-box id="tableBox2" weight-baby="entity_id:baby;action_obj:sphere-foot-InkPad" class="boxTable2" opacity="0"
@@ -1401,16 +1403,14 @@
     visible="false"> 
     
   </a-sphere>
-
- <a-sphere
+  
+  <a-sphere
   id="sphere_daiper"
   scale="0.5 0.5 0.5" 
-  static-body="sphereRadius: NaN" 
-  static-body
   trigger-animation="entity_id:e-clamp;obj_entity:2"
   opacity="1" 
   baby-daiper="entity_id:pañal"
-  position="-0.041 1.816 -1.994"
+  position="0.797  1.816 -0.914"
   geometry="radius: 0.05"
   visible="false"> </a-sphere>
 
@@ -1431,7 +1431,7 @@
     geometry="radius: 0.04"> </a-sphere> -->
 
   </a-scene>
-
+  
   <script>
     NAF.schemas.add({
       template: '#student-avatar-template',
@@ -1527,8 +1527,6 @@
     }
   </script>
   <!-- <script src="../../js/Feature-SpawnTemplate.js"></script> -->
-
- <!-- <script src="../../js/Feature-SpawnTemplate.js"></script> -->
   <script src="../../js/panelQuestions.js"></script>
   <script src="../../js/buttonsScene.js"></script>
   <script>let process  = 8 </script>
