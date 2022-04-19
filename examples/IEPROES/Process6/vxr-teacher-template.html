@@ -8,12 +8,16 @@
   <!-- <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script> -->
   <!-- <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script> -->
   <!-- Networked aframe -->
+  <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
+  <script src="../../js/keycloak-logic.js"></script>
   <script>
     let url = "../../../js/structureEntitiesProcess5.json"
   </script>
   <script>
     let url2 = "../../../js/card.json"
   </script>
+  
+  <script src="../../js/userButtons.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
   <script src="/easyrtc/easyrtc.js"></script>
   <script src="/dist/networked-aframe.js"></script>
@@ -47,12 +51,12 @@
   <script src="../../js/Feature-EmisiveObject.js"></script>
   <script src="../../js/Feature-animation.component.js"></script>
 
-
+  <script>let process  = 6</script>
   <!-- <script src="../../js/hand-attach.js"></script> -->
   <script src="../../js/attach-intracath.js"></script>
   <script src="../../js/attach-to-position.js"></script>
   <script src="../../js/set-name.component.js"></script>
-
+  <script src="../../js/Feature-send-process-data.js"></script>
   <script src="../../js/randomize-spec-color.component.js"></script>
 
   <script>
@@ -585,6 +589,8 @@
       <!-- <a-asset-item id="patient" src="Assets/Patient_Bed.gltf"></a-asset-item> -->
       <a-asset-item id="patient" src="Assets/Patient_VesicalFemale_Anim3.gltf"></a-asset-item>
       <a-asset-item id="patientBlanket" src="Assets/Patient_VesicalFemale_Anim4.gltf"></a-asset-item>
+      <a-asset-item id="info" src="../../Models/Infographic.gltf"></a-asset-item>
+
 
 
       <!-- <a-asset-item id="patient" src="Female_Paciente.gltf"></a-asset-item> -->
@@ -726,7 +732,8 @@
       <a-asset-item id="Clamp_Allis" src="../Process5/Assets/Clamp_Allis_Mod.gltf"></a-asset-item>
       <a-asset-item id="Biombo_Anim" src="../Process5/Assets/Biombo_Anim.gltf"></a-asset-item>
       <a-asset-item id="CordonUmbilical_Static" src="../Process5/Assets/CordonUmbilical_Static.gltf"></a-asset-item>
-
+      <a-asset-item id="Medixlab_Pen" src="/assets/utils/Medixlab_Pen.gltf"></a-asset-item>
+      <a-asset-item id="Medixlab_Clipboard" src="/assets/utils/Medixlab_Clipboard.gltf"></a-asset-item>
 
 
 
@@ -1508,8 +1515,33 @@
         </a-entity>
       </a-entity>
     </template>
+    
+    <template id="vxr-obj-template-Medixlab_Pen">
+      <a-entity>
+        <a-entity id="e-Medixlab_Pen" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
+          class="vxr-obj-Medixlab_Pen vxr-interact" gltf-model="#Medixlab_Pen" draggable grabbable
+          dynamic-body position="-0.371 0.201 -1.904" scale="1 1 1">
+        </a-entity>
+      </a-entity>
+    </template>
+    
+    <template id="vxr-obj-template-Medixlab_Clipboard">
+      <a-entity>
+        <a-entity id="e-Medixlab_Clipboard" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
+          class="vxr-obj-Medixlab_Clipboard vxr-interact" gltf-model="#Medixlab_Clipboard" draggable grabbable
+          static-body position="-0.464 0.188 -1.904" scale="1 1 1" send-process>
+        </a-entity>
+      </a-entity>
+    </template>
 
-
+    <template id="vxr-obj-template-aux-table">
+      <a-entity>
+        <a-entity id="e-aux-table" grabbable="maxGrabbers: NaN" visible="true"  grabbable
+          class="vxr-obj-aux-table vxr-interact" gltf-model="#Table_004" draggable grabbable
+          position="-0.464 -0.59388 -1.904" scale="1 1.120 1" rotation="0 -90 0">
+        </a-entity>
+      </a-entity>
+    </template>
 
     </a-assets>
 
@@ -1568,6 +1600,9 @@
     <a-entity id="table_004" gltf-model="#Table_004" scale="" rotation="0 -90 0" position="2.49729 0.91326 -1.83804">
     </a-entity>
     <a-entity id="e-GooseLamp" gltf-model="#GooseLamp" scale="1.335 1.335 1.335" rotation="0 180 0" position="2.264 0.913 -0.767">
+    </a-entity>
+
+    <a-entity id="info01" class="gltf" gltf-model="#info" position="-0.130 2.369 0.988" rotation="0 180 0" scale="0.4 0.4 0.4">
     </a-entity>
 
     <!-- <a-entity id="Scube" gltf-model="#s_cube"  scale="" position=" 0 1 0" material="color: black"> -->
@@ -1642,8 +1677,15 @@
     color="red" 
     depth="0.6"
     height="0.1"
-    width="1.1"></a-box>
-
+    width="1.1"
+    visible="false"></a-box>
+    
+    <a-entity 
+    id="tst"
+    user-buttons 
+    position="-1.836 2.236 -0.503"
+    rotation="0 90 0">
+  </a-entity>
 
     <a-entity id="genes01" gltf-model="#genes" scale="" position="0.14005 0.858 0.55534" material="color: brown"
       rotation="0 -90 0" shadow="receive: false"></a-entity>
@@ -1728,6 +1770,10 @@
     <a-sphere id="sphere_e-catheteranim" static-body="sphereRadius: NaN" scale="0.71168 0.71168 0.71168" static-body ondragend="openPackage(this)"
       opacity="1" position="0.08172 1.83767 -0.37454" attach-point-v2 geometry="radius: 0.03"> </a-sphere>
 
+    
+      <a-box id="boxTable2" scale="0.5 0.5 1" static-body="sphereRadius: NaN" opacity="0" static-body rotation=""
+      position="-0.456 1.667 -2.169" color="red" depth="0.6" height="0.1" width="1.1"></a-box>
+      
     <a-sphere id="sphere_e-syringePackageAnim" scale="0.71168 0.712 0.712" static-body ondragend="openSyringe(this)"
       opacity="1" position="0.27662 1.84388 -0.51619" attach-point-v2 geometry="radius: 0.03"> </a-sphere>
  
@@ -1825,7 +1871,7 @@
   <script src="../../js/Feature-Schemas.js"></script>
   <script src="../../js/Feature-SpawnObjects.js"></script>
   <!-- <script src="../../js/vxr-full-house.js"></script> -->
-
+  
 
 
 </body>

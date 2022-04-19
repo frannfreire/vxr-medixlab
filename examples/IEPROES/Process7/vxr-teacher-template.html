@@ -12,6 +12,11 @@
   <!-- <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script> -->
   <!-- <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script> -->
   <!-- Networked aframe -->
+  
+  <script src="../../js/userButtons.js"></script>
+
+  <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
+  <script src="../../js/keycloak-logic.js"></script>
   <script>
     let url = "../../../js/structureEntitiesProcess7.json"
   </script>
@@ -52,6 +57,7 @@
   <script src="../../js/Feature-BonesPosition.component.js"></script>
   <script src="../../js/Feature-EmisiveObject.js"></script>
   <script src="../../js/libs.js"></script>
+  <script src="../../js/Feature-send-process-data.js"></script>
 
 
   <!-- <script src="../../js/hand-attach.js"></script> -->
@@ -636,6 +642,8 @@ function takeOffGloves(e) {
       <a-asset-item id="Sillon" src="../HospitalRoomAssets/sillon.gltf"></a-asset-item>
       <a-asset-item id="Sofa" src="../HospitalRoomAssets/sofa.gltf"></a-asset-item>
       <a-asset-item id="Table_004" src="../HospitalRoomAssets/Table_004.gltf"></a-asset-item>
+      <a-asset-item id="info" src="../../Models/Infographic.gltf"></a-asset-item>
+
 
 
       <!-- <a-asset-item id="patient" src="Female_Paciente.gltf"></a-asset-item> -->
@@ -1655,7 +1663,7 @@ function takeOffGloves(e) {
         <a-entity>
           <a-entity id="e-Medixlab_Clipboard" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
             class="vxr-obj-Medixlab_Clipboard vxr-interact" gltf-model="#Medixlab_Clipboard" draggable grabbable
-            static-body position="0.124 0.188 -1.904" scale="1 1 1">
+            static-body position="0.124 0.188 -1.904" scale="1 1 1" send-process>
           </a-entity>
         </a-entity>
       </template>
@@ -1721,7 +1729,8 @@ function takeOffGloves(e) {
     </a-entity>
     <a-entity id="table_004" gltf-model="#Table_004" scale="" rotation="0 -90 0" position="2.49729 0.91326 -1.83804">
     </a-entity>
-
+    <a-entity id="info01" class="gltf" gltf-model="#info" position="-0.130 2.369 0.988" rotation="0 180 0" scale="0.4 0.4 0.4">
+    </a-entity>
 
     <!-- <a-entity id="Scube" gltf-model="#s_cube"  scale="" position=" 0 1 0" material="color: black"> -->
     </a-entity>
@@ -1753,7 +1762,7 @@ function takeOffGloves(e) {
     <a-entity id="player" 
     movement-controls="speed:0.05;constrainToNavMesh: true"
     networked="template:#player-template;attachTemplateToLocal:false;" 
-    position="-0.796 1 -1.897"
+    position="-0.796 0.8 -1.897"
     rotation="0 180 0" >
     <a-entity id="player-camera" position="0 0 0">
       <a-entity id="camera" camera position="0 1.7 0.2" look-controls zoom="100" fov="120"
@@ -1785,7 +1794,15 @@ function takeOffGloves(e) {
     color="red" 
     depth="0.6"
     height="0.1"
-    width="1.1"></a-entity>
+    width="1.1"
+    visible="false"></a-entity>
+    
+    <a-entity 
+      id="tst"
+      user-buttons 
+      position="-1.836 2.236 -0.503"
+      rotation="0 90 0">
+    </a-entity>    
     
     <a-entity id="genes01" gltf-model="#genes" 
     scale="" position="0.14005 0.858 0.36121" material="color: brown"
@@ -1934,6 +1951,86 @@ function takeOffGloves(e) {
   <!-- <script src="../../js/description.js"></script> -->
   <script src="../../js/panelQuestions.js"></script>
   <script src="../../js/buttonsScene.js"></script>
+  <script>let process  = 7</script>
+  <script>
+    
+
+    /* global AFRAME */
+    AFRAME.registerComponent('send-process', {
+      schema: {
+        state: { type:'string',default: '1' },
+        keyCode: { default: 32 }
+      },
+
+      init: function () {
+        let mySelf = this.el;
+        
+        let initProcess = new Date()
+        this.el.addEventListener('collide', function (e) {
+        console.log({mySelf})
+        console.log("e.detail: ",e.detail.body.el.id)
+          if (e.detail.body.el.id=="e-Medixlab_Pen") {
+            let endProcess = new Date()
+            let duration = endProcess-initProcess
+            let initProcessTime = initProcess.toISOString().replace('Z', '')
+            let endProcessTime = endProcess.toISOString().replace('Z', '')
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://api.medixlab.vxr.space/process", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            // xhr.send(JSON.stringify({
+            //   "id": "885aa17d-64c1-4509-899a-9a8bfe632a7c",
+            //   "user_id": "keycloak_token",
+            //   "duration": 10.50,
+            //   "init_session": "2022-10-11T11:00:00",
+            //   "finish_session": "2022-10-11T12:00:00"
+            // }));
+            
+            
+            xhr.send(JSON.stringify({
+              "process_number": process,
+              "duration": duration,
+              "process_state": state,
+              "init_process": initProcessTime,
+              "end_process": endProcessTime,
+              "session_id": localStorage.getItem("sessionID")
+            }));
+          }
+          console.log("status: ",xhr.status)
+      })
+      
+    }
+  });
+
+
+
+  </script>
+  
+  <!-- <script>
+  setTimeout(function () {
+      var xhr = new XMLHttpRequest();
+      
+      xhr.open("POST", "http://localhost:8000/session", true);
+      //xhr.open("POST", "https://api.medixlab.vxr.space/session", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onload = function(e) {
+        if (this.status == 200) {
+          console.log('response', this.response); // JSON response  
+        }
+      };
+      xhr.send(
+        JSON.stringify({
+          user_id:  "123456789",
+          duration: 5050,
+          init_session: "2015-09-05T23:56:04" ,
+          finish_session:"2015-09-05T23:56:04" ,
+        })
+      );
+      
+      
+  },3000)
+  
+  
+  </script> -->
 
   <script>
     // Define custom schema for syncing avatar color, set by random-color

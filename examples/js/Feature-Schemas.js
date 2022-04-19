@@ -1,4 +1,4 @@
-let result
+let result3
 let objSchemas
 
 fetch(url).then(
@@ -6,9 +6,9 @@ fetch(url).then(
 ).then(
   function (json) {
     objSchemas = json
-    result = JSON.parse(JSON.stringify(json));
+    result3 = JSON.parse(JSON.stringify(json));
 
-    SetSchemas(result)
+    SetSchemas(result3)
   }
 )
 

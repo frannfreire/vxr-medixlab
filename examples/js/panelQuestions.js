@@ -2,6 +2,8 @@ let scene = document.querySelector('a-scene');
 let objectsResult;
 let x = 0;
 let score = 0;
+let quizz = 0;
+let questionID = 0;
 
 fetch("../../../js/panelQuestions.json").then(
   function (u) { return u.json(); }
@@ -30,6 +32,22 @@ function createQuestionsElements() {
   questionPlane.setAttribute('text', `${objectsResult[x].question}; font:SourceSansPro-SemiBold-msdf.json; negate:false` );
   scene.appendChild(questionPlane);
   scene.appendChild(panel1);
+
+  var questionText = objectsResult[x].question;
+  questionID++;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "https://api.medixlab.vxr.space/quiz", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  if (this.status == 200) {
+    console.log("response", this.response); // JSON response
+  }
+  xhr.send(
+    JSON.stringify({
+      quizzid: quizz++,
+      process: process,
+    })
+  );
 
   objectsResult[x].answers.forEach(item => {
     let answer = document.createElement('a-plane');
@@ -79,6 +97,21 @@ function createQuestionsElements() {
 
       let answerText = firstAnswer.getAttribute('text')
       console.log('Answer clicked:', answerText)
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      if (this.status == 200) {
+        console.log("response", this.response); // JSON response
+      }
+      xhr.send(
+        JSON.stringify({
+          questionid: questionID,
+          quizzid: quizz,
+          question: questionText,
+          value: questionText,
+        })
+      );
 
       setTimeout(function() {
         questionPlane.removeAttribute('text');
@@ -141,6 +174,21 @@ function createQuestionsElements() {
           answer.setAttribute('color', '#072B73');
         })
       });
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      if (this.status == 200) {
+        console.log("response", this.response); // JSON response
+      }
+      xhr.send(
+        JSON.stringify({
+          questionid: questionID,
+          quizzid: quizz,
+          question: questionText,
+          value: questionText,
+        })
+      );
 
       setTimeout(function() {
         questionPlane.removeAttribute('text');
@@ -219,6 +267,21 @@ function createQuestionsElements() {
       let answerText3 = thirdAnswer.getAttribute('text')
       console.log('Answer clicked:', answerText3)
 
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      if (this.status == 200) {
+        console.log("response", this.response); // JSON response
+      }
+      xhr.send(
+        JSON.stringify({
+          questionid: questionID,
+          quizzid: quizz,
+          question: questionText,
+          value: questionText,
+        })
+      );
+
       answersArray.forEach(answer => {
         answer.addEventListener('click', function() {
           answer.setAttribute('color', '#072B73');
@@ -256,6 +319,21 @@ function createQuestionsElements() {
           answer.setAttribute('color', '#072B73');
         })
       });
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      if (this.status == 200) {
+        console.log("response", this.response); // JSON response
+      }
+      xhr.send(
+        JSON.stringify({
+          questionid: questionID,
+          quizzid: quizz,
+          question: questionText,
+          value: questionText,
+        })
+      );
 
       setTimeout(function() {
         questionPlane.removeAttribute('text');

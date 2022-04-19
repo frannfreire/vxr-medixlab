@@ -8,6 +8,8 @@
   <!-- <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script> -->
   <!-- <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script> -->
   <!-- Networked aframe -->
+  <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
+  <script src="../../js/keycloak-logic.js"></script>
   <script>
     let url = "../../../js/structureEntitiesProcess5.json"
   </script>
@@ -17,6 +19,7 @@
   <script>
     let url3 = "../../../js/assets.json"
   </script>
+  <script>let process  = 5</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
   <script src="/easyrtc/easyrtc.js"></script>
   <script src="/dist/networked-aframe.js"></script>
@@ -25,7 +28,7 @@
   <script src="../../js/set_scene_id.js"></script>
   <script src="aframe-particle-system-component.min.js"></script>
 
-
+  <script src="../../js/Feature-send-process-data.js"></script>
   <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
   <script src="../../js/Feature-animation.component.js"></script>
 
@@ -54,7 +57,7 @@
   <script src="../../js/attach-intracath.js"></script>
   <script src="../../js/attach-to-position.js"></script>
   <script src="../../js/set-name.component.js"></script>
-
+  <script src="../../js/userButtons.js"></script>
   <script src="../../js/randomize-spec-color.component.js"></script>
 
   <script>
@@ -564,6 +567,8 @@
       <!-- <a-asset-item id="patient" src="Assets/Patient_Bed_Anim.gltf"></a-asset-item> -->
       <a-asset-item id="patient" src="Assets/Patient_VesicalMale_Animation.gltf"></a-asset-item>
       <a-asset-item id="patientBed" src="Assets/HospitalBed_PatientVesicalMale_.gltf"></a-asset-item>
+      <a-asset-item id="info" src="../../Models/Infographic.gltf"></a-asset-item>
+
 
 
       <!-- <a-asset-item id="patient" src="Female_Paciente.gltf"></a-asset-item> -->
@@ -1546,7 +1551,7 @@
       <a-entity>
         <a-entity id="e-Medixlab_Clipboard" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
           class="vxr-obj-Medixlab_Clipboard vxr-interact" gltf-model="#Medixlab_Clipboard" draggable grabbable
-          static-body position="-0.464 0.188 -1.904" scale="1 1 1">
+          static-body position="-0.464 0.188 -1.904" scale="1 1 1" send-process>
         </a-entity>
       </a-entity>
     </template>
@@ -1608,6 +1613,9 @@
     <a-entity id="table_004" gltf-model="#GooseLamp" scale="" rotation="0 -90 0" position="2.49729 0.91326 -1.83804">
     </a-entity>
 
+    <a-entity id="info01" class="gltf" gltf-model="#info" position="-0.130 2.369 0.988" rotation="0 180 0" scale="0.4 0.4 0.4">
+    </a-entity>
+
     <!-- <a-entity id="Scube" gltf-model="#s_cube"  scale="" position=" 0 1 0" material="color: black"> -->
     </a-entity>
 
@@ -1652,6 +1660,7 @@
     <a-entity id="player" networked="template:#player-template;attachTemplateToLocal:false;" 
     position="-0.05 0.8 -0.800" movement-controls="speed:0.05;constrainToNavMesh: true"
       rotation="0 180 0" >
+      <a-entity id="player-camera" position="0 0 0">
       <a-entity id="camera" camera rotation="0 180 0" position="0 1.0 0.2" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
       </a-entity>
@@ -1665,6 +1674,7 @@
         networked="template:#right-hand-template">
       </a-entity>
     </a-entity>
+  </a-entity>
     
     <a-box id="boxFloor"
     nav-mesh
@@ -1673,14 +1683,21 @@
     opacity="1"
     static-body
     gltf-model="#nav"
-    rotation="0 0 0"
+    rotation="0 1 0"
     position="0.14005 0.8 0.55534"
     color="red" 
     depth="0.6"
     height="0.1"
-    width="1.1"></a-box>
-
-
+    width="1.1"
+    visible="false"></a-box>
+    
+    <a-entity 
+      id="tst"
+      user-buttons 
+      position="-1.836 2.236 -0.503"
+      rotation="0 90 0">
+    </a-entity>
+    
     <a-entity id="genes01" gltf-model="#genes" scale="" position="0.14005 0.858 0.55534" material="color: brown"
       rotation="0 -90.000 0" shadow="receive: false"></a-entity>
 

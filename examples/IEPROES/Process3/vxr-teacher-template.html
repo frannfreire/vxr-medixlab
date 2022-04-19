@@ -8,6 +8,8 @@
   <!-- <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script> -->
   <!-- <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script> -->
   <!-- Networked aframe -->
+  <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
+  <script src="../../js/keycloak-logic.js"></script>
   <script>
     let url = "../../../js/structureEntitiesProcess3.json"
   </script>
@@ -33,7 +35,7 @@
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
 
   <!-- ownership transfer dependencies -->
-
+  <script>let process  = 1</script>
   <script src="../../js/spawner.component.js"></script>
   <script src="../../js/toggle-physics.component.js"></script>
   <script src="../../js/rotator.component.js"></script>
@@ -49,8 +51,9 @@
   <!-- <script src="../../js/hand-attach.js"></script> -->
   <script src="../../js/attach-intracath.js"></script>
   <script src="../../js/attach-to-position.js"></script>
+  <script src="../../js/userButtons.js"></script>
   <!-- <script src="../../js/set-name.component.js"></script> -->
-
+  <script src="../../js/Feature-send-process-data.js"></script>
   <script src="../../js/randomize-spec-color.component.js"></script>
 
   <script>
@@ -744,6 +747,7 @@
       <a-asset-item id="frontwall" src="/Models/gltf/FrontWall_Auditorium.gltf"></a-asset-item>
       <a-video id="canalizacion" src="/videos/Test.mp4" autoplay loop="true"></a-video>
       <a-video id="logopng" src="/Models/Images/Ieproes_Logo.png"></a-video>
+      <a-asset-item id="info" src="../../Models/Infographic.gltf"></a-asset-item>
 
       <a-asset-item id="CottonSwabs01" src="Assets/CottonSwab01.gltf"></a-asset-item>
       <a-asset-item id="CottonPink" src="Cotton_Pink.gltf"></a-asset-item>
@@ -777,7 +781,7 @@
                           colliderEndEvent: collisions;
                           colliderEndEventProperty: clearedEls;">
       </a-mixin>
-      <a-mixin id="point" raycaster="showLine: true; objects: .vxr-interact" collision-filter="collisionForces: false"
+      <a-mixin id="point" raycaster="showLine: true; objects: .objectsScene" collision-filter="collisionForces: false"
         static-body="shape: sphere; sphereRadius: 0.001" super-hands="colliderEvent: raycaster-intersection;
                     colliderEventProperty: els;
                     colliderEndEvent:raycaster-intersection-cleared;
@@ -1513,7 +1517,7 @@
       <a-entity>
         <a-entity id="e-Medixlab_Clipboard" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
           class="vxr-obj-Medixlab_Clipboard vxr-interact" gltf-model="#Medixlab_Clipboard" draggable grabbable
-          static-body position="-0.464 0.188 -1.904" scale="1 1 1">
+          static-body position="-0.464 0.188 -1.904" scale="1 1 1" send-process>
         </a-entity>
       </a-entity>
     </template>
@@ -1557,6 +1561,9 @@
     </a-entity>
     <a-entity id="table_004" gltf-model="#Table_004" scale="" rotation="0 -90 0" position="2.49729 0.91326 -1.83804">
     </a-entity>
+    <a-entity id="info01" class="gltf" gltf-model="#info" position="-0.130 2.369 0.988" rotation="0 180 0" scale="0.4 0.4 0.4">
+    </a-entity>
+
 
     <!-- <a-entity id="bedhospital" gltf-model="#hospitalbed" scale="" position="1.349 0.889 -1.079" 
       rotation="0 -90 0">
@@ -1607,7 +1614,7 @@
     <a-entity id="player" 
     movement-controls="speed:0.05;constrainToNavMesh: true"
     networked="template:#player-template;attachTemplateToLocal:false;" 
-    position="-1.040  1.2 -1.764"
+    position="-1.040  0.8 -1.764"
       rotation="0 180 0" >
       <a-entity id="camera" camera position="0 1 0.2" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
@@ -1633,7 +1640,8 @@
     color="red" 
     depth="0.6"
     height="0.1"
-    width="1.1"></a-box>
+    width="1.1"
+    visible="false"></a-box>
 
 
 
@@ -1714,7 +1722,12 @@
       opacity="1" position="0.329 1.811 -0.567" ondragstart="fnApositoPackage(this)" attach-point-v2
       geometry="radius: 0.05"> </a-sphere>
       
-      
+      <a-entity 
+      id="tst"
+      user-buttons 
+      position="-1.836 2.236 -0.503"
+      rotation="0 90 0">
+      </a-entity>
       
       
       <a-sphere id="sphere-gloves-off" visible="true" scale="0.5 0.5 0.5" static-body="sphereRadius: NaN"
@@ -1821,8 +1834,9 @@
   <script src="../../js/Feature-SpawnObjects.js"></script>
   <!-- <script src="../../js/vxr-full-house.js"></script> -->
 
-
-
+  
+  <script src="../../js/panelQuestions.js"></script>
+  
 </body>
 
 </html>
