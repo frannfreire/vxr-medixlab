@@ -11,27 +11,26 @@ setTimeout(function () {
   localStorage.setItem("initSessionOnReloadPageDate", initSessionOnReloadPageDate);
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "https://api.medixlab.vxr.space/session", true);
+  xhr.open("POST", "https://api.medixlab.vxr.space/session", false);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onload = function(e) {
+  xhr.onload = function (e) {
     if (this.status == 200) {
-      console.log('response', this.response); // JSON response  
+      console.log("response", this.response); // JSON response
+      localStorage.setItem("sessionID", this.response.id);
     }
   };
   xhr.send(
     JSON.stringify({
+      sessionid: localStorage.getItem("sessionID"),
       user_id: localStorage.getItem("userID"),
       duration: 10.5,
       init_session: localStorage.getItem("initSessionOnReloadPageDate"),
       finish_session: localStorage.getItem("finishSessionDate"),
     })
   );
-  var json_data = xhr.responseText; 
-  console.log("response", json_data)
 
   console.log('The token in localStorage is:', localStorage.getItem("token"));
   console.log('The userID in localStorage is:', localStorage.getItem("userID"));
-  console.log('The sessionID in localStorage is:', localStorage.getItem("sessionID"));
 
   let username = document.createElement("a-text");
   username.setAttribute("position", "-0.823 2.687 -3");
@@ -175,7 +174,7 @@ setTimeout(function () {
     bloqueo6.parentNode.removeChild(bloqueo6);
   }
 
-  if (keycloak.tokenParsed.semestre >= "7") {
+  if (keycloak.tokenParsed.semestre === "7") {
     bloqueo1.parentNode.removeChild(bloqueo1);
     bloqueo2.parentNode.removeChild(bloqueo2);
     bloqueo3.parentNode.removeChild(bloqueo3);
@@ -185,7 +184,27 @@ setTimeout(function () {
     bloqueo7.parentNode.removeChild(bloqueo7);
   }
 
-  if (keycloak.tokenParsed.semestre == "10") {
+  if (keycloak.tokenParsed.semestre === "8") {
+    bloqueo1.parentNode.removeChild(bloqueo1);
+    bloqueo2.parentNode.removeChild(bloqueo2);
+    bloqueo3.parentNode.removeChild(bloqueo3);
+    bloqueo4.parentNode.removeChild(bloqueo4);
+    bloqueo5.parentNode.removeChild(bloqueo5);
+    bloqueo6.parentNode.removeChild(bloqueo6);
+    bloqueo7.parentNode.removeChild(bloqueo7);
+  }
+
+  if (keycloak.tokenParsed.semestre === "9") {
+    bloqueo1.parentNode.removeChild(bloqueo1);
+    bloqueo2.parentNode.removeChild(bloqueo2);
+    bloqueo3.parentNode.removeChild(bloqueo3);
+    bloqueo4.parentNode.removeChild(bloqueo4);
+    bloqueo5.parentNode.removeChild(bloqueo5);
+    bloqueo6.parentNode.removeChild(bloqueo6);
+    bloqueo7.parentNode.removeChild(bloqueo7);
+  }
+
+  if (keycloak.tokenParsed.semestre === "10") {
     bloqueo1.parentNode.removeChild(bloqueo1);
     bloqueo2.parentNode.removeChild(bloqueo2);
     bloqueo3.parentNode.removeChild(bloqueo3);
@@ -203,51 +222,12 @@ setTimeout(function () {
     logoutButton.setAttribute("material", "opacity: 0.25;");
   });
 
-  const loggedInScene = true;
-
   logoutButton.addEventListener("click", function () {
     keycloak.logout();
     let finishSession = new Date()
     let finishSessionDate = finishSession.toISOString().replace('Z', '')
     localStorage.setItem("finishSessionDate", finishSessionDate);
-    loggedInScene = false;
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://api.medixlab.vxr.space/session", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onload = function(e) {
-      if (this.status == 200) {
-        console.log('response', this.response); // JSON response  
-      }
-    };
-    xhr.send(
-      JSON.stringify({
-        user_id: localStorage.getItem("userID"),
-        duration: 10.5,
-        init_session: localStorage.getItem("initSessionOnReloadPageDate"),
-        finish_session: localStorage.getItem("finishSessionDate"),
-      })
-    );
   });
-
-  console.log("logged in scene bool:", loggedInScene)
-
-  if (loggedInScene == true) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://api.medixlab.vxr.space/session", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onload = function(e) {
-      if (this.status == 200) {
-        console.log('response', this.response); // JSON response  
-        localStorage.setItem("sessionID", this.response.id);
-      }
-    };
-    xhr.send(
-      JSON.stringify({
-        sessionid: localStorage.getItem("sessionID"),
-      })
-    );
-  }
 
   console.log(
     "El nombre ha sido posicionado en la escena, el nombre es:",
