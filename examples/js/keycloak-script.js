@@ -233,4 +233,4 @@ setTimeout(function () {
     "El nombre ha sido posicionado en la escena, el nombre es:",
     keycloak.tokenParsed.name
   );
-}, 1600);
+}, 1700);

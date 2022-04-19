@@ -28,11 +28,12 @@ AFRAME.registerComponent('send-process', {
         xhr.open("POST", "http://localhost:8000/process", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function (e) {
+        
           if (this.status == 200) {
             console.log("response", this.response); // JSON response
-            localStorage.setItem("sessionID", this.response.id);
+            var processID = this.response.process;
           }
-        };        
+        }
         xhr.send(JSON.stringify({
           "process_number": process,
           "duration": duration,
