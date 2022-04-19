@@ -35,7 +35,7 @@
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
 
   <!-- ownership transfer dependencies -->
-
+  <script>let process  = 1</script>
   <script src="../../js/spawner.component.js"></script>
   <script src="../../js/toggle-physics.component.js"></script>
   <script src="../../js/rotator.component.js"></script>
@@ -53,7 +53,7 @@
   <script src="../../js/attach-to-position.js"></script>
   <script src="../../js/userButtons.js"></script>
   <!-- <script src="../../js/set-name.component.js"></script> -->
-
+  <script src="../../js/Feature-send-process-data.js"></script>
   <script src="../../js/randomize-spec-color.component.js"></script>
 
   <script>
@@ -781,7 +781,7 @@
                           colliderEndEvent: collisions;
                           colliderEndEventProperty: clearedEls;">
       </a-mixin>
-      <a-mixin id="point" raycaster="showLine: true; objects: .vxr-interact" collision-filter="collisionForces: false"
+      <a-mixin id="point" raycaster="showLine: true; objects: .objectsScene" collision-filter="collisionForces: false"
         static-body="shape: sphere; sphereRadius: 0.001" super-hands="colliderEvent: raycaster-intersection;
                     colliderEventProperty: els;
                     colliderEndEvent:raycaster-intersection-cleared;
@@ -1517,7 +1517,7 @@
       <a-entity>
         <a-entity id="e-Medixlab_Clipboard" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
           class="vxr-obj-Medixlab_Clipboard vxr-interact" gltf-model="#Medixlab_Clipboard" draggable grabbable
-          static-body position="-0.464 0.188 -1.904" scale="1 1 1">
+          static-body position="-0.464 0.188 -1.904" scale="1 1 1" send-process>
         </a-entity>
       </a-entity>
     </template>
@@ -1834,8 +1834,9 @@
   <script src="../../js/Feature-SpawnObjects.js"></script>
   <!-- <script src="../../js/vxr-full-house.js"></script> -->
 
-
-
+  
+  <script src="../../js/panelQuestions.js"></script>
+  
 </body>
 
 </html>

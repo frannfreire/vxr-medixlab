@@ -9,8 +9,8 @@
   <!-- <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script> -->
 
   <!-- Networked aframe -->
-  <!-- <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
-  <script src="../../js/keycloak-logic.js"></script> -->
+  <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
+  <script src="../../js/keycloak-logic.js"></script>
 
   <script>
     let url = "../../js/structureEntitiesProcess2.json"
@@ -51,8 +51,8 @@
   <script src="../../js/Animation-Trigger.js"></script>
   <script src="../../js/libs.js"></script>
   <script src="../../js/userButtons.js"></script>
-
-
+  
+  <script src="../../js/Feature-send-process-data.js"></script>
   <script>
 
     AFRAME.registerComponent('ground-collider', {
@@ -590,7 +590,7 @@
                           colliderEndEvent: collisions;
                           colliderEndEventProperty: clearedEls;">
       </a-mixin>
-      <a-mixin id="point" raycaster="showLine: true; objects: .vxr-interact" collision-filter="collisionForces: false"
+      <a-mixin id="point" raycaster="showLine: true; objects: .objectsScene" collision-filter="collisionForces: false"
         static-body="shape: sphere; sphereRadius: 0.001" super-hands="colliderEvent: raycaster-intersection;
                     colliderEventProperty: els;
                     colliderEndEvent:raycaster-intersection-cleared;
@@ -1207,7 +1207,7 @@
         <a-entity>
           <a-entity id="e-Medixlab_Clipboard" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
             class="vxr-obj-Medixlab_Clipboard vxr-interact" gltf-model="#Medixlab_Clipboard" draggable grabbable
-            static-body position="-0.464 0.188 -1.904" scale="1 1 1">
+            static-body position="-0.464 0.188 -1.904" scale="1 1 1" send-process>
           </a-entity>
         </a-entity>
       </template>
@@ -1429,7 +1429,9 @@
 
   </a-scene>
 
-  <!-- <script src="../../js/buttonsScene.js"></script> -->
+  <script src="../../js/buttonsScene.js"></script>
+  <script src="../../js/panelQuestions.js"></script>
+  
 
   <script>
     // Define custom schema for syncing avatar color, set by random-color
@@ -1522,9 +1524,14 @@
     }
   </script>
   <!-- <script src="../../js/Feature-SpawnTemplate.js"></script> -->
-
+  
   <script src="../../js/Feature-SpawnObjects.js"></script>
-  <!-- <script src="../../js/vxr-full-house.js"></script> -->
+  <script> 
+  
+  let process  = 2
+  
+  </script>
+  <!-- <script src="../../js/vxr-full-house.js"></> -->
 
 
 
