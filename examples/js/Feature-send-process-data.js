@@ -24,17 +24,24 @@ AFRAME.registerComponent('send-process', {
         let initProcessTime = initProcess.toISOString().replace('Z', '')
         let endProcessTime = endProcess.toISOString().replace('Z', '')
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "https://api.medixlab.vxr.space/process", true);
+        // xhr.open("POST", "https://api.medixlab.vxr.space/process", true);
+        xhr.open("POST", "http://localhost:8000/process", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
-        
+        xhr.onload = function (e) {
+          if (this.status == 200) {
+            console.log("response", this.response); // JSON response
+            localStorage.setItem("sessionID", this.response.id);
+          }
+        };        
         xhr.send(JSON.stringify({
           "process_number": process,
           "duration": duration,
           "process_state": 1,
           "init_process": initProcessTime,
           "end_process": endProcessTime,
-          "session_id": localStorage.getItem("sessionID")
+          "session_id": "c158915c-e604-4c46-b1b1-cbf6f03e8410"
         }));
+        //localStorage.getItem("sessionID")
         console.log("status: ",xhr.status)
       }
       }
