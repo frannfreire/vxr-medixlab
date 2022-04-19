@@ -51,12 +51,12 @@
   <script src="../../js/Feature-EmisiveObject.js"></script>
   <script src="../../js/Feature-animation.component.js"></script>
 
-
+  <script>let process  = 6</script>
   <!-- <script src="../../js/hand-attach.js"></script> -->
   <script src="../../js/attach-intracath.js"></script>
   <script src="../../js/attach-to-position.js"></script>
   <script src="../../js/set-name.component.js"></script>
-
+  <script src="../../js/Feature-send-process-data.js"></script>
   <script src="../../js/randomize-spec-color.component.js"></script>
 
   <script>
@@ -730,7 +730,8 @@
       <a-asset-item id="Clamp_Allis" src="../Process5/Assets/Clamp_Allis_Mod.gltf"></a-asset-item>
       <a-asset-item id="Biombo_Anim" src="../Process5/Assets/Biombo_Anim.gltf"></a-asset-item>
       <a-asset-item id="CordonUmbilical_Static" src="../Process5/Assets/CordonUmbilical_Static.gltf"></a-asset-item>
-
+      <a-asset-item id="Medixlab_Pen" src="/assets/utils/Medixlab_Pen.gltf"></a-asset-item>
+      <a-asset-item id="Medixlab_Clipboard" src="/assets/utils/Medixlab_Clipboard.gltf"></a-asset-item>
 
 
 
@@ -1512,8 +1513,33 @@
         </a-entity>
       </a-entity>
     </template>
+    
+    <template id="vxr-obj-template-Medixlab_Pen">
+      <a-entity>
+        <a-entity id="e-Medixlab_Pen" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
+          class="vxr-obj-Medixlab_Pen vxr-interact" gltf-model="#Medixlab_Pen" draggable grabbable
+          dynamic-body position="-0.371 0.201 -1.904" scale="1 1 1">
+        </a-entity>
+      </a-entity>
+    </template>
+    
+    <template id="vxr-obj-template-Medixlab_Clipboard">
+      <a-entity>
+        <a-entity id="e-Medixlab_Clipboard" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
+          class="vxr-obj-Medixlab_Clipboard vxr-interact" gltf-model="#Medixlab_Clipboard" draggable grabbable
+          static-body position="-0.464 0.188 -1.904" scale="1 1 1" send-process>
+        </a-entity>
+      </a-entity>
+    </template>
 
-
+    <template id="vxr-obj-template-aux-table">
+      <a-entity>
+        <a-entity id="e-aux-table" grabbable="maxGrabbers: NaN" visible="true"  grabbable
+          class="vxr-obj-aux-table vxr-interact" gltf-model="#Table_004" draggable grabbable
+          position="-0.464 -0.59388 -1.904" scale="1 1.120 1" rotation="0 -90 0">
+        </a-entity>
+      </a-entity>
+    </template>
 
     </a-assets>
 
@@ -1739,6 +1765,10 @@
     <a-sphere id="sphere_e-catheteranim" static-body="sphereRadius: NaN" scale="0.71168 0.71168 0.71168" static-body ondragend="openPackage(this)"
       opacity="1" position="0.08172 1.83767 -0.37454" attach-point-v2 geometry="radius: 0.03"> </a-sphere>
 
+    
+      <a-box id="boxTable2" scale="0.5 0.5 1" static-body="sphereRadius: NaN" opacity="0" static-body rotation=""
+      position="-0.456 1.667 -2.169" color="red" depth="0.6" height="0.1" width="1.1"></a-box>
+      
     <a-sphere id="sphere_e-syringePackageAnim" scale="0.71168 0.712 0.712" static-body ondragend="openSyringe(this)"
       opacity="1" position="0.27662 1.84388 -0.51619" attach-point-v2 geometry="radius: 0.03"> </a-sphere>
  
@@ -1836,7 +1866,7 @@
   <script src="../../js/Feature-Schemas.js"></script>
   <script src="../../js/Feature-SpawnObjects.js"></script>
   <!-- <script src="../../js/vxr-full-house.js"></script> -->
-
+  
 
 
 </body>

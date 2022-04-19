@@ -9,6 +9,7 @@
   <!-- <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script> -->
   <!-- Networked aframe -->
   <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
+
   <script src="../../js/keycloak-logic.js"></script>
   <script>
     let url = "../../../js/structureEntitiesProcess1.json"
@@ -19,6 +20,7 @@
   <!-- <script    src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script> -->
   <script src="/js/spawn-in-circle.component.js"></script>
   <script src="aframe-particle-system-component.min.js"></script>
+  
 
 
 
@@ -45,12 +47,13 @@
   <script src="../../js/Feature-Bones.component.js"></script>
   <script src="../../js/Feature-BonesPosition.component.js"></script>
   <script src="../../js/Feature-EmisiveObject.js"></script>
-
+  <script>let process  = 1</script>
+  
   <!-- <script src="../../js/hand-attach.js"></script> -->
   <script src="../../js/attach-intracath.js"></script>
   <script src="../../js/attach-to-position.js"></script>
   <script src="../../js/set-name.component.js"></script>
-
+  <script src="../../js/Feature-send-process-data.js"></script>
   <script src="../../js/randomize-spec-color.component.js"></script>
   <script src="../../js/set_scene_id.js"></script>
 
@@ -510,7 +513,7 @@
       <a-asset-item id="shoe_cover_r_static" src="../../Models/process1/statics/ShoeCover_R_static.gltf"></a-asset-item>
       <a-asset-item id="hazmat_suit_static" src="../../Models/process1/statics/Hazmat_Suit_static.gltf"></a-asset-item>
 
-
+      <a-asset-item id="Table_004" src="../HospitalRoomAssets/Table_004.gltf"></a-asset-item>
 
       <!-- Avatars -->
       <a-asset-item id="StudentAvatarHead" src="../../super/process/assets/avatars/StudentAvatarHead.gltf">
@@ -524,6 +527,9 @@
       <a-asset-item id="student" src="../../super/process/assets/StudentNurseAvatar.gltf"></a-asset-item>
       <a-asset-item id="teacher" src="../../super/process/assets/TeacherAvatar.gltf"></a-asset-item>
       <a-asset-item id="nav" src="../../Models/NavMesh_01.glb"></a-asset-item>
+      
+      <a-asset-item id="Medixlab_Pen" src="/assets/utils/Medixlab_Pen.gltf"></a-asset-item>
+      <a-asset-item id="Medixlab_Clipboard" src="/assets/utils/Medixlab_Clipboard.gltf"></a-asset-item>
 
       <canvas id="cam2"></canvas>
 
@@ -534,7 +540,7 @@
                           colliderEndEvent: collisions;
                           colliderEndEventProperty: clearedEls;">
       </a-mixin>
-      <a-mixin id="point" raycaster="showLine: true; objects: .vxr-interact" collision-filter="collisionForces: false"
+      <a-mixin id="point" raycaster="showLine: true; objects: .objectsScene" collision-filter="collisionForces: false"
         static-body="shape: sphere; sphereRadius: 0.001" super-hands="colliderEvent: raycaster-intersection;
                     colliderEventProperty: els;
                     colliderEndEvent:raycaster-intersection-cleared;
@@ -1741,6 +1747,35 @@
           </a-entity>
         </a-entity>
       </template>
+      
+      <template id="vxr-obj-template-Medixlab_Pen">
+        <a-entity>
+          <a-entity id="e-Medixlab_Pen" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
+            class="vxr-obj-Medixlab_Pen vxr-interact" gltf-model="#Medixlab_Pen" draggable grabbable
+            dynamic-body position="-0.371 0.201 -1.904" scale="1 1 1">
+          </a-entity>
+        </a-entity>
+      </template>
+      
+      <template id="vxr-obj-template-Medixlab_Clipboard">
+        <a-entity>
+          <a-entity id="e-Medixlab_Clipboard" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
+            class="vxr-obj-Medixlab_Clipboard vxr-interact" gltf-model="#Medixlab_Clipboard" draggable grabbable
+            static-body position="-0.464 0.188 -1.904" scale="1 1 1" send-process>
+          </a-entity>
+        </a-entity>
+      </template>
+  
+      <template id="vxr-obj-template-aux-table">
+        <a-entity>
+          <a-entity id="e-aux-table" grabbable="maxGrabbers: NaN" visible="true"  grabbable
+            class="vxr-obj-aux-table vxr-interact" gltf-model="#Table_004" draggable grabbable
+            position="-0.464 -0.59388 -1.904" scale="1 1.120 1" rotation="0 -90 0">
+          </a-entity>
+        </a-entity>
+      </template>
+      
+      
 
 
     </a-assets>
@@ -1860,7 +1895,10 @@
     <a-sphere id="sphere1" scale="0.2 0.2 0.2" static-body="sphereRadius: NaN" static-body
       trigger-animation="entity_id:e-gabachon_01;mode:sequence;iteratorSequence:1;" opacity="0"
       position="0.0276 2.24666 -0.32092" attach-point-v2 geometry="radius: 0.02"> </a-sphere>
-
+      
+      <a-box id="boxTable2" scale="0.5 0.5 1" static-body="sphereRadius: NaN" opacity="0" static-body rotation=""
+      position="-0.456 1.667 -2.169" color="red" depth="0.6" height="0.1" width="1.1"></a-box>
+      
     <a-sphere id="sphere2" scale="0.2 0.2 0.2" static-body="sphereRadius: NaN" static-body
       trigger-animation="entity_id:e-mask;mode:sequence;iteratorSequence:2" opacity="0"
       position="0.09943 2.40842 -0.37207" attach-point-v2 geometry="radius: 0.02"> </a-sphere>
@@ -2017,7 +2055,7 @@
 
   </a-scene>
 
-  <script src="../../js/buttonsScene.js"></script>
+  
 
   <script>
     // Define custom schema for syncing avatar color, set by random-color
@@ -2099,7 +2137,8 @@
     }
   </script>
   <script src="../../js/Feature-SpawnObjects.js"></script>
-
+  <script src="../../js/buttonsScene.js"></script>
+  <script src="../../js/panelQuestions.js"></script>
 
 </body>
 

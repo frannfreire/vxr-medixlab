@@ -162,6 +162,14 @@
   {
     "template": "vxr-obj-template-catheterPackage",
     "selector": ".vxr-obj-catheterPackage"
+  },
+  {
+    "template": "vxr-obj-template-Medixlab_Pen",
+    "selector": ".vxr-obj-Medixlab_Pen"
+  },
+  {
+    "template": "vxr-obj-template-Medixlab_Clipboard",
+    "selector": ".vxr-obj-Medixlab_Clipboard"
   }
   
 ]

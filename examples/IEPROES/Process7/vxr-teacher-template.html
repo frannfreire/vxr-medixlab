@@ -15,8 +15,8 @@
   
   <script src="../../js/userButtons.js"></script>
 
-  <!-- <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
-  <script src="../../js/keycloak-logic.js"></script> -->
+  <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
+  <script src="../../js/keycloak-logic.js"></script>
   <script>
     let url = "../../../js/structureEntitiesProcess7.json"
   </script>
@@ -57,6 +57,7 @@
   <script src="../../js/Feature-BonesPosition.component.js"></script>
   <script src="../../js/Feature-EmisiveObject.js"></script>
   <script src="../../js/libs.js"></script>
+  <script src="../../js/Feature-send-process-data.js"></script>
 
 
   <!-- <script src="../../js/hand-attach.js"></script> -->
@@ -1947,20 +1948,20 @@ function takeOffGloves(e) {
   <!-- <script src="../../js/description.js"></script> -->
   <script src="../../js/panelQuestions.js"></script>
   <script src="../../js/buttonsScene.js"></script>
-  
+  <script>let process  = 7</script>
   <script>
     
 
     /* global AFRAME */
     AFRAME.registerComponent('send-process', {
       schema: {
-        template: { default: '' },
+        state: { type:'string',default: '1' },
         keyCode: { default: 32 }
       },
 
       init: function () {
         let mySelf = this.el;
-        let process  = 7
+        
         let initProcess = new Date()
         this.el.addEventListener('collide', function (e) {
         console.log({mySelf})
@@ -1985,10 +1986,10 @@ function takeOffGloves(e) {
             xhr.send(JSON.stringify({
               "process_number": process,
               "duration": duration,
-              "process_state": 1,
+              "process_state": state,
               "init_process": initProcessTime,
               "end_process": endProcessTime,
-              "session_id": "4c4f605c-55d0-4fe4-af67-d5b184681167"
+              "session_id": localStorage.getItem("sessionID")
             }));
           }
           console.log("status: ",xhr.status)

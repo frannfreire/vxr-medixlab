@@ -19,6 +19,7 @@
   <script>
     let url3 = "../../../js/assets.json"
   </script>
+  <script>let process  = 5</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
   <script src="/easyrtc/easyrtc.js"></script>
   <script src="/dist/networked-aframe.js"></script>
@@ -27,7 +28,7 @@
   <script src="../../js/set_scene_id.js"></script>
   <script src="aframe-particle-system-component.min.js"></script>
 
-
+  <script src="../../js/Feature-send-process-data.js"></script>
   <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
   <script src="../../js/Feature-animation.component.js"></script>
 
@@ -1548,7 +1549,7 @@
       <a-entity>
         <a-entity id="e-Medixlab_Clipboard" grabbable="maxGrabbers: NaN" visible="true" rotation="0 0 0" grabbable
           class="vxr-obj-Medixlab_Clipboard vxr-interact" gltf-model="#Medixlab_Clipboard" draggable grabbable
-          static-body position="-0.464 0.188 -1.904" scale="1 1 1">
+          static-body position="-0.464 0.188 -1.904" scale="1 1 1" send-process>
         </a-entity>
       </a-entity>
     </template>
