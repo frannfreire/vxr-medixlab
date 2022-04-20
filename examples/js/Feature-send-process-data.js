@@ -11,7 +11,9 @@ AFRAME.registerComponent('send-process', {
     var delayInMilliseconds = 10000; //1 second
 
     setTimeout(function () {
-      document.getElementById("info01").setAttribute("visible","false")
+      if(document.getElementById("info01")){
+        document.getElementById("info01").setAttribute("visible","false")
+      }
       console.log("hide")
     }, delayInMilliseconds);
 
