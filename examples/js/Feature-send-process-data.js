@@ -5,16 +5,27 @@ AFRAME.registerComponent('send-process', {
 
 
   init: function () {
+
+
+
+    var delayInMilliseconds = 10000; //1 second
+
+    setTimeout(function () {
+      document.getElementById("info01").setAttribute("visible","false")
+      console.log("hide")
+    }, delayInMilliseconds);
+
+
     let firstExperience;
     let req = new XMLHttpRequest();
-    let aux_times_used=0
-    
+    let aux_times_used = 0
+
     //-----------------------------------------------------------------------------------
     //-------------------------------check experience exist------------------------------
     //-----------------------------------------------------------------------------------
-    
-    // req.open("POST", "https://api.medixlab.vxr.space/process", true);
-    req.open("POST", "http://localhost:8000/get_experience", true);
+
+    req.open("POST", "https://api.medixlab.vxr.space/get_experience", true);
+    // req.open("POST", "http://localhost:8000/get_experience", true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.onload = function (e) {
 
@@ -30,21 +41,21 @@ AFRAME.registerComponent('send-process', {
       //experience didn't exist
 
     } else {
-      aux_times_used= this.response.times_used
+      aux_times_used = this.response.times_used
     }
 
-    
+
 
     let boolean = true;
     let mySelf = this.el;
     let initProcess = new Date()
-    
+
     //-----------------------------------------------------------------------------------
     //-------------------------------process ended---------------------------------------
     //-----------------------------------------------------------------------------------
     this.el.addEventListener('collide', function (e) {
-      
-    
+
+
       if (e.detail.body.el.id == "e-Medixlab_Pen") {
 
         if (boolean && firstExperience) {
@@ -77,12 +88,12 @@ AFRAME.registerComponent('send-process', {
             "session_id": "a343295a-d591-4cb9-b14c-df3b66c7c17f"
           }));
           //localStorage.getItem("sessionID")
-          
+
           console.log("status: ", xhr.status)
           //-----------------------------------------------------------------------
           //-------------------------------experience------------------------------
           //-----------------------------------------------------------------------
-          
+
           if (firstExperience) {
             let createExperience = new XMLHttpRequest();
             createExperience.open("POST", "https://api.medixlab.vxr.space/experience", true);
@@ -99,8 +110,8 @@ AFRAME.registerComponent('send-process', {
                 "user_id": localStorage.getItem("userID"),
                 "times_used": 1
               }));
-          }else{
-            aux_times_used+=1;
+          } else {
+            aux_times_used += 1;
             let updateExperience = new XMLHttpRequest();
             updateExperience.open("PATCH", "https://api.medixlab.vxr.space/experience", true);
             // updateExperience.open("PATCH", "http://localhost:8000/experience", true);
@@ -116,7 +127,7 @@ AFRAME.registerComponent('send-process', {
                 "user_id": localStorage.getItem("userID"),
                 "times_used": aux_times_used
               }));
-          
+
           }
         }
       }
