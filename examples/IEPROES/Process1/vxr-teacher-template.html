@@ -8,9 +8,9 @@
   <!-- <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script> -->
   <!-- <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script> -->
   <!-- Networked aframe -->
-  <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
-
-  <script src="../../js/keycloak-logic.js"></script>
+  <!-- <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
+  <script src="../../js/keycloak-logic.js"></script> -->
+  
   <script>
     let url = "../../../js/structureEntitiesProcess1.json"
   </script>
@@ -1859,7 +1859,8 @@
       rotation="0 180 0" 
       movement-controls="speed:0.05;constrainToNavMesh: true"
       >
-      <a-entity camera position="0 2 0.2" look-controls zoom="100" fov="120"
+      <a-entity id="player-camera" position="0 0 0">
+      <a-entity id="camera" camera position="0 2 0.2" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
       </a-entity>
 
@@ -1870,7 +1871,7 @@
       <a-entity id="rhand" mixin="touch" hand-attach vive-controls="hand: right;model:false"  input-controls="hand: right"
         networked="template:#right-hand-template">
       </a-entity>
-
+    </a-entity>
 
     </a-entity>
     
