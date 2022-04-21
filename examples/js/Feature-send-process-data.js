@@ -1,3 +1,4 @@
+let aux_times_used = 0
 AFRAME.registerComponent('send-process', {
   schema: {
     keyCode: { default: 32 }
@@ -18,9 +19,9 @@ AFRAME.registerComponent('send-process', {
     }, delayInMilliseconds);
 
 
-    let firstExperience;
+    let firstExperience=false;
     let req = new XMLHttpRequest();
-    let aux_times_used = 0
+    
 
     //-----------------------------------------------------------------------------------
     //-------------------------------check experience exist------------------------------
@@ -32,19 +33,27 @@ AFRAME.registerComponent('send-process', {
     req.onload = function (e) {
 
       if (this.status == 200) {
-        console.log("response", this.response); // JSON response
+        console.log(this.response); // JSON response
+        
+        if (this.response === undefined) {
+          //experience didn't exist
+          firstExperience = true
+          console.log("firstExperience",firstExperience)
+          console.log("this.response: ",this.response)
+    
+        } else {
+        
+          obj = JSON.parse(this.responseText )
+          aux_times_used = obj.times_used
+          
+        }
       }
     }
     req.send(JSON.stringify({
-      //"user_id": "59c57f8f-b1a4-43d3-acaa-957deee29fed"
+      // "user_id": "59c57f8f-b1a4-43d3-acaa-957deee29fed"
       "user_id": localStorage.getItem("userID")
     }));
-    if (this.response === undefined) {
-      //experience didn't exist
-
-    } else {
-      aux_times_used = this.response.times_used
-    }
+  
 
 
 
@@ -60,7 +69,7 @@ AFRAME.registerComponent('send-process', {
 
       if (e.detail.body.el.id == "e-Medixlab_Pen") {
 
-        if (boolean && firstExperience) {
+        if (boolean ) {
           boolean = false
           document.getElementById("lhand").removeAttribute("mixin")
           document.getElementById("rhand").removeAttribute("mixin")
@@ -108,7 +117,7 @@ AFRAME.registerComponent('send-process', {
             }
             createExperience.send(JSON.stringify(
               {
-                //"user_id": "59c57f8f-b1a4-43d3-acaa-957deee29fed",
+                // "user_id": "59c57f8f-b1a4-43d3-acaa-957deee29fed",
                 "user_id": localStorage.getItem("userID"),
                 "times_used": 1
               }));
@@ -125,7 +134,7 @@ AFRAME.registerComponent('send-process', {
             }
             updateExperience.send(JSON.stringify(
               {
-                //"user_id": "59c57f8f-b1a4-43d3-acaa-957deee29fed",
+                // "user_id": "59c57f8f-b1a4-43d3-acaa-957deee29fed",
                 "user_id": localStorage.getItem("userID"),
                 "times_used": aux_times_used
               }));
