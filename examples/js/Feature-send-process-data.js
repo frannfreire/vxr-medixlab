@@ -12,16 +12,16 @@ AFRAME.registerComponent('send-process', {
     var delayInMilliseconds = 10000; //1 second
 
     setTimeout(function () {
-      if(document.getElementById("info01")){
-        document.getElementById("info01").setAttribute("visible","false")
+      if (document.getElementById("info01")) {
+        document.getElementById("info01").setAttribute("visible", "false")
       }
       console.log("hide")
     }, delayInMilliseconds);
 
 
-    let firstExperience=false;
+    let firstExperience = false;
     let req = new XMLHttpRequest();
-    
+
 
     //-----------------------------------------------------------------------------------
     //-------------------------------check experience exist------------------------------
@@ -31,29 +31,27 @@ AFRAME.registerComponent('send-process', {
     // req.open("POST", "http://localhost:8000/get_experience", true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.onload = function (e) {
+      console.log(this.response); // JSON response
+      if (this.response == "NotFound") {
+        //experience didn't exist
+        firstExperience = true
+        console.log("firstExperience", firstExperience)
+        console.log("this.response: ", this.response)
 
-      if (this.status == 200) {
+      } else {
         console.log(this.response); // JSON response
-        
-        if (this.response === undefined) {
-          //experience didn't exist
-          firstExperience = true
-          console.log("firstExperience",firstExperience)
-          console.log("this.response: ",this.response)
-    
-        } else {
-        
-          obj = JSON.parse(this.responseText )
-          aux_times_used = obj.times_used
-          
-        }
+        obj = JSON.parse(this.responseText)
+        aux_times_used = obj.times_used
+
       }
+
+      
     }
     req.send(JSON.stringify({
       // "user_id": "59c57f8f-b1a4-43d3-acaa-957deee29fed"
       "user_id": localStorage.getItem("userID")
     }));
-  
+
 
 
 
@@ -69,7 +67,7 @@ AFRAME.registerComponent('send-process', {
 
       if (e.detail.body.el.id == "e-Medixlab_Pen") {
 
-        if (boolean ) {
+        if (boolean) {
           boolean = false
           document.getElementById("lhand").removeAttribute("mixin")
           document.getElementById("rhand").removeAttribute("mixin")
@@ -96,7 +94,7 @@ AFRAME.registerComponent('send-process', {
             "process_state": 1,
             "init_process": initProcessTime,
             "end_process": endProcessTime,
-            "session_id": "a343295a-d591-4cb9-b14c-df3b66c7c17f"
+            "session_id": localStorage.getItem("sessionID")
           }));
           //localStorage.getItem("sessionID")
 

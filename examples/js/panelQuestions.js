@@ -1,9 +1,32 @@
 let scene = document.querySelector('a-scene');
 let objectsResult;
-let x = 0;
+let x = 0; // iterator
 let score = 0;
 let quizz = 0;
 let questionID = 0;
+let quizzID = ""
+
+setTimeout(() => {
+  
+
+var xhr = new XMLHttpRequest();
+  xhr.open("POST", "https://api.medixlab.vxr.space/quiz", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function (e) {
+    console.log("value", this.response)
+    quizzID = JSON.parse(this.responseText).id
+    console.log("quizzID: ", quizzID)
+  }
+  if (this.status == 200) {
+    console.log("response", this.response); // JSON response
+  }
+  xhr.send(
+    JSON.stringify({
+      "user_id": localStorage.getItem("userID"),
+      "process_number": process
+    })
+  );
+}, 2000);
 
 fetch("../../../js/panelQuestions.json").then(
   function (u) { return u.json(); }
@@ -29,26 +52,18 @@ function createQuestionsElements() {
   questionPlane.setAttribute('rotation', "0 180 0")
   questionPlane.setAttribute('height', "0.25");
   console.log('question:', objectsResult[x].question);
-  questionPlane.setAttribute('text', `${objectsResult[x].question}; font:SourceSansPro-SemiBold-msdf.json; negate:false` );
+  questionPlane.setAttribute('text', `${objectsResult[x].question}; font:SourceSansPro-SemiBold-msdf.json; negate:false`);
   scene.appendChild(questionPlane);
   scene.appendChild(panel1);
 
   var questionText = objectsResult[x].question;
   questionID++;
 
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "https://api.medixlab.vxr.space/quiz", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  if (this.status == 200) {
-    console.log("response", this.response); // JSON response
-  }
-  xhr.send(
-    JSON.stringify({
-      quizzid: quizz++,
-      process: process,
-    })
-  );
 
+
+  
+  console.log("response", this.response); // JSON response
+  console.log("response", this.status); // JSON response
   objectsResult[x].answers.forEach(item => {
     let answer = document.createElement('a-plane');
     answer.setAttribute('class', 'objectsScene')
@@ -70,7 +85,7 @@ function createQuestionsElements() {
     })
 
     panel1.appendChild(answer);
-    
+
   });
 
   let answersArray = [];
@@ -81,303 +96,312 @@ function createQuestionsElements() {
 
   answersArray.push(firstAnswer, secondAnswer, thirdAnswer, fourthAnswer);
 
-  x ++;
+  x++;
 
   firstAnswer.addEventListener('click', function () {
-      answersArray = answersArray.filter(answer => answer != firstAnswer);
-      console.log('answersArray', answersArray);
-      const objAnswers = Object.assign({}, answersArray)
-      console.log('objAnswers', objAnswers)
+    answersArray = answersArray.filter(answer => answer != firstAnswer);
+    console.log('answersArray', answersArray);
+    const objAnswers = Object.assign({}, answersArray)
+    console.log('objAnswers', objAnswers)
 
-      answersArray.forEach(answer => {
-        answer.addEventListener('click', function() {
-          answer.setAttribute('color', '#072B73');
-        })
-      });
+    answersArray.forEach(answer => {
+      answer.addEventListener('click', function () {
+        answer.setAttribute('color', '#072B73');
+      })
+    });
 
-      let answerText = firstAnswer.getAttribute('text')
-      console.log('Answer clicked:', answerText)
+    let answerText = firstAnswer.getAttribute('text')
+    console.log('Answer clicked:', answerText)
 
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
-      xhr.setRequestHeader("Content-Type", "application/json");
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function (e) {
       if (this.status == 200) {
         console.log("response", this.response); // JSON response
+        }
+    };
+    if (this.status == 200) {
+      console.log("response", this.response); // JSON response
+    }
+    xhr.send(
+      JSON.stringify({
+
+        "quizz_id": quizzID,
+        "question": x,
+        "answer": 1
+
+      })
+    );
+
+    setTimeout(function () {
+      questionPlane.removeAttribute('text');
+      panel1.remove();
+      questionPlane.remove();
+      score++;
+      console.log('score:', score);
+      if (x < objectsResult.length) {
+        createQuestionsElements()
+      } else {
+        let panel1 = document.createElement('a-plane');
+        panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
+        panel1.setAttribute('position', "1 2.375 1");
+        panel1.setAttribute('rotation', "0 180 0");
+        panel1.setAttribute('height', "0.5");
+        panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
+        scene.appendChild(panel1);
       }
-      xhr.send(
-        JSON.stringify({
-          questionid: questionID,
-          quizzid: quizz,
-          question: questionText,
-          value: questionText,
-        })
-      );
+    }, 1000);
+    firstAnswer.setAttribute('color', 'blue');
 
-      setTimeout(function() {
-        questionPlane.removeAttribute('text');
-        panel1.remove();
-        questionPlane.remove();
-        score ++;
-        console.log('score:', score);
-        if (x < objectsResult.length) {
-          createQuestionsElements()
-        } else {
-          let panel1 = document.createElement('a-plane');
-          panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
-          panel1.setAttribute('position', "1 2.375 1");
-          panel1.setAttribute('rotation', "0 180 0");
-          panel1.setAttribute('height', "0.5");
-          panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
-          scene.appendChild(panel1);
-        }
-      }, 1000);
-      firstAnswer.setAttribute('color', 'blue');
+    answersArray = answersArray.filter(answer => answer != firstAnswer);
+    console.log('answersArray', answersArray);
 
-      answersArray = answersArray.filter(answer => answer != firstAnswer);
-      console.log('answersArray', answersArray);
+    answersArray.forEach(answer => {
+      answer.addEventListener('click', function () {
+        answer.setAttribute('color', '#072B73');
+      })
+    });
 
-      answersArray.forEach(answer => {
-        answer.addEventListener('click', function() {
-          answer.setAttribute('color', '#072B73');
-        })
-      });
-      
-      setTimeout(function() {
-        questionPlane.removeAttribute('text');
-        panel1.remove();
-        questionPlane.remove();
-        if (x < objectsResult.length) {
-          createQuestionsElements()
-        } else {
-          let panel1 = document.createElement('a-plane');
-          panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
-          panel1.setAttribute('position', "1 2.375 1");
-          panel1.setAttribute('rotation', "0 180 0");
-          panel1.setAttribute('height', "0.5");
-          panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
-          scene.appendChild(panel1);
-        }
-      }, 1000);
+    setTimeout(function () {
+      questionPlane.removeAttribute('text');
+      panel1.remove();
+      questionPlane.remove();
+      if (x < objectsResult.length) {
+        createQuestionsElements()
+      } else {
+        let panel1 = document.createElement('a-plane');
+        panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
+        panel1.setAttribute('position', "1 2.375 1");
+        panel1.setAttribute('rotation', "0 180 0");
+        panel1.setAttribute('height', "0.5");
+        panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
+        scene.appendChild(panel1);
+      }
+    }, 1000);
   });
 
   secondAnswer.addEventListener('click', function () {
-      answersArray = answersArray.filter(answer => answer != secondAnswer);
-      console.log('answersArray', answersArray);
-      const objAnswers = Object.assign({}, answersArray)
-      console.log('objAnswers', objAnswers)
+    answersArray = answersArray.filter(answer => answer != secondAnswer);
+    console.log('answersArray', answersArray);
+    const objAnswers = Object.assign({}, answersArray)
+    console.log('objAnswers', objAnswers)
 
-      let answerText2 = secondAnswer.getAttribute('text')
-      console.log('Answer clicked:', answerText2)
+    let answerText2 = secondAnswer.getAttribute('text')
+    console.log('Answer clicked:', answerText2)
 
-      answersArray.forEach(answer => {
-        answer.addEventListener('click', function() {
-          answer.setAttribute('color', '#072B73');
-        })
-      });
+    answersArray.forEach(answer => {
+      answer.addEventListener('click', function () {
+        answer.setAttribute('color', '#072B73');
+      })
+    });
 
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      if (this.status == 200) {
-        console.log("response", this.response); // JSON response
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    if (this.status == 200) {
+      console.log("response", this.response); // JSON response
+    }
+    xhr.send(
+      JSON.stringify({
+
+        "quizz_id": quizzID,
+        "question": x,
+        "answer": 2
+
+      })
+    );
+
+    setTimeout(function () {
+      questionPlane.removeAttribute('text');
+      panel1.remove();
+      questionPlane.remove();
+      score++;
+      console.log('score:', score);
+      if (x < objectsResult.length) {
+        createQuestionsElements()
+      } else {
+        let panel1 = document.createElement('a-plane');
+        panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
+        panel1.setAttribute('position', "1 2.375 1");
+        panel1.setAttribute('rotation', "0 180 0");
+        panel1.setAttribute('height', "0.5");
+        panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
+        scene.appendChild(panel1);
       }
-      xhr.send(
-        JSON.stringify({
-          questionid: questionID,
-          quizzid: quizz,
-          question: questionText,
-          value: questionText,
-        })
-      );
+    }, 1000);
+    secondAnswer.setAttribute('color', 'blue');
 
-      setTimeout(function() {
-        questionPlane.removeAttribute('text');
-        panel1.remove();
-        questionPlane.remove();
-        score ++;
-        console.log('score:', score);
-        if (x < objectsResult.length) {
-          createQuestionsElements()
-        } else {
-          let panel1 = document.createElement('a-plane');
-          panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
-          panel1.setAttribute('position', "1 2.375 1");
-          panel1.setAttribute('rotation', "0 180 0");
-          panel1.setAttribute('height', "0.5");
-          panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
-          scene.appendChild(panel1);
-        }
-      }, 1000);
-      secondAnswer.setAttribute('color', 'blue');
+    answersArray = answersArray.filter(answer => answer != secondAnswer);
+    console.log('answersArray', answersArray);
 
-      answersArray = answersArray.filter(answer => answer != secondAnswer);
-      console.log('answersArray', answersArray);
+    answersArray.forEach(answer => {
+      answer.addEventListener('click', function () {
+        answer.setAttribute('color', '#072B73');
+      })
+    });
 
-      answersArray.forEach(answer => {
-        answer.addEventListener('click', function() {
-          answer.setAttribute('color', '#072B73');
-        })
-      });
-
-      setTimeout(function() {
-        questionPlane.removeAttribute('text');
-        panel1.remove();
-        questionPlane.remove();
-        if (x < objectsResult.length) {
-          createQuestionsElements()
-        } else {
-          let panel1 = document.createElement('a-plane');
-          panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
-          panel1.setAttribute('position', "1 2.375 1");
-          panel1.setAttribute('rotation', "0 180 0");
-          panel1.setAttribute('height', "0.5");
-          panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
-          scene.appendChild(panel1);
-        }
-      }, 1000);
+    setTimeout(function () {
+      questionPlane.removeAttribute('text');
+      panel1.remove();
+      questionPlane.remove();
+      if (x < objectsResult.length) {
+        createQuestionsElements()
+      } else {
+        let panel1 = document.createElement('a-plane');
+        panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
+        panel1.setAttribute('position', "1 2.375 1");
+        panel1.setAttribute('rotation', "0 180 0");
+        panel1.setAttribute('height', "0.5");
+        panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
+        scene.appendChild(panel1);
+      }
+    }, 1000);
   });
 
   thirdAnswer.addEventListener('click', function () {
-      setTimeout(function() {
-        questionPlane.removeAttribute('text');
-        panel1.remove();
-        questionPlane.remove();
-        score ++;
-        console.log('score:', score);
-        if (x < objectsResult.length) {
-          console.log('x inside thirdanswer:', x)
-          createQuestionsElements()
-        } else {
-          let panel1 = document.createElement('a-plane');
-          panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
-          panel1.setAttribute('position', "1 2.375 1");
-          panel1.setAttribute('rotation', "0 180 0");
-          panel1.setAttribute('height', "0.5");
-          panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
-          scene.appendChild(panel1);
-        }
-      }, 1000);
-      thirdAnswer.setAttribute('color', 'blue');
-
-      answersArray = answersArray.filter(answer => answer != thirdAnswer);
-      console.log('answersArray', answersArray);
-      const objAnswers = Object.assign({}, answersArray)
-      console.log('objAnswers', objAnswers)
-
-      let answerText3 = thirdAnswer.getAttribute('text')
-      console.log('Answer clicked:', answerText3)
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      if (this.status == 200) {
-        console.log("response", this.response); // JSON response
+    setTimeout(function () {
+      questionPlane.removeAttribute('text');
+      panel1.remove();
+      questionPlane.remove();
+      score++;
+      console.log('score:', score);
+      if (x < objectsResult.length) {
+        console.log('x inside thirdanswer:', x)
+        createQuestionsElements()
+      } else {
+        let panel1 = document.createElement('a-plane');
+        panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
+        panel1.setAttribute('position', "1 2.375 1");
+        panel1.setAttribute('rotation', "0 180 0");
+        panel1.setAttribute('height', "0.5");
+        panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
+        scene.appendChild(panel1);
       }
-      xhr.send(
-        JSON.stringify({
-          questionid: questionID,
-          quizzid: quizz,
-          question: questionText,
-          value: questionText,
-        })
-      );
+    }, 1000);
+    thirdAnswer.setAttribute('color', 'blue');
 
-      answersArray.forEach(answer => {
-        answer.addEventListener('click', function() {
-          answer.setAttribute('color', '#072B73');
-        })
-      });
-      setTimeout(function() {
-        questionPlane.removeAttribute('text');
-        panel1.remove();
-        questionPlane.remove();
-        if (x < objectsResult.length) {
-          createQuestionsElements()
-        } else {
-          let panel1 = document.createElement('a-plane');
-          panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
-          panel1.setAttribute('position', "1 2.375 1");
-          panel1.setAttribute('rotation', "0 180 0");
-          panel1.setAttribute('height', "0.5");
-          panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
-          scene.appendChild(panel1);
-        }
-      }, 1000);
+    answersArray = answersArray.filter(answer => answer != thirdAnswer);
+    console.log('answersArray', answersArray);
+    const objAnswers = Object.assign({}, answersArray)
+    console.log('objAnswers', objAnswers)
+
+    let answerText3 = thirdAnswer.getAttribute('text')
+    console.log('Answer clicked:', answerText3)
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    if (this.status == 200) {
+      console.log("response", this.response); // JSON response
+    }
+    xhr.send(
+      JSON.stringify({
+
+        "quizz_id": quizzID,
+        "question": x,
+        "answer": 3
+
+      })
+    );
+
+    answersArray.forEach(answer => {
+      answer.addEventListener('click', function () {
+        answer.setAttribute('color', '#072B73');
+      })
     });
+    setTimeout(function () {
+      questionPlane.removeAttribute('text');
+      panel1.remove();
+      questionPlane.remove();
+      if (x < objectsResult.length) {
+        createQuestionsElements()
+      } else {
+        let panel1 = document.createElement('a-plane');
+        panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
+        panel1.setAttribute('position', "1 2.375 1");
+        panel1.setAttribute('rotation', "0 180 0");
+        panel1.setAttribute('height', "0.5");
+        panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
+        scene.appendChild(panel1);
+      }
+    }, 1000);
+  });
 
   fourthAnswer.addEventListener('click', function () {
-      answersArray = answersArray.filter(answer => answer != fourthAnswer);
-      console.log('answersArray', answersArray);
-      const objAnswers = Object.assign({}, answersArray)
-      console.log('objAnswers', objAnswers)
+    answersArray = answersArray.filter(answer => answer != fourthAnswer);
+    console.log('answersArray', answersArray);
+    const objAnswers = Object.assign({}, answersArray)
+    console.log('objAnswers', objAnswers)
 
-      let answerText4 = fourthAnswer.getAttribute('text')
-      console.log('Answer clicked:', answerText4)
+    let answerText4 = fourthAnswer.getAttribute('text')
+    console.log('Answer clicked:', answerText4)
 
-      answersArray.forEach(answer => {
-        answer.addEventListener('click', function() {
-          answer.setAttribute('color', '#072B73');
-        })
-      });
+    answersArray.forEach(answer => {
+      answer.addEventListener('click', function () {
+        answer.setAttribute('color', '#072B73');
+      })
+    });
 
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      if (this.status == 200) {
-        console.log("response", this.response); // JSON response
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://api.medixlab.vxr.space/question", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    if (this.status == 200) {
+      console.log("response", this.response); // JSON response
+    }
+    xhr.send(
+      JSON.stringify({
+
+        "quizz_id": quizzID,
+        "question": x,
+        "answer": 4
+
+      })
+    );
+
+    setTimeout(function () {
+      questionPlane.removeAttribute('text');
+      panel1.remove();
+      questionPlane.remove();
+      score++;
+      console.log('score:', score);
+      if (x < objectsResult.length) {
+        createQuestionsElements()
+      } else {
+        let panel1 = document.createElement('a-plane');
+        panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
+        panel1.setAttribute('position', "1 2.375 1");
+        panel1.setAttribute('rotation', "0 180 0");
+        panel1.setAttribute('height', "0.5");
+        panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
+        scene.appendChild(panel1);
       }
-      xhr.send(
-        JSON.stringify({
-          questionid: questionID,
-          quizzid: quizz,
-          question: questionText,
-          value: questionText,
-        })
-      );
+    }, 1000);
+    fourthAnswer.setAttribute('color', 'blue');
 
-      setTimeout(function() {
-        questionPlane.removeAttribute('text');
-        panel1.remove();
-        questionPlane.remove();
-        score ++;
-        console.log('score:', score);
-        if (x < objectsResult.length) {
-          createQuestionsElements()
-        } else {
-          let panel1 = document.createElement('a-plane');
-          panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
-          panel1.setAttribute('position', "1 2.375 1");
-          panel1.setAttribute('rotation', "0 180 0");
-          panel1.setAttribute('height', "0.5");
-          panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
-          scene.appendChild(panel1);
-        }
-      }, 1000);
-      fourthAnswer.setAttribute('color', 'blue');
+    answersArray = answersArray.filter(answer => answer != fourthAnswer);
+    console.log('answersArray', answersArray);
 
-      answersArray = answersArray.filter(answer => answer != fourthAnswer);
-      console.log('answersArray', answersArray);
-
-      answersArray.forEach(answer => {
-        answer.addEventListener('click', function() {
-          answer.setAttribute('color', '#072B73');
-        })
-      });
-      setTimeout(function() {
-        questionPlane.removeAttribute('text');
-        panel1.remove();
-        questionPlane.remove();
-        if (x < objectsResult.length) {
-          createQuestionsElements()
-        } else {
-          let panel1 = document.createElement('a-plane');
-          panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
-          panel1.setAttribute('position', "1 2.375 1");
-          panel1.setAttribute('rotation', "0 180 0");
-          panel1.setAttribute('height', "0.5");
-          panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
-          scene.appendChild(panel1);
-        }
-      }, 1000);
+    answersArray.forEach(answer => {
+      answer.addEventListener('click', function () {
+        answer.setAttribute('color', '#072B73');
+      })
+    });
+    setTimeout(function () {
+      questionPlane.removeAttribute('text');
+      panel1.remove();
+      questionPlane.remove();
+      if (x < objectsResult.length) {
+        createQuestionsElements()
+      } else {
+        let panel1 = document.createElement('a-plane');
+        panel1.setAttribute('material', "color: #072B73; opacity: 0.7");
+        panel1.setAttribute('position', "1 2.375 1");
+        panel1.setAttribute('rotation', "0 180 0");
+        panel1.setAttribute('height', "0.5");
+        panel1.setAttribute('text', `value: ¡Fin de la prueba!; align: center`);
+        scene.appendChild(panel1);
+      }
+    }, 1000);
   });
 }

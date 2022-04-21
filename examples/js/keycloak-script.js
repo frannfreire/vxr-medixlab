@@ -16,7 +16,9 @@ setTimeout(function () {
   xhr.onload = function (e) {
     if (this.status == 200) {
       console.log("response", this.response); // JSON response
-      localStorage.setItem("sessionID", this.response.id);
+      console.log("id",JSON.parse(this.responseText ).id)
+      JSON.parse(this.responseText ).id
+      localStorage.setItem("sessionID", JSON.parse(this.responseText ).id);
     }
   };
   xhr.send(
