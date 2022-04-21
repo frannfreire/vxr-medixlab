@@ -9,8 +9,8 @@
   <!-- <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script> -->
   <!-- Networked aframe -->
   <script src="https://auth.medixlab.vxr.space/auth/js/keycloak.js"></script>
-
   <script src="../../js/keycloak-logic.js"></script>
+  
   <script>
     let url = "../../../js/structureEntitiesProcess1.json"
   </script>
@@ -456,6 +456,7 @@
       <a-asset-item id="Table_001" src="../../Models/room/Table.gltf"></a-asset-item>
       <a-asset-item id="alcoholbottle" src="../../Models/gltf/AlcoholGel.gltf"></a-asset-item>
       <a-asset-item id="mannequen" src="../../Models/room/Mannequin_Covid_Test.gltf"></a-asset-item>
+      <a-asset-item id="info" src="../../Models/Infographic.gltf"></a-asset-item>
 
 
       <!--Assets-->
@@ -1798,7 +1799,8 @@
 
     <a-entity id="genes01" gltf-model="#genes" scale="1.55475 1 1" position="0.14005 0.858 1.50591"
       material="color: brown" rotation="0 -90 0" shadow="receive: false"></a-entity>
-
+    <a-entity id="info01" class="gltf" gltf-model="#info" position="-0.130 2.369 0.988" rotation="0 180 0" scale="0.4 0.4 0.4">
+      </a-entity>
 
 
     <a-entity id="container01" scale="1.125 1.125 1.125" position="-1.39547 0.91541 -1.78823" gltf-model="#container" 
@@ -1857,7 +1859,8 @@
       rotation="0 180 0" 
       movement-controls="speed:0.05;constrainToNavMesh: true"
       >
-      <a-entity camera position="0 2 0.2" look-controls zoom="100" fov="120"
+      <a-entity id="player-camera" position="0 0 0">
+      <a-entity id="camera" camera position="0 2 0.2" look-controls zoom="100" fov="120"
         networked="template:#constraint-teacher-avatar-template;attachTemplateToLocal:false;">
       </a-entity>
 
@@ -1868,7 +1871,7 @@
       <a-entity id="rhand" mixin="touch" hand-attach vive-controls="hand: right;model:false"  input-controls="hand: right"
         networked="template:#right-hand-template">
       </a-entity>
-
+    </a-entity>
 
     </a-entity>
     

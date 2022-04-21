@@ -48,8 +48,7 @@ CREATE TABLE app_processes (
 
 CREATE TABLE app_quizes (
     id VARCHAR NOT NULL PRIMARY KEY,
-    process_id VARCHAR NOT NULL,
-    CONSTRAINT fk_process FOREIGN KEY(process_id) REFERENCES app_processes(id) ON DELETE CASCADE
+    user_id VARCHAR NOT NULL
 );
 
 CREATE TABLE app_questions (
@@ -58,4 +57,10 @@ CREATE TABLE app_questions (
     question INTEGER NOT NULL,
     answer INTEGER NOT NULL,
     CONSTRAINT fk_quizes FOREIGN KEY(quizz_id) REFERENCES app_quizes(id) ON DELETE CASCADE
+);
+
+CREATE TABLE app_experiences (
+    id VARCHAR NOT NULL PRIMARY KEY,
+    user_id VARCHAR NOT NULL,
+    times_used INTEGER NOT NULL
 );

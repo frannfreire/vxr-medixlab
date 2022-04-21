@@ -395,6 +395,7 @@
       <!-- <a-asset-item id="patient" src="../../Models/gltf/Baby.gltf"></a-asset-item> -->
       <!-- <a-asset-item id="patient" src="Baby_Jeringa.gltf"></a-asset-item> -->
       <a-asset-item id="patient" src="Baby_Bryan_Posed.gltf"></a-asset-item>
+      <a-asset-item id="info" src="../../Models/Infographic.gltf"></a-asset-item>
 
       <a-asset-item id="tray" src="../../super/process/assets/Tray.gltf"></a-asset-item>
       <a-asset-item id="StudentAvatar" src="../../super/process/assets/StudentNurseAvatar.gltf"></a-asset-item>
@@ -410,7 +411,7 @@
       <a-asset-item id="cottonswab" src="../../Models/gltf/CottonSwabs01.gltf"></a-asset-item>
       <a-asset-item id="salinebottle" src="../../Models/gltf/ClorhexidinaBottle.gltf"></a-asset-item>
       <a-asset-item id="alcoholgel" src="../../Models/gltf/AlcoholGel.gltf"></a-asset-item>
-      <a-asset-item id="intracath" src="../../Models/gltf/Intracath.gltf"></a-asset-item>
+      <a-asset-item id="intracath" src="../../Models/gltf/Intracath_Baby.gltf"></a-asset-item>
       <a-asset-item id="intracath-piece-1" src="../../Models/gltf/Catheter01.gltf"></a-asset-item>
       <a-asset-item id="intracath-piece-2" src="../../Models/gltf/Catheter02.gltf"></a-asset-item>
       <a-asset-item id="MedicalClothe" src="../../Models/gltf/MedicalClothe.gltf"></a-asset-item>
@@ -749,10 +750,10 @@
 
       <template id="vxr-obj-template-intracath">
         <a-entity>
-          <a-entity id="e-intracath" rotation="0 -180 0" ondragstart="emissiveObjectOn(this)"
+          <a-entity id="e-intracath" rotation="0 180 0" ondragstart="emissiveObjectOn(this)"
             ondragend="emissiveObjectOff(this)" grabbable="maxGrabbers: NaN" dynamic-body="sphereRadius: NaN"
             class="vxr-obj-intracath vxr-interact" gltf-model="#intracath" dynamic-body draggable grabbable
-            toggle-physics position="0.335 0.412 -0.006">
+            toggle-physics position="0.347 0.412 -0.006">
           </a-entity>
         </a-entity>
       </template>
@@ -1128,6 +1129,8 @@
     <a-entity class="gltf" gltf-model="#bed" position="0.87277 0.948 -0.9535" rotation="0 90 0"></a-entity>
     <a-box id="boxTable1" static-body="sphereRadius: NaN" opacity="0" static-body rotation=""
       position="-0.11878 1.855 -0.37707" color="red" depth="0.6" height="0.1" width="1.1"></a-box>
+    <a-entity id="info01" class="gltf" gltf-model="#info" position="-0.130 2.369 0.988" rotation="0 180 0" scale="0.4 0.4 0.4">
+    </a-entity>
     
     <!-- <a-box id="TorundaBowl" class="boxTable2" opacity="0" static-body position="0.30215 1.87809 -0.51316" depth="0.1"
       height="0.1" width="0.1" material="" geometry="depth: 0.1; width: 0.1"></a-box> -->
