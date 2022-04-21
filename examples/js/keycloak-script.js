@@ -10,6 +10,11 @@ setTimeout(function () {
   let initSessionOnReloadPageDate = initSessionOnReloadPage.toISOString().replace('Z', '')
   localStorage.setItem("initSessionOnReloadPageDate", initSessionOnReloadPageDate);
 
+  let finishSession = new Date()
+  let finishSessionDate = finishSession.toISOString().replace('Z', '')
+
+  let duration = Math.abs(finishSession.getTime() - initSessionOnReloadPage.getTime()) / 1000
+
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "https://api.medixlab.vxr.space/session", false);
   xhr.setRequestHeader("Content-Type", "application/json");
@@ -17,13 +22,14 @@ setTimeout(function () {
     if (this.status == 200) {
       console.log("response", this.response); // JSON response
       localStorage.setItem("sessionID", this.response.id);
+      console.log("Session id is: ", localStorage.getItem("sessionID"))
     }
   };
   xhr.send(
     JSON.stringify({
       sessionid: localStorage.getItem("sessionID"),
       user_id: localStorage.getItem("userID"),
-      duration: 10.5,
+      duration: duration,
       init_session: localStorage.getItem("initSessionOnReloadPageDate"),
       finish_session: localStorage.getItem("finishSessionDate"),
     })
@@ -224,9 +230,24 @@ setTimeout(function () {
 
   logoutButton.addEventListener("click", function () {
     keycloak.logout();
-    let finishSession = new Date()
-    let finishSessionDate = finishSession.toISOString().replace('Z', '')
     localStorage.setItem("finishSessionDate", finishSessionDate);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("PATCH", "https://api.medixlab.vxr.space/session", false);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function (e) {
+      if (this.status == 200) {
+        console.log("response", this.response); // JSON response
+        localStorage.setItem("sessionID", this.response.id);
+      }
+    };
+    xhr.send(
+      JSON.stringify({
+        id: localStorage.getItem("sessionID"),
+        duration: duration,
+        finish_session: localStorage.getItem("finishSessionDate"),
+      })
+    );
   });
 
   console.log(

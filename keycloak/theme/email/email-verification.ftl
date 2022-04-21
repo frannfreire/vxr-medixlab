@@ -3,7 +3,7 @@
     <div style="padding-top: 12px; padding-bottom: 12px; background-color: #fff; color: #fff; width: 100%; border-collapse: separate; text-align: center;">
         <br>
         <br>
-        <div style="width: 590px; background-image: url('https://i.imgur.com/B0nqSlt.png'); background-size: cover; background-repeat: no-repeat; margin: 0px auto;">
+        <div style="width: 590px; background-image: url('https://i.imgur.com/avILuwy.png'); background-size: cover; background-repeat: no-repeat; margin: 0px auto;">
             <div>
                 <img style="width: 25%; margin-top: 15%;" src="https://i.imgur.com/3UJBeFg.png">
                     <h2 style="position: absolute;

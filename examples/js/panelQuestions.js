@@ -36,6 +36,8 @@ function createQuestionsElements() {
   var questionText = objectsResult[x].question;
   questionID++;
 
+  localStorage.setItem("userID", keycloak.tokenParsed.sub);
+
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "https://api.medixlab.vxr.space/quiz", true);
   xhr.setRequestHeader("Content-Type", "application/json");
@@ -45,7 +47,7 @@ function createQuestionsElements() {
   xhr.send(
     JSON.stringify({
       quizzid: quizz++,
-      process: process,
+      userid: localStorage.getItem("userID"),
     })
   );
 
