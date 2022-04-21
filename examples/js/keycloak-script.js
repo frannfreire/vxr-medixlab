@@ -13,16 +13,17 @@ setTimeout(function () {
   let finishSession = new Date()
   let finishSessionDate = finishSession.toISOString().replace('Z', '')
 
-  let duration = Math.abs(finishSession.getTime() - initSessionOnReloadPage.getTime()) / 1000
-
   var xhr = new XMLHttpRequest();
+
+  let duration = Math.abs(finishSession.getTime() - initSessionOnReloadPage.getTime()) / 1000;
+
   xhr.open("POST", "https://api.medixlab.vxr.space/session", false);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onload = function (e) {
     if (this.status == 200) {
       console.log("response", this.response); // JSON response
-      localStorage.setItem("sessionID", this.response.id);
-      console.log("Session id is: ", localStorage.getItem("sessionID"))
+      localStorage.setItem("sessionID", JSON.parse(this.responseText).id);
+      console.log("Session id is: ", localStorage.getItem("sessionID"));
     }
   };
   xhr.send(
@@ -232,13 +233,12 @@ setTimeout(function () {
     keycloak.logout();
     localStorage.setItem("finishSessionDate", finishSessionDate);
 
-    var xhr = new XMLHttpRequest();
     xhr.open("PATCH", "https://api.medixlab.vxr.space/session", false);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onload = function (e) {
       if (this.status == 200) {
         console.log("response", this.response); // JSON response
-        localStorage.setItem("sessionID", this.response.id);
+        localStorage.setItem("sessionID", JSON.parse(this.responseText).id);
       }
     };
     xhr.send(
