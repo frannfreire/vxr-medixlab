@@ -42,7 +42,7 @@
 
             <div class="form-group">
                 <div class="${properties.kcLabelWrapperClass!}">
-                    <label for="user.attributes.semestre" class="${properties.kcLabelClass!}">Semestre</label>
+                    <label for="user.attributes.semestre" class="${properties.kcLabelClass!}">Ciclo (1-10)</label>
                 </div>
 
                 <div class="${properties.kcInputWrapperClass!}">
@@ -52,7 +52,7 @@
 
             <div class="form-group">
                 <div class="${properties.kcLabelWrapperClass!}">
-                    <label for="user.attributes.estatura" class="${properties.kcLabelClass!}">Estatura (cm)</label>
+                    <label for="user.attributes.estatura" class="${properties.kcLabelClass!}">Estatura (Ej: 177)</label>
                 </div>
 
                 <div class="${properties.kcInputWrapperClass!}">
